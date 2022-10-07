@@ -25,25 +25,36 @@ public class GasolineraDetailPresenter {
      * @return String con el precio sumario en dos decimales, - si un precio es negativo
      */
     public String getPrecioSumario() {
+        double precioSumario;
+        double precioDiesel;
+        double precio95;
         try {
-            // reemplazar coma por punto antes de convertir a double
-            double precioDiesel = Double.parseDouble(
+             precioDiesel = Double.parseDouble(
                     gasolinera.getDieselA().replace(',', '.'));
-            double precio95 = Double.parseDouble(
-                    gasolinera.getNormal95().replace(',', '.'));
-            // si un precio es negativo
-            if (precio95 <= 0 || precioDiesel<= 0) {
-                return "-";
-            }
-            double precioSumario = (precio95 * 2+ precioDiesel * 1) / 3.0;
-            // mostrar precio con coma
-            String precio = Double.toString(precioSumario);
-            precio = precio.replace('.', ',');
-            precio = precio.substring(0, 4);
-            return precio;
-        } catch (NumberFormatException e) { // si no se puede parsear el numero
-            return  "-";
+        } catch (NumberFormatException e){
+            precioDiesel = 0;
         }
+        try {
+            precio95 = Double.parseDouble(
+                    gasolinera.getNormal95().replace(',', '.'));
+        } catch (NumberFormatException e){
+            precio95 = 0;
+        }
+        // gestionar que se devuelve dependiendo de los valores disponibles
+        if (precio95 <= 0 && precioDiesel <= 0) {
+            return "-";
+        } else if (precio95 <= 0) {
+            precioSumario = precioDiesel;
+        } else if (precioDiesel <= 0) {
+            precioSumario = precio95;
+        } else {
+            precioSumario = (precio95 * 2+ precioDiesel * 1) / 3.0;
+        }
+        // mostrar precio con coma
+        String precio = Double.toString(precioSumario);
+        precio = precio.replace('.', ',');
+        precio = precio.substring(0, 4);
+        return precio;
     }
 
     public String getRotulo() {

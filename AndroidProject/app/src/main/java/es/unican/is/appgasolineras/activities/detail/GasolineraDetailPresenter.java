@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.detail;
 
+import android.util.Log;
+
 import es.unican.is.appgasolineras.model.Gasolinera;
 
 /**
@@ -24,15 +26,21 @@ public class GasolineraDetailPresenter {
      */
     public String getPrecioSumario() {
         try {
-            double precioDiesel = Double.parseDouble(gasolinera.getDieselA());
-            double precio95 = Double.parseDouble(gasolinera.getNormal95());
+            // reemplazar coma por punto antes de convertir a double
+            double precioDiesel = Double.parseDouble(
+                    gasolinera.getDieselA().replace(',', '.'));
+            double precio95 = Double.parseDouble(
+                    gasolinera.getNormal95().replace(',', '.'));
             // si un precio es negativo
             if (precio95 <= 0 || precioDiesel<= 0) {
                 return "-";
             }
-            double precioSumario = (precio95 + precioDiesel) / 2.0;
-
-            return String.format("%.2f", precioSumario);
+            double precioSumario = (precio95 * 2+ precioDiesel * 1) / 3.0;
+            // mostrar precio con coma
+            String precio = Double.toString(precioSumario);
+            precio = precio.replace('.', ',');
+            precio = precio.substring(0, 4);
+            return precio;
         } catch (NumberFormatException e) { // si no se puede parsear el numero
             return  "-";
         }
@@ -66,13 +74,15 @@ public class GasolineraDetailPresenter {
     }
 
     public String getDieselA() {
-        if (gasolinera.getDieselA() == null || Double.parseDouble(gasolinera.getDieselA()) <= 0) {
+        if (gasolinera.getDieselA() == null ||
+                Double.parseDouble(gasolinera.getDieselA().replace(',', '.')) <= 0) {
         return "-";
         }
         return gasolinera.getDieselA(); }
 
     public String getNormal95() {
-        if (gasolinera.getNormal95() == null || Double.parseDouble(gasolinera.getNormal95()) <= 0) {
+        if (gasolinera.getNormal95() == null ||
+                Double.parseDouble(gasolinera.getNormal95().replace(',', '.')) <= 0) {
         return "-";
         }
         return gasolinera.getNormal95();

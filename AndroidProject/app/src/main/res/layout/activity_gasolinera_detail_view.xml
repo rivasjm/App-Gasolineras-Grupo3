@@ -50,67 +50,80 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.634"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTxtDieselA"
-        app:layout_constraintVertical_bias="0.424" />
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvPrecioSumario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="Precio"
         android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvMunicipio"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="@+id/tvMunicipio"
         app:layout_constraintTop_toBottomOf="@+id/tvMunicipio" />
-
-    <TextView
-        android:id="@+id/tvTxtDieselA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Diésel Normal"
-        android:textAlignment="viewEnd"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/tvPrecioDieselA"
-        app:layout_constraintHorizontal_bias="0.373"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTxtPrecioGasolina95" />
 
     <TextView
         android:id="@+id/tvPrecioGasolina95"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="76dp"
+        android:layout_marginEnd="56dp"
         android:text="TextView"
         android:textAlignment="viewEnd"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvTxtPrecioGasolina95"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/tvTxtDieselA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Diésel Normal"
+        android:textAlignment="viewEnd"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvPrecioDieselA"
+        app:layout_constraintHorizontal_bias="0.308"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTxtPrecioGasolina95" />
+
+    <TextView
+        android:id="@+id/tvTxtPrecioGasolina95"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Gasolina 95"
+        android:textAlignment="viewEnd"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvPrecioGasolina95"
+        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioSumario" />
+
+    <TextView
         android:id="@+id/tvPrecioDieselA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="76dp"
+        android:layout_marginEnd="56dp"
         android:text="TextView"
         android:textAlignment="viewEnd"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvTxtDieselA"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/tvTxtPrecioGasolina95"
+        android:id="@+id/tvtTxtHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Gasolina 95"
-        android:textAlignment="viewEnd"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/tvPrecioGasolina95"
-        app:layout_constraintHorizontal_bias="0.399"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrecioSumario" />
+        android:text="Horario"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvHorario"
+        app:layout_constraintEnd_toEndOf="@+id/tvHorario"
+        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintStart_toStartOf="@+id/tvHorario"
+        app:layout_constraintTop_toBottomOf="@+id/tvTxtDieselA"
+        app:layout_constraintVertical_bias="0.768"
+        android:layout_marginTop="40dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

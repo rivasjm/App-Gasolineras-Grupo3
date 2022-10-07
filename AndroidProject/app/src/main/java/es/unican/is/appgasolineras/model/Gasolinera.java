@@ -31,6 +31,8 @@ public class Gasolinera implements Parcelable {
     @SerializedName("Precio Gasoleo A")             private String dieselA;
     @SerializedName("Precio Gasolina 95 E5")        private String normal95;  // 95 octanes
 
+    @SerializedName(value="Horario")            private String schedule;
+
     public Gasolinera() {
 
     }
@@ -92,6 +94,12 @@ public class Gasolinera implements Parcelable {
         this.normal95 = normal95;
     }
 
+    public String getSchedule() { return schedule; }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
     /*
      * Methods for Parcelable interface. Needed to send this object in an Intent.
      *
@@ -107,6 +115,7 @@ public class Gasolinera implements Parcelable {
         municipio = in.readString();
         dieselA = in.readString();
         normal95 = in.readString();
+        schedule = in.readString();
     }
 
     public static final Creator<Gasolinera> CREATOR = new Creator<Gasolinera>() {
@@ -135,5 +144,7 @@ public class Gasolinera implements Parcelable {
         dest.writeString(municipio);
         dest.writeString(dieselA);
         dest.writeString(normal95);
+        dest.writeString(schedule);
+
     }
 }

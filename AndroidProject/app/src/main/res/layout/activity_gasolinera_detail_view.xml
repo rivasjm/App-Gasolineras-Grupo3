@@ -32,7 +32,7 @@
         android:id="@+id/tvMunicipio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="Localidad"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tvRotulo"
@@ -44,6 +44,7 @@
         android:id="@+id/tvHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="76dp"
         android:layout_marginBottom="84dp"
         android:text="Horario"
@@ -51,7 +52,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.67"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvtTxtHorario" />
 
     <TextView
         android:id="@+id/tvPrecioSumario"
@@ -116,14 +118,12 @@
         android:id="@+id/tvtTxtHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:text="Horario"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvHorario"
         app:layout_constraintEnd_toEndOf="@+id/tvHorario"
         app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="@+id/tvHorario"
-        app:layout_constraintTop_toBottomOf="@+id/tvTxtDieselA"
-        app:layout_constraintVertical_bias="0.768"
-        android:layout_marginTop="40dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvTxtDieselA" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

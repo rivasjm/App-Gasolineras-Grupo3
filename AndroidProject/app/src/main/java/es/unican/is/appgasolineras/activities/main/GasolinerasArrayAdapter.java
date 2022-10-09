@@ -55,13 +55,15 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
         return convertView;
     }
 
-    private void showInfo(@Nullable View convertView, int p, String info) {
+    private void showInfo(View convertView, int p, String info) {
         TextView tv = convertView.findViewById(p);
         tv.setText(info);
     }
 
     private void setLogo(View convertView, Gasolinera gasolinera) {
         String rotulo = gasolinera.getRotulo().toLowerCase();
+
+
 
         int imageID = getContext().getResources()
                 .getIdentifier(rotulo, "drawable", getContext().getPackageName());

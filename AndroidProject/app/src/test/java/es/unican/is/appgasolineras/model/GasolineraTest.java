@@ -13,7 +13,8 @@ public class GasolineraTest extends TestCase {
     public void testGetRotulo() {
         Gasolinera gasolinera = new Gasolinera();
         gasolinera.setRotulo(REPSOL);
-
         assertEquals(gasolinera.getRotulo(), REPSOL);
     }
+
+
 }

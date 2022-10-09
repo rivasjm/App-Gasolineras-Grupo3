@@ -34,7 +34,7 @@ public class Gasolinera implements Parcelable {
     @SerializedName(value="Horario")            private String schedule;
 
     public Gasolinera() {
-
+        id = "0";
     }
 
     @NonNull
@@ -145,6 +145,5 @@ public class Gasolinera implements Parcelable {
         dest.writeString(dieselA);
         dest.writeString(normal95);
         dest.writeString(schedule);
-
     }
 }

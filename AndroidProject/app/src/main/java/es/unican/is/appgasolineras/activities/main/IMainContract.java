@@ -27,18 +27,6 @@ public interface IMainContract {
          * @param index the index of the gas station (position in the list)
          */
         void onGasolineraClicked(int index);
-
-        /**
-         * This method should be used by the View to notifiy the Presenter that the
-         * Info button has been clicked
-         */
-        void onInfoClicked();
-
-        /**
-         * This method should be used by the View to notify the Presenter that the
-         * Refresh button has been clicked
-         */
-        void onRefreshClicked();
     }
 
     /**
@@ -86,11 +74,6 @@ public interface IMainContract {
          * @param gasolinera the gas station
          */
         void openGasolineraDetails(Gasolinera gasolinera);
-
-        /**
-         * The View is requested to open the Info view
-         */
-        void openInfoView();
     }
 
 }

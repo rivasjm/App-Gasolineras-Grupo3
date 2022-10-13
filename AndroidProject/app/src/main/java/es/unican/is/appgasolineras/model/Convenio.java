@@ -3,19 +3,20 @@ package es.unican.is.appgasolineras.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/* Clase que representa a la tabla "convenios" de la base de datos. Cada convenio tiene los siguientes campos:
-*   Marca
-*   Descuento*/
+/**
+ * Clase que representa la tabla "convenios" de la base de datos. Cada convenio tiene los siguientes campos:
+ * La tabla almacena en cada fila un determinado repostaje, con los siguientes datos:
+ *      Marcha
+ *      Descuento
+ */
 
 @Entity(tableName = "convenios")
 public class Convenio {
     @PrimaryKey
-    private String id;
-
     private String marca;
     private int descuento;
 
-    public Convenio() { id = "0";}
+    public Convenio() {}
 
     public String getMarca() {
         return marca;

@@ -12,11 +12,19 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "convenios")
 public class Convenio {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     private String marca;
     private int descuento;
 
-    public Convenio() {}
+    public Convenio() {
+        id = 0;
+    }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getMarca() {
         return marca;

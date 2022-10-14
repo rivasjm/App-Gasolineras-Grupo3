@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,8 +12,11 @@ import androidx.room.PrimaryKey;
  *      Precio
  *      Litros
  */
-@Entity(tableName = "repostajes", primaryKeys = {"fechaRepostaje", "localizacion"})
+@Entity(tableName = "repostajes")
 public class Repostaje {
+
+    @PrimaryKey(autoGenerate = true)    @NonNull
+    private int id;
 
     private String fechaRepostaje;
     private String localizacion;
@@ -20,8 +24,15 @@ public class Repostaje {
     private String litros;
 
     public Repostaje() {
-        fechaRepostaje = "12/10/22";
-        localizacion = "Localizacion";
+        id = 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFechaRepostaje() {

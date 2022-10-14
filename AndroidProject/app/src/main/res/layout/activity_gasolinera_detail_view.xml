@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.detail.GasolineraDetailView">
 
+
+
     <ImageView
         android:id="@+id/ivRotulo"
         android:layout_width="wrap_content"

@@ -8,11 +8,4 @@
     android:background="@color/white"
     app:titleTextColor="@color/black">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/logoRepostApp"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_gravity="fill_horizontal"-->
-<!--        android:src="@drawable/logo_repost_app" />-->
-
 </androidx.appcompat.widget.Toolbar>

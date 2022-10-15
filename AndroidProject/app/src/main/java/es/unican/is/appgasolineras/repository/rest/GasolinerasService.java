@@ -1,6 +1,6 @@
 package es.unican.is.appgasolineras.repository.rest;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,7 +11,7 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.model.GasolinerasResponse;
 import es.unican.is.appgasolineras.model.IDCCAAs;
 import retrofit2.Call;
-import retrofit2.Response;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class GasolinerasService {
 
-    public static long TIMEOUT_SECONDS = 60L;
+    public static final long TIMEOUT_SECONDS = 60L;
 
     private static GasolinerasAPI api;
 
@@ -52,7 +52,7 @@ public class GasolinerasService {
     public static GasolinerasResponse getGasolineras() {
         final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
 
-        List<Gasolinera> gasolineras;
+
         ExecutorService executor = Executors.newFixedThreadPool(1);
         CallRunnable<GasolinerasResponse> runnable = new CallRunnable<>(call);
         executor.execute(runnable);

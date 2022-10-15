@@ -46,6 +46,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      * @param menu
      * @return
      */
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = activity.getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
@@ -64,6 +65,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      * @param item
      * @return
      */
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuInfo:

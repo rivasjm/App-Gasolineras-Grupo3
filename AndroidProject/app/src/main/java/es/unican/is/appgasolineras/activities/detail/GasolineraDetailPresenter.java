@@ -58,27 +58,27 @@ public class GasolineraDetailPresenter {
     }
 
     public String getRotulo() {
-        if (gasolinera.getRotulo() == null || gasolinera.getRotulo() == "") {
+        if (gasolinera.getRotulo() == null || gasolinera.getRotulo().equals("")) {
             return "-";
         }
         return gasolinera.getRotulo();
     }
 
     public String getCp() {
-        if (gasolinera.getCp() == null || gasolinera.getCp() == "") {
+        if (gasolinera.getCp() == null || gasolinera.getCp().equals("")) {
             return "-";
         }
         return gasolinera.getCp();
     }
 
     public String getDireccion() {
-        if (gasolinera.getDireccion() == null || gasolinera.getDireccion() == "") {
+        if (gasolinera.getDireccion() == null || gasolinera.getDireccion().equals("")) {
         return "-";
     }
         return gasolinera.getDireccion(); }
 
     public String getMunicipio() {
-        if (gasolinera.getMunicipio() == null || gasolinera.getMunicipio() == "") {
+        if (gasolinera.getMunicipio() == null || gasolinera.getMunicipio().equals("")) {
             return "-";
         }
         return gasolinera.getMunicipio();
@@ -100,7 +100,7 @@ public class GasolineraDetailPresenter {
     }
 
     public String getSchedule() {
-        if (gasolinera.getSchedule() == null || gasolinera.getSchedule() == "") {
+        if (gasolinera.getSchedule() == null || gasolinera.getSchedule().equals("")) {
             return "-";
         }
         return gasolinera.getSchedule();

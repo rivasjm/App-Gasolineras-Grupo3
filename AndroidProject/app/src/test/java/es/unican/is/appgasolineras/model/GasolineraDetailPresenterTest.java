@@ -21,22 +21,22 @@ public class GasolineraDetailPresenterTest {
         gasolinera.setNormal95("1.859");
         GasolineraDetailPresenter sumario = new GasolineraDetailPresenter(gasolinera);
         String sumarioS = sumario.getPrecioSumario();
-        assertEquals(sumarioS,"1,81");
+        assertEquals("1,81", sumarioS);
 
         // Caso 2 → Datos ausentes
         //Dato del diesel ausente
         gasolinera.setDieselA("-");
         sumarioS=sumario.getPrecioSumario();
-        assertEquals(sumarioS,"1,85");
+        assertEquals("1,85", sumarioS);
         //Dato de ambos ausente
         gasolinera.setNormal95("-");
         sumarioS=sumario.getPrecioSumario();
-        assertEquals(sumarioS,"-");
+        assertEquals("-", sumarioS);
 
         //Caso 3 → Valores negativos
         gasolinera.setNormal95("1.739");
         gasolinera.setDieselA("-2.14");
         sumarioS=sumario.getPrecioSumario();
-        assertEquals(sumarioS,"1,73");
+        assertEquals("1,73", sumarioS);
     }
 }

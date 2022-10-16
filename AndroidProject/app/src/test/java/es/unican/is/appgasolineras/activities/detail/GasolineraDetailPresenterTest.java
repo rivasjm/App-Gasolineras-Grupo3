@@ -1,14 +1,11 @@
-package es.unican.is.appgasolineras.model;
+package es.unican.is.appgasolineras.activities.detail;
 
 import static org.junit.Assert.assertEquals;
 
-import android.util.Log;
-
 import org.junit.Test;
-import junit.framework.TestCase;
 
 import es.unican.is.appgasolineras.activities.detail.GasolineraDetailPresenter;
-import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
+import es.unican.is.appgasolineras.model.Gasolinera;
 
 public class GasolineraDetailPresenterTest {
     private static final String REPSOL = "REPSOL";

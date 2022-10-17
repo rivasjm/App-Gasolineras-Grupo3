@@ -29,22 +29,21 @@ public class HistorialRepostajesArrayAdapter extends ArrayAdapter<Repostaje> {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
-                    .inflate(R.layout.activity_historial_repostajes_view, parent, false);
+                    .inflate(R.layout.activity_historial_repostajes_item, parent, false);
             //check
         }
 
-
         // localizacion
-        showInfo(convertView, R.id.tvLocalizacion, repostajes.getLocalizacion());
+        showInfo(convertView, R.id.tvAdress, repostajes.getLocalizacion());
 
         // fecha repostaje
-        showInfo(convertView, R.id.tvFecha, repostajes.getFechaRepostaje());
+        showInfo(convertView, R.id.tvDate, repostajes.getFechaRepostaje());
 
         //Litros
-        showInfo(convertView, R.id.tvLitros, repostajes.getLitros());
+        showInfo(convertView, R.id.tvLiters, repostajes.getLitros());
 
         // Precio
-        showInfo(convertView, R.id.tvPrecio, repostajes.getPrecio());
+        showInfo(convertView, R.id.tvPrice, repostajes.getPrecio());
 
         return convertView;
     }

@@ -5,6 +5,8 @@ import java.util.List;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.model.Repostaje;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
+import es.unican.is.appgasolineras.repository.db.RepostajeDao;
 
 public interface IHistorialRepostajesContract {
 
@@ -59,7 +61,7 @@ public interface IHistorialRepostajesContract {
          * Android Context, and this is available in the View
          * @return the Repository object to access the historial
          */
-        IHistorialRepostajesRepository getHistorialRepostajesRepository();
+        GasolineraDatabase getGasolineraDb();
 
         /**
          * Esta vista muestra los repostajes

@@ -18,12 +18,6 @@ public interface IHistorialRepostajesContract {
 
         /**
          * This method should be used by the View to notifiy the Presenter that the
-         * home button has been clicked
-         */
-        void onHomeClicked();
-
-        /**
-         * This method should be used by the View to notifiy the Presenter that the
          * acceptar button has been clicked
          */
         void onAceptarClicked();
@@ -34,15 +28,9 @@ public interface IHistorialRepostajesContract {
          */
         void onReintentarClicked();
 
-
-
     }
 
     public interface View {
-        /**
-         * Initialization method
-         */
-        void init();
 
         /**
          * The View is requested to open the main view
@@ -59,14 +47,21 @@ public interface IHistorialRepostajesContract {
          * This object can be used to access all the historial de repostajes from the db
          * This method is in the View because it generally requires access to the
          * Android Context, and this is available in the View
+         *
          * @return the Repository object to access the historial
          */
         GasolineraDatabase getGasolineraDb();
 
         /**
          * Esta vista muestra los repostajes
+         *
          * @param historialRepostajes la lista de repostajes
          */
         void showHistorialRepostajes(List<Repostaje> historialRepostajes);
+
+        /**
+         * Muestra un mensaje que avisa al usuario de que no tiene repostajes registrados
+         */
+        void showHistorialVacio();
     }
 }

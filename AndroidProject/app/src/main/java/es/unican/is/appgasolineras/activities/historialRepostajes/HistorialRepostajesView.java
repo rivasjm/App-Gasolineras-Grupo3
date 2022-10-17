@@ -19,12 +19,12 @@ import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.model.Repostaje;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
-public class HistorialRepostajesView extends AppCompatActivity  implements IHistorialRepostajesContract.View{
+public class HistorialRepostajesView extends AppCompatActivity implements IHistorialRepostajesContract.View {
+
 
     private BarraHerramientasView barraHerramientasView;
     private IHistorialRepostajesContract.Presenter presenter;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial_repostajes_view);
@@ -38,7 +38,7 @@ public class HistorialRepostajesView extends AppCompatActivity  implements IHist
 
         presenter = new HistorialRepostajesPresenter(this);
         presenter.init();
-        this.init();
+
     }
 
     @Override
@@ -51,19 +51,19 @@ public class HistorialRepostajesView extends AppCompatActivity  implements IHist
         return barraHerramientasView.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void init() {
-        //Vacio
-    }
 
     @Override
     public void openMainView() {
-
     }
+
+
+    /**
+     * The View is requested to show an alert informing that there was an error while
+     * loading the gas stations
+     */
 
     @Override
     public void showLoadError() {
-
     }
 
     public GasolineraDatabase getGasolineraDb() {
@@ -76,4 +76,11 @@ public class HistorialRepostajesView extends AppCompatActivity  implements IHist
         ListView list = findViewById(R.id.lvHistoricoGasolineras);
         list.setAdapter(adapter);
     }
+
+    @Override
+    public void showHistorialVacio() {
+        //Hacer una ventana emergente que ponmga que no hay historial.
+    }
+
+
 }

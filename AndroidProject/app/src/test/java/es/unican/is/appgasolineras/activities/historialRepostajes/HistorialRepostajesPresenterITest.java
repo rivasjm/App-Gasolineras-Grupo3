@@ -1,58 +1,56 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
+import android.os.Build;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import es.unican.is.appgasolineras.model.Repostaje;
+import es.unican.is.appgasolineras.repository.db.RepostajeDao;
 
 /**
- * Test unitario del presentador del historial de repostajes.
+ * Test de integracion del presentador del historial de repostajes
+ * junto con su DAO y la base de datos.
  *
  * @author Ivan Ortiz del Noval
  */
-public class HistorialRepostajesPresenterTest {
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.O_MR1})
+public class HistorialRepostajesPresenterITest {
 
     private HistorialRepostajesPresenter sut;
 
-    private List<Repostaje> repostajes;
+    /*
+        Hay que usar Roboelectric para tener, con el mock de la vista, un contexto que pasarle
+        con la dao real o ya implementada, porque aqui no se puede
+     */
 
     @Mock
     private IHistorialRepostajesContract.View viewMock;
-    // ver como es la interaccion en la DAO, si se usa repository, DAO o que, si no no puedo avanzar
+
+    private RepostajeDao dao; // ahora a la vista(mock) se le pasa la DAO de verdad
 
     @Before
     public void setUp() throws Exception {
         // inicializar mocks siempre
         MockitoAnnotations.openMocks(this);
-        // no defino aqui comportamiento porque varia en cada caso
+        // no defino aqui comportamiento de la vista
     }
 
     @Test
     public void initCorrectoTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
 
-        // lista de repostajes modelo, con 10 repostajes
-        repostajes = new LinkedList<>();
-        for (int i = 0; i < 10; i++) {
-            Repostaje r = new Repostaje();
-            r.setId(i+100);
-            r.setFechaRepostaje(String.format("%d/10/2022", i));
-            r.setLitros(Double.toString(10 + i));
-            r.setPrecio(Double.toString(2 * (10 + i)));
-            r.setLocalizacion(String.format("Direccion %d", i));
-            repostajes.add(r);
-        }
         // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
+        when(viewMock.getHistorialRepostajesRepository()).thenCall();
 
         // ver que funciona
         sut.init();
@@ -64,9 +62,11 @@ public class HistorialRepostajesPresenterTest {
     @Test
     public void initCorrectoAnomaloTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
+        // definir comportamiento mock
+        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
 
         // lista de repostajes con datos anomalos, con 10 repostajes
-        repostajes = new LinkedList<>();
+        List<Repostaje> repostajes = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             Repostaje r = new Repostaje();
             r.setId(i+100);
@@ -78,8 +78,6 @@ public class HistorialRepostajesPresenterTest {
             }
             repostajes.add(r);
         }
-        // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
 
         // ver que funciona correctamente
         sut.init();
@@ -91,17 +89,17 @@ public class HistorialRepostajesPresenterTest {
     @Test
     public void initListaVaciaTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
-        // lista de repostajes vacia
-        repostajes = new LinkedList<>();
         // definir comportamiento mock
         when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
+
+        // lista de repostajes vacia
+        List<Repostaje> repostajes = new LinkedList<>();
 
         // ver que funciona correctamente
         sut.init();
         assert (sut.shownRepostajes.equals(repostajes));
         verify (viewMock).getHistorialRepostajesRepository();
-        // el metodo del show vacio
-        verify (viewMock).showEmpty();
+        // TODO el metodo del show vacio
     }
 
     @Test

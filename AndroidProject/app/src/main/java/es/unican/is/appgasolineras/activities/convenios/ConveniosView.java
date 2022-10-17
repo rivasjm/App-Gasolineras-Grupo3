@@ -1,18 +1,30 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
+import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
+import es.unican.is.appgasolineras.model.Convenio;
+import es.unican.is.appgasolineras.model.Gasolinera;
+import es.unican.is.appgasolineras.repository.GasolinerasRepository;
+import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
-public class ConveniosView extends AppCompatActivity {
+public class ConveniosView extends AppCompatActivity implements  IConveniosContract.View {
 
+    private IConveniosContract.Presenter presenter;
     private BarraHerramientasView barraHerramientasView;
 
     @Override
@@ -23,9 +35,8 @@ public class ConveniosView extends AppCompatActivity {
         // Toolbar
         barraHerramientasView = new BarraHerramientasView(findViewById(R.id.toolbar), this);
 
-        // Temporal
-        TextView tv = findViewById(R.id.tvConveniosMessage);
-        tv.setText("CONVENIOS");
+        presenter = new ConveniosPresenter(this);
+        // TODO: presenter.init();
     }
 
     @Override
@@ -36,5 +47,30 @@ public class ConveniosView extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return barraHerramientasView.onOptionsItemSelected(item);
+    }
+
+    // TODO:
+//    @Override
+//    public IConveniosRepository getConveniosRepository() {
+//        return new ConveniosRepository(this);
+//    }
+
+    @Override
+    public void showConvenios(List<Convenio> convenios) {
+        ConveniosArrayAdapter adapter = new ConveniosArrayAdapter(this, convenios);
+        ListView list = findViewById(R.id.lvConvenios);
+        list.setAdapter(adapter);
+    }
+
+    @Override
+    public void showLoadCorrect(int conveniosCount) {
+        String text = getResources().getString(R.string.loadCorrectConvenios);
+        Toast.makeText(this, String.format(text, conveniosCount), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoadError() {
+        String text = getResources().getString(R.string.loadErrorConvenios);
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

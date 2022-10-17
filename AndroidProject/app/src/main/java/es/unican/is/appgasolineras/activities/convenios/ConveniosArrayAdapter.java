@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.main;
+package es.unican.is.appgasolineras.activities.convenios;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -15,42 +15,32 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.model.Gasolinera;
+import es.unican.is.appgasolineras.model.Convenio;
 
-public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
+public class ConveniosArrayAdapter extends ArrayAdapter<Convenio> {
 
-    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects) {
+    public ConveniosArrayAdapter(@NonNull Context context, @NonNull List<Convenio> objects) {
         super(context, 0, objects);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Gasolinera gasolinera = getItem(position);
+        Convenio convenio = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
-                    .inflate(R.layout.activity_main_item, parent, false);
+                    .inflate(R.layout.activity_convenios_item, parent, false);
         }
 
         // logo
-        setLogo(convertView, gasolinera);
+        setLogo(convertView, convenio);
 
-        // name
-        showInfo(convertView, R.id.tvName, gasolinera.getRotulo());
+        // marca
+        showInfo(convertView, R.id.tvMarcaConvenio, convenio.getMarca());
 
-        // address
-        showInfo(convertView, R.id.tvAddress, gasolinera.getDireccion());
-
-        // 95 octanes price
-        String label95 = getContext().getResources().getString(R.string.gasolina95label);
-        showInfo(convertView, R.id.tv95Label, label95 + ":");
-        showInfo(convertView, R.id.tv95, gasolinera.getNormal95());
-
-        // diesel A price
-        String labelDieselALabel = getContext().getResources().getString(R.string.dieselAlabel);
-        showInfo(convertView, R.id.tvDieselALabel, labelDieselALabel + ":");
-        showInfo(convertView, R.id.tvDieselA, gasolinera.getDieselA());
+        // descuento
+        showInfo(convertView, R.id.tvDescuentoConvenio, String.valueOf(convenio.getDescuento()));
 
         return convertView;
     }
@@ -60,8 +50,8 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
         tv.setText(info);
     }
 
-    private void setLogo(View convertView, Gasolinera gasolinera) {
-        String rotulo = gasolinera.getRotulo().toLowerCase();
+    private void setLogo(View convertView, Convenio convenio) {
+        String rotulo = convenio.getRotulo().toLowerCase();
         int imageID = getContext().getResources()
                 .getIdentifier(rotulo, "drawable", getContext().getPackageName());
 
@@ -74,7 +64,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
         }
 
         if (imageID != 0) {
-            ImageView view = convertView.findViewById(R.id.ivLogo);
+            ImageView view = convertView.findViewById(R.id.ivLogoConvenio);
             view.setImageResource(imageID);
         }
     }

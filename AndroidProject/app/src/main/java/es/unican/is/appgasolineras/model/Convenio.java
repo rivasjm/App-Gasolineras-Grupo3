@@ -3,6 +3,8 @@ package es.unican.is.appgasolineras.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Clase que representa la tabla "convenios" de la base de datos. Cada convenio tiene los siguientes campos:
  * La tabla almacena en cada fila un determinado repostaje, con los siguientes datos:
@@ -17,6 +19,7 @@ public class Convenio {
 
     private String marca;
     private int descuento;
+    @SerializedName("Rótulo")                       private String rotulo;
 
     public Convenio() {
         id = 0;
@@ -25,6 +28,14 @@ public class Convenio {
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
+
+    public String getRotulo() {
+        return rotulo;
+    }
+
+    public void setRotulo(String rotulo) {
+        this.rotulo = rotulo;
+    }
 
     public String getMarca() {
         return marca;

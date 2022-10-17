@@ -24,7 +24,7 @@ public interface RepostajeDao {
     void insertRepostaje(Repostaje r);
 
     @Update
-    void udpdateRepostaje(Repostaje r);
+    void updateRepostaje(Repostaje r);
 
     @Delete
     void deleteRepostaje(Repostaje r);

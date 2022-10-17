@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menuInfo"
-        android:title="@string/info" />
-    <item
-        android:id="@+id/menuRefresh"
-        android:title="@string/refresh" />
     <item
         android:id="@+id/menuConvenios"
         android:title="Convenios" />
@@ -15,8 +9,9 @@
         android:id="@+id/menuHistorialRepostajes"
         android:title="Historial Repostajes" />
     <item
-        android:id="@+id/menuHome"
-        android:title="Home"
-        app:actionLayout="@layout/activity_custom_menu_home"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/menuInfo"
+        android:title="@string/info" />
+    <item
+        android:id="@+id/menuRefresh"
+        android:title="@string/refresh" />
 </menu>

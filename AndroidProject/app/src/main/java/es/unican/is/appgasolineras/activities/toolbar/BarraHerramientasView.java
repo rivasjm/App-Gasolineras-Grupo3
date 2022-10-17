@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.lang.reflect.Field;
+
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.convenios.ConveniosView;
 import es.unican.is.appgasolineras.activities.historialRepostajes.HistorialRepostajesView;
@@ -35,6 +37,32 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         if (activity.getSupportActionBar() != null) {
             activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        activity.getSupportActionBar().setLogo(R.drawable.logo_repost_app_50);
+        setLogoOnClickListener(toolbar, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.onLogoClicked();
+            }
+        });
+        activity.getSupportActionBar().setDisplayUseLogoEnabled(true);
+    }
+
+    private void setLogoOnClickListener(Toolbar toolbar, View.OnClickListener listener) {
+        try {
+            Class<?> toolbarClass = Toolbar.class;
+            Field logoField = toolbarClass.getDeclaredField("mLogoView");
+            logoField.setAccessible(true);
+            ImageView logoView = (ImageView) logoField.get(toolbar);
+
+            if(logoView != null) {
+                logoView.setOnClickListener(listener);
+            }
+        }
+        catch (NoSuchFieldException |
+                IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public AppCompatActivity getActivity() {
@@ -50,13 +78,6 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = activity.getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-        final MenuItem item = menu.findItem(R.id.menuHome);
-        item.getActionView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.onLogoClicked();
-            }
-        });
         return true;
     }
 

@@ -20,7 +20,6 @@ import es.unican.is.appgasolineras.model.Repostaje;
  * @author Ivan Ortiz del Noval
  */
 public class HistorialRepostajesPresenterTest {
-
     private HistorialRepostajesPresenter sut;
 
     private List<Repostaje> repostajes;

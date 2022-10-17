@@ -21,6 +21,7 @@ import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class ConveniosView extends AppCompatActivity implements  IConveniosContract.View {
 
@@ -36,7 +37,7 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         barraHerramientasView = new BarraHerramientasView(findViewById(R.id.toolbar), this);
 
         presenter = new ConveniosPresenter(this);
-        // TODO: presenter.init();
+        presenter.init();
     }
 
     @Override
@@ -49,11 +50,10 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         return barraHerramientasView.onOptionsItemSelected(item);
     }
 
-    // TODO:
-//    @Override
-//    public IConveniosRepository getConveniosRepository() {
-//        return new ConveniosRepository(this);
-//    }
+    @Override
+    public GasolineraDatabase getDatabase() {
+        return GasolineraDatabase.getDB(this);
+    }
 
     @Override
     public void showConvenios(List<Convenio> convenios) {

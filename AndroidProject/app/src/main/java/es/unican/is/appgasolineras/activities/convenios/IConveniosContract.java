@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 /**
  * The Convenios Activity is composed of a Presenter and View, which must expose the methods
@@ -15,10 +16,11 @@ public interface IConveniosContract {
      * These methods (excluding init), are meant to be used by the View.
      */
     public interface Presenter {
+
         /**
          * Initialization method
          */
-        // TODO: void init();
+        void init();
     }
 
     /**
@@ -27,16 +29,8 @@ public interface IConveniosContract {
      */
     public interface View {
 
-        /**
-         * Returns the Convenios Repository object.
-         * This object can be used to access convenios from
-         * different sources (REST API, persisted DB, etc.)
-         * This method is in the View because it generally requires access to the
-         * Android Context, and this is available in the View
-         *
-         * @return the Repository object to access convenios
-         */
-        // TODO: IConveniosRepository getConveniosRepository();
+
+        GasolineraDatabase getDatabase();
 
         /**
          * The View is requested to show a list of convenios

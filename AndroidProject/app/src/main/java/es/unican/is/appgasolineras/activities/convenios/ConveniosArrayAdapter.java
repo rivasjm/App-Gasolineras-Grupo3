@@ -33,9 +33,6 @@ public class ConveniosArrayAdapter extends ArrayAdapter<Convenio> {
                     .inflate(R.layout.activity_convenios_item, parent, false);
         }
 
-        // logo
-        setLogo(convertView, convenio);
-
         // marca
         showInfo(convertView, R.id.tvMarcaConvenio, convenio.getMarca());
 
@@ -48,24 +45,5 @@ public class ConveniosArrayAdapter extends ArrayAdapter<Convenio> {
     private void showInfo(View convertView, int p, String info) {
         TextView tv = convertView.findViewById(p);
         tv.setText(info);
-    }
-
-    private void setLogo(View convertView, Convenio convenio) {
-        String rotulo = convenio.getRotulo().toLowerCase();
-        int imageID = getContext().getResources()
-                .getIdentifier(rotulo, "drawable", getContext().getPackageName());
-
-        // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
-        // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
-        // que coincida con esos números
-        if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
-            imageID = getContext().getResources()
-                    .getIdentifier("generic", "drawable", getContext().getPackageName());
-        }
-
-        if (imageID != 0) {
-            ImageView view = convertView.findViewById(R.id.ivLogoConvenio);
-            view.setImageResource(imageID);
-        }
     }
 }

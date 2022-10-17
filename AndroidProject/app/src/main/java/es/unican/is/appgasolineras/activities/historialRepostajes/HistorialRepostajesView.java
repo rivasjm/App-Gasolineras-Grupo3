@@ -8,23 +8,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
-import es.unican.is.appgasolineras.activities.main.IMainContract;
-import es.unican.is.appgasolineras.activities.main.MainPresenter;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.model.Repostaje;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class HistorialRepostajesView extends AppCompatActivity implements IHistorialRepostajesContract.View {
 
-
     private BarraHerramientasView barraHerramientasView;
     private IHistorialRepostajesContract.Presenter presenter;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial_repostajes_view);
@@ -39,6 +35,8 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
         presenter = new HistorialRepostajesPresenter(this);
         presenter.init();
 
+        TextView tv = findViewById(R.id.tvHistorialRepostajeMessage);
+        tv.setText("HISTORIAL REPOSTAJES");
     }
 
     @Override
@@ -50,7 +48,6 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return barraHerramientasView.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void openMainView() {
@@ -79,8 +76,6 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
 
     @Override
     public void showHistorialVacio() {
-        //Hacer una ventana emergente que ponmga que no hay historial.
+        //Hacer una ventana emergente que ponga que no hay historial.
     }
-
-
 }

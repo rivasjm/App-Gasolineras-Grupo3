@@ -1,9 +1,12 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.BeforeClass;
+import android.database.sqlite.SQLiteException;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -13,15 +16,18 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.ConvenioDao;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class ConveniosPresenterTest {
+    //Tests unitarios para el presentador de los Convenios
     private ConveniosPresenter sut;
     @Mock
     private IConveniosContract.View mockView;
     @Mock
     private ConvenioDao mockDao;
+    @Mock
+    private GasolineraDatabase mockDb;
     private List<Convenio> convenios;
-    // TODO: definir la DAO, el presenter debería tener una ConveniosDao en el constructor
 
     private void llenarDatos(){
         Convenio c1 = new Convenio();
@@ -33,23 +39,60 @@ public class ConveniosPresenterTest {
         convenios.add(c1);
         convenios.add(c2);
     }
-    @Test
-    public void testValidInit(){
+    @Before
+    public void setUp()  {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testInitCorrecto(){
         sut = new ConveniosPresenter(mockView);
         convenios = new ArrayList<Convenio>();
         llenarDatos();
+
+        when(mockView.getDatabase()).thenReturn(mockDb);
+        when(mockDb.convenioDao()).thenReturn(mockDao);
         when(mockDao.getAll()).thenReturn(convenios);
+
         sut.init();
-        verify(mockView).showLoadCorrect(convenios.size());
+        assert(sut.shownConvenios.equals(convenios));
+        verify(mockView).showConvenios(convenios);
+        verify(mockView).getDatabase();
+        verify(mockDb).convenioDao();
     }
+
     @Test
-    public void testInvalidInitEmpty(){
-        MockitoAnnotations.openMocks(this);
+    public void testInitErrorCarga(){
+        sut = new ConveniosPresenter(mockView);
+
+        when(mockView.getDatabase()).thenReturn(mockDb);
+        when(mockDb.convenioDao()).thenReturn(mockDao);
+        when(mockDao.getAll()).thenThrow(new SQLiteException());
+
+        try{
+            sut.init();
+        }
+        catch (SQLiteException exception){}
+        assert(sut.shownConvenios==null);
+        verify(mockView).showLoadError();
+        verify(mockView).getDatabase();
+        verify(mockDb).convenioDao();
+    }
+
+    @Test
+    public void testInitVacio(){
         sut = new ConveniosPresenter(mockView);
         convenios = new ArrayList<Convenio>();
-        when(mockDao.getAll()).thenReturn(null);
+
+        when(mockView.getDatabase()).thenReturn(mockDb);
+        when(mockDb.convenioDao()).thenReturn(mockDao);
+        when(mockDao.getAll()).thenReturn(convenios);
+
         sut.init();
-        verify(mockView).showLoadError();
+        verify(mockView).showListaConveniosVacia();
+        verify(mockView).getDatabase();
+        verify(mockDb).convenioDao();
+        verify(mockDao).getAll();
     }
+
 }

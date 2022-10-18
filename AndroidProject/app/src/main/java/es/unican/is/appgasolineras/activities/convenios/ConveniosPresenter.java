@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import android.database.sqlite.SQLiteException;
+
 import java.util.List;
 
 import es.unican.is.appgasolineras.model.Convenio;
@@ -19,18 +21,26 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
     public void init() {
         final GasolineraDatabase db = view.getDatabase();
         final ConvenioDao conveniosDao = db.convenioDao();
-
+        // Ejecutar solo primera vez que se lanza la app
         //insertaDatosTemp(conveniosDao);
 
-        List<Convenio> data = conveniosDao.getAll();
+        List<Convenio> data = null;
 
-        if (data != null) {
+        // Fallo en el acceso a datos
+        try {
+            data = conveniosDao.getAll();
+        } catch (SQLiteException e) {
+            view.showLoadError();
+        }
+
+        if (data.size() != 0) {
+            // Caso exito
             view.showConvenios(data);
             shownConvenios = data;
-            view.showLoadCorrect(data.size());
         } else {
+            // No existen convenios para mostrar
+            view.showListaConveniosVacia();
             shownConvenios = null;
-            view.showLoadError();
         }
     }
 

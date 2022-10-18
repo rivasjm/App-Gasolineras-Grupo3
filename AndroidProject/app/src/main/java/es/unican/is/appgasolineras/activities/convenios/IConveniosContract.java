@@ -40,16 +40,11 @@ public interface IConveniosContract {
         void showConvenios(List<Convenio> convenios);
 
         /**
-         * The View is requested to show an alert informing that the convenios were loaded
-         * correctly
-         * @param conveniosCount the number of convenios that were loaded
-         */
-        void showLoadCorrect(int conveniosCount);
-
-        /**
          * The View is requested to show an alert informing that there was an error while
          * loading the convenio
          */
         void showLoadError();
+
+        void showListaConveniosVacia();
     }
 }

@@ -35,6 +35,9 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         final GasolineraDatabase db = view.getGasolineraDb();
         final RepostajeDao repDao = db.repostajeDao();
 
+        // Ejecutar la primera vez que se ejecuta la app
+        //insertaDatosTemp(repDao);
+
         try {
             shownRepostajes = repDao.getAll();
         } catch (SQLiteException e)
@@ -47,7 +50,21 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         }else {
             view.showHistorialRepostajes(shownRepostajes);
         }
+    }
 
+    private void insertaDatosTemp(RepostajeDao repostajeDao) {
+        Repostaje r1 = new Repostaje();
+        r1.setFechaRepostaje("18/10/2022");
+        r1.setPrecio("25.0");
+        r1.setLocalizacion("CARRETERA CASTILLO SIETEVILLAS KM, S/N");
+        r1.setLitros("13");
+        Repostaje r2 = new Repostaje();
+        r2.setFechaRepostaje("10/10/2022");
+        r2.setPrecio("55.83");
+        r2.setLocalizacion("CARRETERA ARGOÑOS SOMO KM. 28,7");
+        r2.setLitros("26");
+        repostajeDao.insertRepostaje(r1);
+        repostajeDao.insertRepostaje(r2);
     }
 
     @Override

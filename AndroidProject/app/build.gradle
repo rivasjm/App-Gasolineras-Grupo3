@@ -94,6 +94,9 @@ dependencies {
     // para Roboelectric
     testImplementation 'org.robolectric:robolectric:4.6'
     testImplementation 'androidx.test:core:1.0.0'
+    // para prueba Android
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.1"
+
 
     // GSON for json serialization/deserialization
     implementation 'com.google.code.gson:gson:2.9.0'

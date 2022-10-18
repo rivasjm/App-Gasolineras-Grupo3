@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,7 +36,7 @@ public class HistorialRepostajesPresenterTest {
     private GasolineraDatabase dbMock;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // inicializar mocks siempre
         MockitoAnnotations.openMocks(this);
         // no defino aqui comportamiento porque varia en cada caso
@@ -123,29 +122,11 @@ public class HistorialRepostajesPresenterTest {
         when(dbMock.repostajeDao()).thenReturn(daoMock);
         when(daoMock.getAll()).thenThrow(new SQLiteException());
         // ver que funciona correctamente
-        try {
-            sut.init();
-            fail();
-        } catch (SQLiteException e) {
-        }
+        sut.init(); // esto deberia haber recogido SQLiteException y llamado a showLoadError
         assert (sut.shownRepostajes == null);
         verify (viewMock).getGasolineraDb();
         verify (viewMock).showLoadError();
     }
-
-    /* Se ha quitado el metodo de la interfaz porque lo hace la toolbar
-    @Test
-    public void onHomeClickedTest() {
-        sut = new HistorialRepostajesPresenter(viewMock);
-        // definir mocks para que el init salga bien
-        when(viewMock.getGasolineraDb()).thenReturn(dbMock);
-        when(dbMock.repostajeDao()).thenReturn(daoMock);
-        when(daoMock.getAll()).thenReturn(null);
-        sut.init();
-        // ver que si se llama al metodo se llama a la vista para volver
-        sut.onHomeClicked();
-        verify(viewMock).openMainView();
-    } */
 
     @Test
     public void onAceptarClickedTest() {
@@ -168,8 +149,9 @@ public class HistorialRepostajesPresenterTest {
         when(dbMock.repostajeDao()).thenReturn(daoMock);
         when(daoMock.getAll()).thenReturn(null);
         sut.init();
-        // ver que si se llama al metodo se llama otra vez a init
+        // ver que si se llama al metodo se llama otra vez a init (no puedes hacer verify sin mock)
         sut.onReintentarClicked();
-        verify(sut, times(2)).init();
+        verify(viewMock, times(2)).getGasolineraDb();
+        verify(dbMock, times(2)).repostajeDao();
     }
 }

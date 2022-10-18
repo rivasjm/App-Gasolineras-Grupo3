@@ -8,8 +8,10 @@ import android.database.sqlite.SQLiteException;
 
 import androidx.room.Room;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.common.Callback;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.model.Repostaje;
@@ -35,8 +37,9 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         final GasolineraDatabase db = view.getGasolineraDb();
         final RepostajeDao repDao = db.repostajeDao();
 
-        // Ejecutar la primera vez que se ejecuta la app
-        //insertaDatosTemp(repDao);
+        // Ejecutar la primera vez que se ejecuta la app para tener algun dato
+        // repDao.deleteAll();
+        // insertaDatosTemp(repDao);
 
         try {
             shownRepostajes = repDao.getAll();
@@ -52,7 +55,7 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         }
     }
 
-    private void insertaDatosTemp(RepostajeDao repostajeDao) {
+    public void insertaDatosTemp(RepostajeDao repostajeDao) {
         Repostaje r1 = new Repostaje();
         r1.setFechaRepostaje("18/10/2022");
         r1.setPrecio("25.0");
@@ -65,6 +68,22 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         r2.setLitros("26");
         repostajeDao.insertRepostaje(r1);
         repostajeDao.insertRepostaje(r2);
+    }
+
+    public void insertaDatosErroneosTemp(RepostajeDao repostajeDao) {
+        for (int i = 0; i < 10; i++) {
+            Repostaje r = new Repostaje();
+            r.setId(i+100);
+            r.setFechaRepostaje(String.format("%d/%d/2023", i, 3+i)); // algunas fechas mal
+            if (i != 4) { // poner un litro nulo
+                r.setLitros(Double.toString(-23 + i*8)); // algun litro negativo
+            }
+            r.setPrecio(Double.toString(2 * (-3 + i))); // algun precio negativo y poco realista
+            if (i > 2) {
+                r.setLocalizacion(String.format("Direccion %d", i)); // alguna direccion vacia
+            }
+            repostajeDao.insertRepostaje(r); // meter repostaje incorrecto en la DAO
+        }
     }
 
     @Override

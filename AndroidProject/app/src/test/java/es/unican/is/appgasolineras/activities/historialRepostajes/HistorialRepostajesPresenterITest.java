@@ -1,6 +1,14 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import android.database.sqlite.SQLiteException;
 import android.os.Build;
+
+import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import es.unican.is.appgasolineras.model.Repostaje;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.db.RepostajeDao;
 
 /**
@@ -25,48 +34,45 @@ import es.unican.is.appgasolineras.repository.db.RepostajeDao;
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {Build.VERSION_CODES.O_MR1})
 public class HistorialRepostajesPresenterITest {
-
     private HistorialRepostajesPresenter sut;
 
-    /*
-        Hay que usar Roboelectric para tener, con el mock de la vista, un contexto que pasarle
-        con la dao real o ya implementada, porque aqui no se puede
-     */
+    private List<Repostaje> repostajes;
 
-    @Mock
+    @Mock // sigue siendo un mock
     private IHistorialRepostajesContract.View viewMock;
 
-    private RepostajeDao dao; // ahora a la vista(mock) se le pasa la DAO de verdad
+    private RepostajeDao dao;
 
     @Before
     public void setUp() throws Exception {
         // inicializar mocks siempre
         MockitoAnnotations.openMocks(this);
-        // no defino aqui comportamiento de la vista
+        // no defino aqui comportamiento porque varia en cada caso
     }
 
     @Test
     public void initCorrectoTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
 
+        // datos reales en la DAO, asi que no hay mocks para ella
         // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenCall();
+        // obtiene el contexto del mock de la vista
+        when(viewMock.getGasolineraDb()).thenReturn(
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
 
         // ver que funciona
         sut.init();
-        assert (sut.shownRepostajes.equals(repostajes));
-        verify (viewMock).getHistorialRepostajesRepository();
+        assert (sut.shownRepostajes.equals(repostajes)); // TODO comprobacion distinta
+        verify (viewMock).getGasolineraDb();
         verify (viewMock).showHistorialRepostajes(repostajes);
     }
 
     @Test
-    public void initCorrectoAnomaloTest() {
+    public void initCorrectoAnomaloTest() { // TODO como hago que tenga datos incorrectos
         sut = new HistorialRepostajesPresenter(viewMock);
-        // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
 
         // lista de repostajes con datos anomalos, con 10 repostajes
-        List<Repostaje> repostajes = new LinkedList<>();
+        repostajes = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             Repostaje r = new Repostaje();
             r.setId(i+100);
@@ -78,55 +84,64 @@ public class HistorialRepostajesPresenterITest {
             }
             repostajes.add(r);
         }
+        // datos reales en la DAO, asi que no hay mocks para ella
+        // definir comportamiento mock
+        // obtiene el contexto del mock de la vista
+        when(viewMock.getGasolineraDb()).thenReturn(
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
 
-        // ver que funciona correctamente
+        // ver que funciona
         sut.init();
         assert (sut.shownRepostajes.equals(repostajes));
-        verify (viewMock).getHistorialRepostajesRepository();
+        verify (viewMock).getGasolineraDb();
         verify (viewMock).showHistorialRepostajes(repostajes);
     }
 
     @Test
-    public void initListaVaciaTest() {
+    public void initListaVaciaTest() { // TODO como hago que este vacia
         sut = new HistorialRepostajesPresenter(viewMock);
+        // datos reales en la DAO, asi que no hay mocks para ella
         // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
+        // obtiene el contexto del mock de la vista
+        when(viewMock.getGasolineraDb()).thenReturn(
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
 
-        // lista de repostajes vacia
-        List<Repostaje> repostajes = new LinkedList<>();
-
-        // ver que funciona correctamente
+        // ver que funciona
         sut.init();
-        assert (sut.shownRepostajes.equals(repostajes));
-        verify (viewMock).getHistorialRepostajesRepository();
-        // TODO el metodo del show vacio
+
+        verify (viewMock).getGasolineraDb();
+        // el metodo del show vacio
+        verify (viewMock).showHistorialVacio();
     }
 
     @Test
-    public void initErrorCargaTest() {
+    public void initErrorCargaTest() { // TODO como hago que de un error la DAO de verdad, simulo desde view???
         sut = new HistorialRepostajesPresenter(viewMock);
-        // definir comportamiento mock, si hay error devuelve null
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(null);
+        // datos reales en la DAO, asi que no hay mocks para ella
+        // definir comportamiento mock
+        // obtiene el contexto del mock de la vista
+        when(viewMock.getGasolineraDb()).thenReturn(
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
 
         // ver que funciona correctamente
-        sut.init();
+        try {
+            sut.init();
+            fail();
+        } catch (SQLiteException e) {
+        }
         assert (sut.shownRepostajes == null);
-        verify (viewMock).getHistorialRepostajesRepository();
+        verify (viewMock).getGasolineraDb();
         verify (viewMock).showLoadError();
-    }
-
-    @Test
-    public void onHomeClickedTest() {
-        sut = new HistorialRepostajesPresenter(viewMock);
-        sut.init();
-        // ver que si se llama al metodo se llama a la vista para volver
-        sut.onHomeClicked();
-        verify(viewMock).openMainView();
     }
 
     @Test
     public void onAceptarClickedTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
+        // datos reales en la DAO, asi que no hay mocks para ella
+        // definir comportamiento mock
+        // obtiene el contexto del mock de la vista
+        when(viewMock.getGasolineraDb()).thenReturn(
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
         sut.init();
         // ver que si se llama al metodo se llama a la vista para volver
         sut.onAceptarClicked();
@@ -136,6 +151,11 @@ public class HistorialRepostajesPresenterITest {
     @Test
     public void onReintentarClickedTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
+        // datos reales en la DAO, asi que no hay mocks para ella
+        // definir comportamiento mock
+        // obtiene el contexto del mock de la vista
+        when(viewMock.getGasolineraDb()).thenReturn(
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
         sut.init();
         // ver que si se llama al metodo se llama otra vez a init
         sut.onReintentarClicked();

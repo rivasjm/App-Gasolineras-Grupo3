@@ -21,7 +21,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
     public void init() {
         final GasolineraDatabase db = view.getDatabase();
         final ConvenioDao conveniosDao = db.convenioDao();
-        // Ejecutar solo primera vez que se lanza la app
+        // Ejecutar solo la primera vez que se ejecuta la app
         //insertaDatosTemp(conveniosDao);
 
         List<Convenio> data = null;
@@ -44,6 +44,11 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         }
     }
 
+    /**
+     * Inserta dos convenios en la DAO para poder probar la historia de usuario "Ver
+     * convenios de precios".
+     * @param conveniosDao la DAO de convenios.
+     */
     private void insertaDatosTemp(ConvenioDao conveniosDao) {
         Convenio c1 = new Convenio();
         c1.setMarca("Campsa");

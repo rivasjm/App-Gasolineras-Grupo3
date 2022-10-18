@@ -38,6 +38,9 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         presenter.init();
     }
 
+    /*
+    Metodos referentes a la toolbar
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return barraHerramientasView.onCreateOptionsMenu(menu);
@@ -48,6 +51,9 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         return barraHerramientasView.onOptionsItemSelected(item);
     }
 
+    /*
+    Metodos referentes a IConveniosContract.View
+     */
     @Override
     public GasolineraDatabase getDatabase() {
         return GasolineraDatabase.getDB(this);
@@ -86,11 +92,21 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         tv.setText(getResources().getString(R.string.conveniosListaVacia));
     }
 
+    /*
+    Metodos privados
+     */
+
+    /**
+     * Abre la vista principal.
+     */
     private void openMainView() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
     }
 
+    /**
+     * Refresca la vista.
+     */
     private void refresh() {
         this.recreate();
     }

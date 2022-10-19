@@ -1,10 +1,13 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.test.core.app.ApplicationProvider;
 
@@ -48,8 +51,35 @@ public class ConveniosPresenterITest {
         c2.setId(2);
         c2.setMarca("Galp");
         c2.setDescuento(5);
+        Convenio c3 = new Convenio();
+        c3.setId(3);
+        c3.setMarca("Repsol");
+        c3.setDescuento(-10);
+        Convenio c4 = new Convenio();
+        c4.setId(4);
+        c4.setMarca("");
         convenios_.add(c1);
         convenios_.add(c2);
+        convenios_.add(c3);
+        convenios_.add(c4);
+    }
+    public boolean verifyEquals(List<Convenio> sut, List<Convenio> test){
+        boolean ans = false;
+        if(sut.size()==test.size()){
+            int items = sut.size();
+            int count=0;
+            for(int i=0;i<items;i++){
+                Convenio sutC = sut.get(i);
+                Convenio testC = test.get(i);
+                if( (sutC.getId()==testC.getId()) && (sutC.getMarca().equals(testC.getMarca())) &&  (sutC.getDescuento()==testC.getDescuento())){
+                    count++;
+                }
+            }
+            if (count==items){
+                ans=true;
+            }
+        }
+        return  ans;
     }
     @Test
     public void testInitCorrecto(){
@@ -62,8 +92,7 @@ public class ConveniosPresenterITest {
         llenarDatos();
 
         sut.init();
-        //para implementar esto deberiamos poder hacer el equals por valor, elemento a elemento, sobre escribir
-        //assert(sut.shownConvenios.equals(convenios_));
+        assertTrue(verifyEquals(sut.shownConvenios,convenios_));
         verify(mockView).getDatabase();
         verify(mockView).showConvenios(sut.shownConvenios);
     }

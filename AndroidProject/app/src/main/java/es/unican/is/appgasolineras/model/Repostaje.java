@@ -66,4 +66,24 @@ public class Repostaje {
     public void setLitros(String litros) {
         this.litros = litros;
     }
+
+    /**
+     * Compara que dos repostajes son iguales.
+     * Precondicion: No tiene atributos nulos (salvo su ID)
+     * @param obj otro repostaje
+     * @return True si son iguales, false en caso contrario
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Repostaje o = (Repostaje) obj;
+        if (this.fechaRepostaje.equals(o.fechaRepostaje) && this.localizacion.equals(o.localizacion)
+                && this.precio.equals(o.precio) && this.litros.equals(o.litros)) {
+            return true;
+        }
+        return false;
+    }
+
 }

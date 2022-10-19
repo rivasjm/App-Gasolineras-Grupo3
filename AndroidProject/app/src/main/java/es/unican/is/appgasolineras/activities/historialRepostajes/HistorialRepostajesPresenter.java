@@ -53,7 +53,7 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         }
         
         //Si esta vacía mostramos se lo indicamos al usuario
-        if(shownRepostajes.size() == 0) {
+        if(shownRepostajes == null || shownRepostajes.size() == 0) {
             view.showHistorialVacio();
         }else {
             view.showHistorialRepostajes(shownRepostajes);
@@ -91,12 +91,16 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         for (int i = 0; i < 10; i++) {
             Repostaje r = new Repostaje();
             r.setFechaRepostaje(String.format("%d/%d/2023", i, 3+i)); // algunas fechas mal
-            if (i != 4) { // poner un litro nulo
+            if (i != 4) {
                 r.setLitros(Double.toString(-23 + i*8)); // algun litro negativo
+            } else { // poner un litro nulo
+                r.setLitros("");
             }
             r.setPrecio(Double.toString(2 * (-3 + i))); // algun precio negativo y poco realista
             if (i > 2) {
                 r.setLocalizacion(String.format("Direccion %d", i)); // alguna direccion vacia
+            } else {
+                r.setLocalizacion(""); // poner alguna localizacion nula
             }
             repostajeDao.insertRepostaje(r); // meter repostaje incorrecto en la DAO
         }

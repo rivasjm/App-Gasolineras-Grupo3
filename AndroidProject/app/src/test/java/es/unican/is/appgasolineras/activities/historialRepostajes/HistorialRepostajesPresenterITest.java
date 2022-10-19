@@ -1,11 +1,9 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.database.sqlite.SQLiteException;
 import android.os.Build;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -28,6 +26,8 @@ import es.unican.is.appgasolineras.repository.db.RepostajeDao;
 /**
  * Test de integracion del presentador del historial de repostajes
  * junto con su DAO y la base de datos.
+ *
+ * DEBEN EJECUTARSE DE UNA EN UNA.
  *
  * @author Ivan Ortiz del Noval
  */
@@ -63,10 +63,10 @@ public class HistorialRepostajesPresenterITest {
 
         // crear el contexto adecuado para hacer el test (meter datos correctos)
         dao = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()).repostajeDao();
-        dao.deleteAll();
         sut.insertaDatosTemp(dao);
 
         // repostajes que deberia haber
+        repostajes = new LinkedList<>();
         Repostaje r1 = new Repostaje();
         Repostaje r2 = new Repostaje();
         r1.setFechaRepostaje("18/10/2022");
@@ -82,6 +82,7 @@ public class HistorialRepostajesPresenterITest {
 
         // ver que funciona
         sut.init();
+
         assert (sut.shownRepostajes.equals(repostajes));
         verify (viewMock).getGasolineraDb();
         verify (viewMock).showHistorialRepostajes(repostajes);
@@ -101,14 +102,18 @@ public class HistorialRepostajesPresenterITest {
         repostajes = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             Repostaje r = new Repostaje();
-            r.setId(i); // TODO puede fallar el ID al generarse automaticamente
+            r.setId(0); // poner todos con ID 0 para comparar con los de la BD
             r.setFechaRepostaje(String.format("%d/%d/2023", i, 3+i)); // algunas fechas mal
-            if (i != 4) { // poner un litro nulo
+            if (i != 4) {
                 r.setLitros(Double.toString(-23 + i*8)); // algun litro negativo
+            } else { // poner un litro nulo
+                r.setLitros("");
             }
             r.setPrecio(Double.toString(2 * (-3 + i))); // algun precio negativo y poco realista
             if (i > 2) {
                 r.setLocalizacion(String.format("Direccion %d", i)); // alguna direccion vacia
+            } else {
+                r.setLocalizacion(""); // poner alguna localizacion nula
             }
             repostajes.add(r);
         }
@@ -119,7 +124,12 @@ public class HistorialRepostajesPresenterITest {
         // ver que funciona
         sut.init();
 
-        assert (sut.shownRepostajes.equals(repostajes));
+        // poner ID 0 a todos los repostajes del sut, para que se puedan comparar
+        List<Repostaje> sutRepostajes = sut.shownRepostajes;
+        for (Repostaje r: sutRepostajes) {
+            r.setId(0);
+        }
+        assert (sutRepostajes.equals(repostajes));
         verify (viewMock).showHistorialRepostajes(repostajes);
     }
 
@@ -137,11 +147,14 @@ public class HistorialRepostajesPresenterITest {
         sut.init();
 
         assert (sut.shownRepostajes.size() == 0); // comprobar que se tiene una lista vacia
-        verify (viewMock, times(2)).getGasolineraDb();
+        verify (viewMock).getGasolineraDb();
         // el metodo del show vacio
         verify (viewMock).showHistorialVacio();
     }
 
+    /*
+        // Este test esta comentado, porque no puedo crear un estado en que falle la DAO al estar
+        // hecha automaticamente por Room (sin usar otro mock de la DAO, pero seria como la unitaria)
     @Test
     public void initErrorCargaTest() {
 
@@ -161,7 +174,7 @@ public class HistorialRepostajesPresenterITest {
 
         assert (sut.shownRepostajes == null);
         verify (viewMock).showLoadError();
-    }
+    } */
 
     @Test
     public void onAceptarClickedTest() {

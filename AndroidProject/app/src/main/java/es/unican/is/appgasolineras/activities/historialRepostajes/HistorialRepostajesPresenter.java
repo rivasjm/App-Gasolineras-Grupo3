@@ -40,7 +40,7 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
 
         // Ejecutar la primera vez que se ejecuta la app para tener algun dato
         // repDao.deleteAll();
-        // insertaDatosTemp(repDao);
+        //insertaDatosTemp(repDao);
 
 
         //Estructurapara sacarelhistorial de repostajes de nuestra base de datos
@@ -81,6 +81,11 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         repostajeDao.insertRepostaje(r2);
     }
 
+    /**
+     * Inserta  repostajes con datos supuestamente erroeneos en la DAO para poder probar la historia de usuario "Ver
+     * convenios de precios".
+     * @param repostajeDao la DAO de repostajes.
+     */
     public void insertaDatosErroneosTemp(RepostajeDao repostajeDao) {
         for (int i = 0; i < 10; i++) {
             Repostaje r = new Repostaje();
@@ -104,7 +109,7 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
 
     @Override
     public void onReintentarClicked() {
-        init();
+        view.refresh();
     }
 
 

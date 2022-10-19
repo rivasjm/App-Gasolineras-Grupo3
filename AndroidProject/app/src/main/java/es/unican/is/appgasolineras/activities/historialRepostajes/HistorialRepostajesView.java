@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
 import es.unican.is.appgasolineras.activities.main.IMainContract;
 import es.unican.is.appgasolineras.activities.main.MainPresenter;
+import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.model.Repostaje;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
@@ -53,16 +56,17 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
         return barraHerramientasView.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void refresh() {
+        recreate();
+    }
 
     @Override
     public void openMainView() {
+        Intent intent = new Intent(this, MainView.class);
+        startActivity(intent);
     }
 
-
-    /**
-     * The View is requested to show an alert informing that there was an error while
-     * loading the gas stations
-     */
 
     @Override
     public void showLoadError() {

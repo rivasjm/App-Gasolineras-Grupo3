@@ -187,8 +187,8 @@ public class HistorialRepostajesPresenterITest {
                 GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
         sut.init();
 
-        // ver que si se llama al metodo se llama otra vez a init
+        // ver que si se llama al metodo se llama otra vez a refresh en la vista
         sut.onReintentarClicked();
-        verify(sut, times(2)).init();
+        verify(viewMock).refresh();
     }
 }

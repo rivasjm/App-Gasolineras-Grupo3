@@ -25,6 +25,20 @@ public interface IConveniosContract {
          * texto indicandolo.
          */
         void init();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Aceptar de la ventana emergente que notfica el error de acceso a datos ha
+         * sido pulsado.
+         */
+        void onErrorAceptarClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Reintentar de la ventana emergente que notfica el error de acceso a datos ha
+         * sido pulsado.
+         */
+        void onErrorReintentarClicked();
     }
 
     /**
@@ -57,5 +71,15 @@ public interface IConveniosContract {
          * esta vacia.
          */
         void showListaConveniosVacia();
+
+        /**
+         * Se solicita a la View que abra la vista principal.
+         */
+        void openMainView();
+
+        /**
+         * Se solicita a la View que vuelva a crear la vista.
+         */
+        void refresh();
     }
 }

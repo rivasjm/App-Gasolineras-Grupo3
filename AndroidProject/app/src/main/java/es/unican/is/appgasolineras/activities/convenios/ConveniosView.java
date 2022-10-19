@@ -73,13 +73,13 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                openMainView();
+                presenter.onErrorAceptarClicked();
             }
         });
         builder.setNegativeButton(R.string.reintentar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                refresh();
+                presenter.onErrorReintentarClicked();
             }
         });
         AlertDialog dialog = builder.create();
@@ -92,22 +92,14 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         tv.setText(getResources().getString(R.string.conveniosListaVacia));
     }
 
-    /*
-    Metodos privados
-     */
-
-    /**
-     * Abre la vista principal.
-     */
-    private void openMainView() {
+    @Override
+    public void openMainView() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
     }
 
-    /**
-     * Refresca la vista.
-     */
-    private void refresh() {
-        this.recreate();
+    @Override
+    public void refresh() {
+        recreate();
     }
 }

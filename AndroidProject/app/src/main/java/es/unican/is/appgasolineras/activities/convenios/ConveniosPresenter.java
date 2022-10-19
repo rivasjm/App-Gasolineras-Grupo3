@@ -44,6 +44,16 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         }
     }
 
+    @Override
+    public void onErrorAceptarClicked() {
+        view.openMainView();
+    }
+
+    @Override
+    public void onErrorReintentarClicked() {
+        view.refresh();
+    }
+
     /**
      * Inserta dos convenios en la DAO para poder probar la historia de usuario "Ver
      * convenios de precios".

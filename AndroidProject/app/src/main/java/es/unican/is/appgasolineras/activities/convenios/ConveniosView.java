@@ -92,22 +92,14 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         tv.setText(getResources().getString(R.string.conveniosListaVacia));
     }
 
-    /*
-    Metodos privados
-     */
-
-    /**
-     * Abre la vista principal.
-     */
-    private void openMainView() {
+    @Override
+    public void openMainView() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
     }
 
-    /**
-     * Refresca la vista.
-     */
-    private void refresh() {
+    @Override
+    public void refresh() {
         this.recreate();
     }
 }

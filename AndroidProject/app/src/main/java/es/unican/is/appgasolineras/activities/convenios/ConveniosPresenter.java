@@ -41,8 +41,16 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
             view.showListaConveniosVacia();
             shownConvenios = null;
         }
+    }
 
+    @Override
+    public void onErrorAceptarClicked() {
+        view.openMainView();
+    }
 
+    @Override
+    public void onErrorReintentarClicked() {
+        view.refresh();
     }
 
     /**
@@ -57,7 +65,14 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         Convenio c2 = new Convenio();
         c2.setMarca("Galp");
         c2.setDescuento(5);
+        Convenio c3 = new Convenio();
+        c3.setMarca("Repsol");
+        c3.setDescuento(-10);
+        Convenio c4 = new Convenio();
+        c4.setMarca("");
         conveniosDao.insertConvenio(c1);
         conveniosDao.insertConvenio(c2);
+        conveniosDao.insertConvenio(c3);
+        conveniosDao.insertConvenio(c4);
     }
 }

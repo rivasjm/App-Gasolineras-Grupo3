@@ -11,7 +11,7 @@ import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     private final IConveniosContract.View view;
-    private List<Convenio> shownConvenios;
+    public List<Convenio> shownConvenios;
 
     public ConveniosPresenter(IConveniosContract.View view) {
         this.view = view;
@@ -32,8 +32,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         } catch (SQLiteException e) {
             view.showLoadError();
         }
-
-        if (data.size() != 0) {
+        if (data!=null && data.size() != 0) {
             // Caso exito
             view.showConvenios(data);
             shownConvenios = data;
@@ -42,6 +41,8 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
             view.showListaConveniosVacia();
             shownConvenios = null;
         }
+
+
     }
 
     @Override

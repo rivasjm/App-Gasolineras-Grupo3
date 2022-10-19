@@ -149,9 +149,8 @@ public class HistorialRepostajesPresenterTest {
         when(dbMock.repostajeDao()).thenReturn(daoMock);
         when(daoMock.getAll()).thenReturn(null);
         sut.init();
-        // ver que si se llama al metodo se llama otra vez a init (no puedes hacer verify sin mock)
+        // ver que si se llama a view.refresh
         sut.onReintentarClicked();
-        verify(viewMock, times(2)).getGasolineraDb();
-        verify(dbMock, times(2)).repostajeDao();
+        verify(viewMock).refresh();
     }
 }

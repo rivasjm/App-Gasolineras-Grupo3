@@ -73,13 +73,13 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                openMainView();
+                presenter.onErrorAceptarClicked();
             }
         });
         builder.setNegativeButton(R.string.reintentar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                refresh();
+                presenter.onErrorReintentarClicked();
             }
         });
         AlertDialog dialog = builder.create();
@@ -100,6 +100,6 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
 
     @Override
     public void refresh() {
-        this.recreate();
+        recreate();
     }
 }

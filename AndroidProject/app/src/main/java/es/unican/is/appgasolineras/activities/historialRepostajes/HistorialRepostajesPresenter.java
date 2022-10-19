@@ -5,6 +5,7 @@ import static es.unican.is.appgasolineras.repository.db.GasolineraDatabase.getDB
 
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import androidx.room.Room;
 
@@ -39,8 +40,8 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         final RepostajeDao repDao = db.repostajeDao();
 
         // Ejecutar la primera vez que se ejecuta la app para tener algun dato
-        // repDao.deleteAll();
-        //insertaDatosTemp(repDao);
+        //repDao.deleteAll();
+        //insertaDatosErroneosTemp(repDao);
 
 
         //Estructurapara sacarelhistorial de repostajes de nuestra base de datos
@@ -50,9 +51,9 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         {
             view.showLoadError();
         }
-
+        
         //Si esta vacía mostramos se lo indicamos al usuario
-        if(shownRepostajes == null) {
+        if(shownRepostajes.size() == 0) {
             view.showHistorialVacio();
         }else {
             view.showHistorialRepostajes(shownRepostajes);
@@ -89,7 +90,6 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
     public void insertaDatosErroneosTemp(RepostajeDao repostajeDao) {
         for (int i = 0; i < 10; i++) {
             Repostaje r = new Repostaje();
-            r.setId(i+100);
             r.setFechaRepostaje(String.format("%d/%d/2023", i, 3+i)); // algunas fechas mal
             if (i != 4) { // poner un litro nulo
                 r.setLitros(Double.toString(-23 + i*8)); // algun litro negativo

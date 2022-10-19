@@ -101,7 +101,7 @@ public class HistorialRepostajesPresenterITest {
         repostajes = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             Repostaje r = new Repostaje();
-            r.setId(i+100);
+            r.setId(i); // TODO puede fallar el ID al generarse automaticamente
             r.setFechaRepostaje(String.format("%d/%d/2023", i, 3+i)); // algunas fechas mal
             if (i != 4) { // poner un litro nulo
                 r.setLitros(Double.toString(-23 + i*8)); // algun litro negativo
@@ -136,6 +136,7 @@ public class HistorialRepostajesPresenterITest {
         // ver que funciona
         sut.init();
 
+        assert (sut.shownRepostajes.size() == 0); // comprobar que se tiene una lista vacia
         verify (viewMock, times(2)).getGasolineraDb();
         // el metodo del show vacio
         verify (viewMock).showHistorialVacio();

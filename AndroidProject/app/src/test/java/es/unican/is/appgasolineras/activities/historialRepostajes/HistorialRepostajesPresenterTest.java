@@ -104,11 +104,12 @@ public class HistorialRepostajesPresenterTest {
         // definir comportamiento mock
         when(viewMock.getGasolineraDb()).thenReturn(dbMock);
         when(dbMock.repostajeDao()).thenReturn(daoMock);
-        when(daoMock.getAll()).thenReturn(null);
+        when(daoMock.getAll()).thenReturn(new LinkedList<Repostaje>()); // devuelve lista vacia
 
         // ver que funciona
         sut.init();
 
+        assert (sut.shownRepostajes.size() == 0);
         verify (viewMock).getGasolineraDb();
         // el metodo del show vacio
         verify (viewMock).showHistorialVacio();

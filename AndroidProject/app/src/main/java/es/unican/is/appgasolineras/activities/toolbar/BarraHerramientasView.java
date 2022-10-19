@@ -70,7 +70,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     }
 
     /**
-     * Create a menu in this activity (three dot menu on the top left)
+     * Create a menu in this activity (three dot menu on the top right)
      * @param menu
      * @return
      */
@@ -81,7 +81,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     }
 
     /**
-     * This is the listener to the three-dot menu on the top left
+     * This is the listener to the three-dot menu on the top right
      * @param item
      * @return
      */

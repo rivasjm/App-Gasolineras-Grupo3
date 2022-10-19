@@ -1,6 +1,8 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -64,6 +66,7 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
 
     @Override
     public void showLoadError() {
+
     }
 
     public GasolineraDatabase getGasolineraDb() {
@@ -79,8 +82,6 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
 
     @Override
     public void showHistorialVacio() {
-        //Hacer una ventana emergente que ponmga que no hay historial.
     }
-
 
 }

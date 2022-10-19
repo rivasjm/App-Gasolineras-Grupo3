@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
+import android.content.Context;
+
 import java.util.List;
 
 import es.unican.is.appgasolineras.model.Gasolinera;
@@ -63,5 +65,6 @@ public interface IHistorialRepostajesContract {
          * Muestra un mensaje que avisa al usuario de que no tiene repostajes registrados
          */
         void showHistorialVacio();
+
     }
 }

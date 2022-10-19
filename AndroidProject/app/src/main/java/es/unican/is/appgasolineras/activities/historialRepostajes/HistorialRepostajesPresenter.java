@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteException;
 
 import androidx.room.Room;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
@@ -31,16 +30,20 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         this.view = view;
     }
 
-    
+
     @Override
     public void init() {
+        //Instanciamos la base de datos
         final GasolineraDatabase db = view.getGasolineraDb();
+        //a partir de la base de datos podemos obtener la dao de repostajes con laqueinteractuar
         final RepostajeDao repDao = db.repostajeDao();
 
         // Ejecutar la primera vez que se ejecuta la app para tener algun dato
         // repDao.deleteAll();
         // insertaDatosTemp(repDao);
 
+
+        //Estructurapara sacarelhistorial de repostajes de nuestra base de datos
         try {
             shownRepostajes = repDao.getAll();
         } catch (SQLiteException e)
@@ -48,6 +51,7 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
             view.showLoadError();
         }
 
+        //Si esta vacía mostramos se lo indicamos al usuario
         if(shownRepostajes == null) {
             view.showHistorialVacio();
         }else {
@@ -55,7 +59,14 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         }
     }
 
+
+    /**
+     * Inserta dos repostajes en la DAO para poder probar la historia de usuario "Ver
+     * convenios de precios".
+     * @param repostajeDao la DAO de repostajes.
+     */
     public void insertaDatosTemp(RepostajeDao repostajeDao) {
+
         Repostaje r1 = new Repostaje();
         r1.setFechaRepostaje("18/10/2022");
         r1.setPrecio("25.0");
@@ -95,5 +106,6 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
     public void onReintentarClicked() {
         init();
     }
+
 
 }

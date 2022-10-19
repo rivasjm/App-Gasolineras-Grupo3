@@ -1,16 +1,24 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
-
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
+import es.unican.is.appgasolineras.activities.main.IMainContract;
+import es.unican.is.appgasolineras.activities.main.MainPresenter;
+import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.model.Repostaje;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
@@ -28,10 +36,6 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
         // Toolbar
         barraHerramientasView = new BarraHerramientasView(findViewById(R.id.toolbar), this);
 
-        // Temporal
-        //TextView tv = findViewById(R.id.tvHistorialRepostajeMessage);
-        //tv.setText("HISTORIAL REPOSTAJES");
-
         presenter = new HistorialRepostajesPresenter(this);
         presenter.init();
 
@@ -39,6 +43,9 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
         tv.setText("HISTORIAL REPOSTAJES");
     }
 
+    /*
+     *Metodos de la toolbar
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return barraHerramientasView.onCreateOptionsMenu(menu);
@@ -49,18 +56,40 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
         return barraHerramientasView.onOptionsItemSelected(item);
     }
 
+
+    /*
+     *Metodos del IHistorialRepostajesContract.View
+     */
+    @Override
+    public void refresh() {
+        recreate();
+    }
+
     @Override
     public void openMainView() {
+        Intent intent = new Intent(this, MainView.class);
+        startActivity(intent);
     }
 
 
-    /**
-     * The View is requested to show an alert informing that there was an error while
-     * loading the gas stations
-     */
-
     @Override
     public void showLoadError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.repostajesFalloAccesoDatos);
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                presenter.onAceptarClicked();
+            }
+        });
+        builder.setNegativeButton(R.string.reintentar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                presenter.onReintentarClicked();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public GasolineraDatabase getGasolineraDb() {
@@ -76,6 +105,7 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
 
     @Override
     public void showHistorialVacio() {
-        //Hacer una ventana emergente que ponga que no hay historial.
+        TextView tv = findViewById(R.id.tvRepostajesVacios);
+        tv.setText(getResources().getString(R.string.repostajesVacios));
     }
 }

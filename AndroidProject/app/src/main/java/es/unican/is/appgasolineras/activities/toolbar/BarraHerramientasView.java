@@ -32,6 +32,11 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         setUpToolBar();
     }
 
+    /**
+     * Establece una Toolbar como ActionBar de la activity.
+     * Establece el logo de la aplicacion y le da la funcionalidad de volver a
+     * la ventana principal al pulsarlo.
+     */
     private void setUpToolBar() {
         activity.setSupportActionBar(toolbar);
         if (activity.getSupportActionBar() != null) {
@@ -48,6 +53,11 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         activity.getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
+    /**
+     * Metodo para poder asignar un listener al logo de la toolbar.
+     * @param toolbar Toolbar de la activity.
+     * @param listener funcion que se quiere asignar al logo.
+     */
     private void setLogoOnClickListener(Toolbar toolbar, View.OnClickListener listener) {
         try {
             Class<?> toolbarClass = Toolbar.class;
@@ -65,12 +75,8 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         }
     }
 
-    public AppCompatActivity getActivity() {
-        return activity;
-    }
-
     /**
-     * Create a menu in this activity (three dot menu on the top left)
+     * Crear un menu en la activity (menu de tres puntos arriba a la izquierda).
      * @param menu
      * @return
      */
@@ -85,7 +91,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     }
 
     /**
-     * This is the listener to the three-dot menu on the top left
+     * Listener para el menu de tres puntos arriba a la izquierda.
      * @param item
      * @return
      */
@@ -134,5 +140,10 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public void openMainView() {
         Intent intent = new Intent(activity, MainView.class);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public AppCompatActivity getActivity() {
+        return activity;
     }
 }

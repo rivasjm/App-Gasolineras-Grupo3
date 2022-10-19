@@ -5,14 +5,17 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import android.database.sqlite.SQLiteException;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import es.unican.is.appgasolineras.model.Repostaje;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
+import es.unican.is.appgasolineras.repository.db.RepostajeDao;
 
 /**
  * Test unitario del presentador del historial de repostajes.
@@ -26,10 +29,13 @@ public class HistorialRepostajesPresenterTest {
 
     @Mock
     private IHistorialRepostajesContract.View viewMock;
-    // ver como es la interaccion en la DAO, si se usa repository, DAO o que, si no no puedo avanzar
+    @Mock
+    private RepostajeDao daoMock;
+    @Mock
+    private GasolineraDatabase dbMock;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // inicializar mocks siempre
         MockitoAnnotations.openMocks(this);
         // no defino aqui comportamiento porque varia en cada caso
@@ -51,12 +57,14 @@ public class HistorialRepostajesPresenterTest {
             repostajes.add(r);
         }
         // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
+        when(viewMock.getGasolineraDb()).thenReturn(dbMock);
+        when(dbMock.repostajeDao()).thenReturn(daoMock);
+        when(daoMock.getAll()).thenReturn(repostajes);
 
         // ver que funciona
         sut.init();
         assert (sut.shownRepostajes.equals(repostajes));
-        verify (viewMock).getHistorialRepostajesRepository();
+        verify (viewMock).getGasolineraDb();
         verify (viewMock).showHistorialRepostajes(repostajes);
     }
 
@@ -78,56 +86,55 @@ public class HistorialRepostajesPresenterTest {
             repostajes.add(r);
         }
         // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
+        when(viewMock.getGasolineraDb()).thenReturn(dbMock);
+        when(dbMock.repostajeDao()).thenReturn(daoMock);
+        when(daoMock.getAll()).thenReturn(repostajes);
 
-        // ver que funciona correctamente
+        // ver que funciona
         sut.init();
         assert (sut.shownRepostajes.equals(repostajes));
-        verify (viewMock).getHistorialRepostajesRepository();
+        verify (viewMock).getGasolineraDb();
         verify (viewMock).showHistorialRepostajes(repostajes);
     }
 
     @Test
     public void initListaVaciaTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
-        // lista de repostajes vacia
-        repostajes = new LinkedList<>();
         // definir comportamiento mock
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(repostajes);
+        when(viewMock.getGasolineraDb()).thenReturn(dbMock);
+        when(dbMock.repostajeDao()).thenReturn(daoMock);
+        when(daoMock.getAll()).thenReturn(new LinkedList<Repostaje>()); // devuelve lista vacia
 
-        // ver que funciona correctamente
+        // ver que funciona
         sut.init();
-        assert (sut.shownRepostajes.equals(repostajes));
-        verify (viewMock).getHistorialRepostajesRepository();
+
+        assert (sut.shownRepostajes.size() == 0);
+        verify (viewMock).getGasolineraDb();
         // el metodo del show vacio
-        verify (viewMock).showEmpty();
+        verify (viewMock).showHistorialVacio();
     }
 
     @Test
     public void initErrorCargaTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
-        // definir comportamiento mock, si hay error devuelve null
-        when(viewMock.getHistorialRepostajesRepository()).thenReturn(null);
-
+        // definir comportamiento mock, si hay error lanza excepcion
+        when(viewMock.getGasolineraDb()).thenReturn(dbMock);
+        when(dbMock.repostajeDao()).thenReturn(daoMock);
+        when(daoMock.getAll()).thenThrow(new SQLiteException());
         // ver que funciona correctamente
-        sut.init();
+        sut.init(); // esto deberia haber recogido SQLiteException y llamado a showLoadError
         assert (sut.shownRepostajes == null);
-        verify (viewMock).getHistorialRepostajesRepository();
+        verify (viewMock).getGasolineraDb();
         verify (viewMock).showLoadError();
-    }
-
-    @Test
-    public void onHomeClickedTest() {
-        sut = new HistorialRepostajesPresenter(viewMock);
-        sut.init();
-        // ver que si se llama al metodo se llama a la vista para volver
-        sut.onHomeClicked();
-        verify(viewMock).openMainView();
     }
 
     @Test
     public void onAceptarClickedTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
+        // definir mocks para que el init salga bien
+        when(viewMock.getGasolineraDb()).thenReturn(dbMock);
+        when(dbMock.repostajeDao()).thenReturn(daoMock);
+        when(daoMock.getAll()).thenReturn(null);
         sut.init();
         // ver que si se llama al metodo se llama a la vista para volver
         sut.onAceptarClicked();
@@ -137,9 +144,13 @@ public class HistorialRepostajesPresenterTest {
     @Test
     public void onReintentarClickedTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
+        // definir mocks para que el init salga bien
+        when(viewMock.getGasolineraDb()).thenReturn(dbMock);
+        when(dbMock.repostajeDao()).thenReturn(daoMock);
+        when(daoMock.getAll()).thenReturn(null);
         sut.init();
-        // ver que si se llama al metodo se llama otra vez a init
+        // ver que si se llama a view.refresh
         sut.onReintentarClicked();
-        verify(sut, times(2)).init();
+        verify(viewMock).refresh();
     }
 }

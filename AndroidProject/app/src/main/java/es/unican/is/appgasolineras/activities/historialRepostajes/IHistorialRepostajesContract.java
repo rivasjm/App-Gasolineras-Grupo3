@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
+import android.content.Context;
+
 import java.util.List;
 
 import es.unican.is.appgasolineras.model.Gasolinera;
@@ -12,19 +14,25 @@ public interface IHistorialRepostajesContract {
 
     public interface Presenter {
         /**
-         * Initialization method
+         * Metodo de inicializacion. Obtiene los repostajes de la DAO y los muestra.
+         * Si hay un fallo en el acceso a datos se muestra una ventana emergente informando
+         * del error, y ofreciendo la opcion de reintentar o volver a la vista principal.
+         * Si la lista de convenios esta vacia se muestra un fondo vacio (en blanco) con un
+         * texto indicandolo.
          */
         void init();
 
         /**
-         * This method should be used by the View to notifiy the Presenter that the
-         * acceptar button has been clicked
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Aceptar de la ventana emergente que notfica el error de acceso a datos ha
+         * sido pulsado.
          */
         void onAceptarClicked();
 
-        /**
-         * This method should be used by the View to notifiy the Presenter that the
-         * reintentar button has been clicked
+         /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Reintentar de la ventana emergente que notfica el error de acceso a datos ha
+         * sido pulsado.
          */
         void onReintentarClicked();
 
@@ -38,17 +46,15 @@ public interface IHistorialRepostajesContract {
         void openMainView();
 
         /**
-         * The View is requested to show
+         * Se solicita a la View que muestre una ventana emergente informando de que ha ocurrido
+         * un error al acceder a los datos y ofreciendo la opcion de reintentar o volver a la
+         * vista principal.
          */
         void showLoadError();
 
         /**
-         * Returns the HistorialRepostajes Repository object.
-         * This object can be used to access all the historial de repostajes from the db
-         * This method is in the View because it generally requires access to the
-         * Android Context, and this is available in the View
-         *
-         * @return the Repository object to access the historial
+         * Devuelve la base de datos con su contexto.
+         * @return el objeto GasolineraDatabase para acceder a la base de datos.
          */
         GasolineraDatabase getGasolineraDb();
 
@@ -63,5 +69,11 @@ public interface IHistorialRepostajesContract {
          * Muestra un mensaje que avisa al usuario de que no tiene repostajes registrados
          */
         void showHistorialVacio();
+
+        /**
+         * Se solicita a la View que vuelva a crear la vista.
+         */
+        void refresh();
+
     }
 }

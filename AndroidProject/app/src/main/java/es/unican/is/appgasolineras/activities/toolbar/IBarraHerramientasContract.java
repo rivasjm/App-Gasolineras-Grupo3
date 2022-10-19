@@ -2,62 +2,72 @@ package es.unican.is.appgasolineras.activities.toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * La Activity BarraHerramientas esta compuesta por un Presenter y una View, los cuales deben
+ * implementar los metodos definidos en las siguientes interfaces.
+ */
 public interface IBarraHerramientasContract {
+
     public interface Presenter {
         /**
-         * This method should be used by the View to notifiy the Presenter that the
-         * Info button has been clicked
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Info ha sido pulsado.
          */
         void onInfoClicked();
 
         /**
-         * This method should be used by the View to notify the Presenter that the
-         * Refresh button has been clicked
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Refrescar ha sido pulsado.
          */
         void onRefreshClicked();
 
         /**
-         * This method should be used by the View to notify the Presenter that the
-         * Convenios button has been clicked
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Convenios ha sido pulsado.
          */
         void onConveniosClicked();
 
         /**
-         * This method should be used by the View to notify the Presenter that the
-         * Historial Repostajes button has been clicked
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Historial Repostajes ha sido pulsado.
          */
         void onHistorialRepostajesClicked();
 
         /**
-         * This method should be used by the View to notify the Presenter that the
-         * Logo button has been clicked
+         * Este metodo debe ser usado por la View para notificar al Presenter que el Logo
+         * ha sido pulsado.
          */
         void onLogoClicked();
     }
 
+    /**
+     * Una vista para la Activity BarraHerramientas debe implementar esta funcionalidad.
+     * Estos metodos estan destinados a ser utilizados por el Presenter.
+     */
     public interface View {
         /**
-         * The View is requested to open the Info view
+         * Se solicita a la View que abra la vista Info.
          */
         void openInfoView();
 
         /**
-         * The View is requested to open the Convenios view
+         * Se solicia a la View que abra la vista Convenios.
          */
         void openConveniosView();
 
         /**
-         * The View is requested to open the Historial Repostaje view
+         * Se solicita a la View que abra la vista Historial Repostajes.
          */
         void openHistorialRepostajeView();
 
         /**
-         * The View is requested to open the Main view
+         * Se solicita a la View que abra la vista principal.
          */
         void openMainView();
 
         /**
-         * The View is requested to return the activity to which it is related.
+         * Devuelve la Activity con la que la View esta ligada.
+         * @return la Activity con la que la toolbar esta ligada.
          */
         AppCompatActivity getActivity();
     }

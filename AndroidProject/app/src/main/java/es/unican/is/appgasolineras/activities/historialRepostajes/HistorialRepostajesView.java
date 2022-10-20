@@ -1,10 +1,8 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -17,9 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
-import es.unican.is.appgasolineras.activities.main.IMainContract;
-import es.unican.is.appgasolineras.activities.main.MainPresenter;
 import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.model.Repostaje;
@@ -88,6 +83,12 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
                 presenter.onReintentarClicked();
             }
         });
+        builder.setPositiveButton("Aceptar", ((DialogInterface dialogInf1, int which) -> {
+            presenter.onAceptarClicked();
+        }));
+        builder.setNegativeButton(R.string.reintentar, ((DialogInterface dialogInf2, int which) -> {
+            presenter.onReintentarClicked();
+        }));
         AlertDialog dialog = builder.create();
         dialog.show();
     }

@@ -1,6 +1,5 @@
 package es.unican.is.appgasolineras.repository.rest;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,7 +10,6 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.model.GasolinerasResponse;
 import es.unican.is.appgasolineras.model.IDCCAAs;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -70,4 +68,7 @@ public class GasolinerasService {
         return response;
     }
 
+    private GasolinerasService() {
+        throw new IllegalStateException();
+    }
 }

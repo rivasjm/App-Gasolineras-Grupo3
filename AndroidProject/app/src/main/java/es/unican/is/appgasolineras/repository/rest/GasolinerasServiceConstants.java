@@ -22,4 +22,8 @@ public class GasolinerasServiceConstants {
     public static final String getAPIURL() {
         return API_URL;
     }
+
+    private GasolinerasServiceConstants() {
+        throw new IllegalStateException();
+    }
 }

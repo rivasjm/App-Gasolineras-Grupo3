@@ -40,6 +40,8 @@ captures/
 *.iml
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/misc.xml
+.idea/androidTestResultsUserPreferences.xml
 .idea/gradle.xml
 .idea/assetWizardSettings.xml
 .idea/dictionaries
@@ -83,3 +85,4 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+AndroidProject/.idea/misc.xml

@@ -62,9 +62,6 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
 
     private void setLogo(View convertView, Gasolinera gasolinera) {
         String rotulo = gasolinera.getRotulo().toLowerCase();
-
-
-
         int imageID = getContext().getResources()
                 .getIdentifier(rotulo, "drawable", getContext().getPackageName());
 

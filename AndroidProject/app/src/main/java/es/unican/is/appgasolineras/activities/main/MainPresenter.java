@@ -66,14 +66,4 @@ public class MainPresenter implements IMainContract.Presenter {
             view.openGasolineraDetails(gasolinera);
         }
     }
-
-    @Override
-    public void onInfoClicked() {
-        view.openInfoView();
-    }
-
-    @Override
-    public void onRefreshClicked() {
-        init();
-    }
 }

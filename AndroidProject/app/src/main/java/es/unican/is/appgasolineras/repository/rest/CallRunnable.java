@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.repository.rest;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -23,10 +25,10 @@ class CallRunnable<T> implements Runnable {
     @Override
     public void run() {
         try {
-            Response<T> response = call.execute();
-            this.response = response.body();
+            Response<T> answer = call.execute();
+            this.response = answer.body();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("ERROR", "IOException lanzada en CallRunnable");
         }
     }
 }

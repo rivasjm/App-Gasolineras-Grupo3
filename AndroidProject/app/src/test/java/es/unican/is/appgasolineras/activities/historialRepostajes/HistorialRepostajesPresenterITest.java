@@ -58,10 +58,10 @@ public class HistorialRepostajesPresenterITest {
         // definir comportamiento mock
         // obtiene el contexto del mock de la vista
         when(viewMock.getGasolineraDb()).thenReturn(
-                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true));
 
         // crear el contexto adecuado para hacer el test (meter datos correctos)
-        dao = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()).repostajeDao();
+        dao = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true).repostajeDao();
         sut.insertaDatosTemp(dao);
 
         // repostajes que deberia haber
@@ -94,8 +94,9 @@ public class HistorialRepostajesPresenterITest {
 
         // crear una DAO previa para borrar DB y meter datos incorrectos
         when(viewMock.getGasolineraDb()).thenReturn(
-                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
-        dao = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()).repostajeDao();
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true));
+        dao = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(),
+                true).repostajeDao();
         dao.deleteAll();
         // lista de repostajes con datos anomalos, con 10 repostajes,
         repostajes = new LinkedList<>();
@@ -137,9 +138,10 @@ public class HistorialRepostajesPresenterITest {
         sut = new HistorialRepostajesPresenter(viewMock);
 
         when(viewMock.getGasolineraDb()).thenReturn(
-                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true));
         // crear una DAO previa vacia
-        dao = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()).repostajeDao();
+        dao = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(),
+                true).repostajeDao();
         dao.deleteAll();
 
         // ver que funciona
@@ -151,30 +153,6 @@ public class HistorialRepostajesPresenterITest {
         verify (viewMock).showHistorialVacio();
     }
 
-    /*
-        // Este test esta comentado, porque no puedo crear un estado en que falle la DAO al estar
-        // hecha automaticamente por Room (sin usar otro mock de la DAO, pero seria como la unitaria)
-    @Test
-    public void initErrorCargaTest() {
-
-        // En este caso uso un mock de la DAO, predefinida por Room, porque no deberia fallar en
-        // otro caso. Sigo usando GasolineraDatabase de verdad, pero no puedo generar un fallo en
-        // la DAO de verdad que provoque un fallo en la carga de datos.
-
-        sut = new HistorialRepostajesPresenter(viewMock);
-        // datos reales en la DAO, asi que no hay mocks para ella
-        // definir comportamiento mock
-        // obtiene el contexto del mock de la vista
-        when(viewMock.getGasolineraDb()).thenReturn(
-                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
-
-        // ver que funciona correctamente
-        sut.init();
-
-        assert (sut.shownRepostajes == null);
-        verify (viewMock).showLoadError();
-    } */
-
     @Test
     public void onAceptarClickedTest() {
         sut = new HistorialRepostajesPresenter(viewMock);
@@ -182,7 +160,7 @@ public class HistorialRepostajesPresenterITest {
         // definir comportamiento mock
         // obtiene el contexto del mock de la vista
         when(viewMock.getGasolineraDb()).thenReturn(
-                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true));
         sut.init();
 
         // ver que si se llama al metodo se llama a la vista para volver
@@ -197,7 +175,7 @@ public class HistorialRepostajesPresenterITest {
         // definir comportamiento mock
         // obtiene el contexto del mock de la vista
         when(viewMock.getGasolineraDb()).thenReturn(
-                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext()));
+                GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true));
         sut.init();
 
         // ver que si se llama al metodo se llama otra vez a refresh en la vista

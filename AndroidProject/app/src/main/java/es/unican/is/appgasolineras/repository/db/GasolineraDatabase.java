@@ -20,8 +20,12 @@ public abstract class GasolineraDatabase extends RoomDatabase {
 
     private static GasolineraDatabase db;
 
-    public static GasolineraDatabase getDB(Context context) {
-        if (db == null || !db.isOpen()) {
+    public static GasolineraDatabase getDB(Context context){
+        return getDB(context,false);
+    }
+    // variable booleana anadida para ejecutar los test de integracion sin fallos de Threads
+    public static GasolineraDatabase getDB(Context context, Boolean force) {
+        if (force || db == null || !db.isOpen()) {
             db = Room
                     .databaseBuilder(context, GasolineraDatabase.class, GasolineraDatabase.GASOLINERAS_DB_NAME)
                     .allowMainThreadQueries()

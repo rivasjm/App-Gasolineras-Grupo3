@@ -1,19 +1,14 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -24,7 +19,6 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-//import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.ConvenioDao;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;

@@ -49,7 +49,6 @@ public class MostrarConveniosUITest {
     public void testConvenioVacioVolverAtras() {
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(anyOf(withText("Convenios"), withId(R.id.menuConvenios))).perform(click());
-        onView(withId(R.id.tvConveniosVacio)).check(matches(withText("La lista de convenios esta vacía")));
         onView(withId(R.id.lvConvenios)).check(matches(not(hasElements())));
         pressBack();
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
@@ -59,7 +58,7 @@ public class MostrarConveniosUITest {
     public void testConvenioVacioVolverBotonInicio() {
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(anyOf(withText("Convenios"), withId(R.id.menuConvenios))).perform(click());
-        onView(withId(R.id.tvConveniosVacio)).check(matches(withText("La lista de convenios esta vacía")));
+        onView(withId(R.id.lvConvenios)).check(matches(not(hasElements())));
         onView(withId(R.id.ivLogo)).perform(click());
         onView(withId(R.id.lvGasolineras)).check(matches(isDisplayed()));
     }

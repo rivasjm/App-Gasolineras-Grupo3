@@ -93,7 +93,6 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      * @param item
      * @return
      */
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

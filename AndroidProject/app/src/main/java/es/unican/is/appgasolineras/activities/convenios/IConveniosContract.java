@@ -7,49 +7,79 @@ import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 /**
- * The Convenios Activity is composed of a Presenter and View, which must expose the methods
- * defined in the following interfaces.
+ * La Activity Convenios esta compuesta por un Presenter y una View, las cuales deben implementar
+ * los metodos definidos en las siguientes interfaces.
  */
 public interface IConveniosContract {
     /**
-     * A Presenter for the Convenios Activity must implement this functionality
-     * These methods (excluding init), are meant to be used by the View.
+     * Un Presenter para la Activity Convenios debe implementar esta funcionalidad.
+     * Estos metodos (menos init) estan destinados a ser utilizados por la View.
      */
     public interface Presenter {
 
         /**
-         * Initialization method
+         * Metodo de inicializacion. Obtiene los convenios de la DAO y los muestra.
+         * Si hay un fallo en el acceso a datos se muestra una ventana emergente informando
+         * del error, y ofreciendo la opcion de reintentar o volver a la vista principal.
+         * Si la lista de convenios esta vacia se muestra un fondo vacio (en blanco) con un
+         * texto indicandolo.
          */
         void init();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Aceptar de la ventana emergente que notfica el error de acceso a datos ha
+         * sido pulsado.
+         */
+        void onErrorAceptarClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Reintentar de la ventana emergente que notfica el error de acceso a datos ha
+         * sido pulsado.
+         */
+        void onErrorReintentarClicked();
     }
 
     /**
-     * A View for the Convenios Activity must implement this functionality
-     * These methods (excluding init), are meant to be used by the Presenter.
+     * Una vista para la Activity Convenios debe implementar esta funcionalidad.
+     * Estos metodos estan destinados a ser utilizados por el Presenter.
      */
     public interface View {
 
-
+        /**
+         * Devuelve la base de datos con su contexto.
+         * @return el objeto GasolineraDatabase para acceder a la base de datos.
+         */
         GasolineraDatabase getDatabase();
 
         /**
-         * The View is requested to show a list of convenios
-         *
-         * @param convenios the list of gas stations
+         * Se solicita a la View que muestre una lista de convenios.
+         * @param convenios la lista de convenios.
          */
         void showConvenios(List<Convenio> convenios);
 
         /**
-         * The View is requested to show an alert informing that the convenios were loaded
-         * correctly
-         * @param conveniosCount the number of convenios that were loaded
-         */
-        void showLoadCorrect(int conveniosCount);
-
-        /**
-         * The View is requested to show an alert informing that there was an error while
-         * loading the convenio
+         * Se solicita a la View que muestre una ventana emergente informando de que ha ocurrido
+         * un error al acceder a los datos y ofreciendo la opcion de reintentar o volver a la
+         * vista principal.
          */
         void showLoadError();
+
+        /**
+         * Se solicita a la View que muestre un mensaje informando que la lista de convenios
+         * esta vacia.
+         */
+        void showListaConveniosVacia();
+
+        /**
+         * Se solicita a la View que abra la vista principal.
+         */
+        void openMainView();
+
+        /**
+         * Se solicita a la View que vuelva a crear la vista.
+         */
+        void refresh();
     }
 }

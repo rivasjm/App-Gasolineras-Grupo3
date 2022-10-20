@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import es.unican.is.appgasolineras.R;
@@ -20,13 +22,9 @@ import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
-import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
+import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.model.Convenio;
-import es.unican.is.appgasolineras.model.Gasolinera;
-import es.unican.is.appgasolineras.repository.GasolinerasRepository;
-import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class ConveniosView extends AppCompatActivity implements  IConveniosContract.View {
@@ -43,14 +41,13 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         // Toolbar
         barraHerramientasView = new BarraHerramientasView(findViewById(R.id.toolbar), this);
 
-        // Temporal
-        TextView tv = findViewById(R.id.tvConveniosMessage);
-        tv.setText("CONVENIOS");
-
         presenter = new ConveniosPresenter(this);
         presenter.init();
     }
 
+    /*
+    Metodos referentes a la toolbar
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return barraHerramientasView.onCreateOptionsMenu(menu);
@@ -61,6 +58,9 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         return barraHerramientasView.onOptionsItemSelected(item);
     }
 
+    /*
+    Metodos referentes a IConveniosContract.View
+     */
     @Override
     public GasolineraDatabase getDatabase() {
         return GasolineraDatabase.getDB(this);
@@ -74,14 +74,39 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
     }
 
     @Override
-    public void showLoadCorrect(int conveniosCount) {
-        String text = getResources().getString(R.string.loadCorrectConvenios);
-        Toast.makeText(this, String.format(text, conveniosCount), Toast.LENGTH_SHORT).show();
+    public void showLoadError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.conveniosFalloAccesoDatos);
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                presenter.onErrorAceptarClicked();
+            }
+        });
+        builder.setNegativeButton(R.string.reintentar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                presenter.onErrorReintentarClicked();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
-    public void showLoadError() {
-        String text = getResources().getString(R.string.loadErrorConvenios);
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    public void showListaConveniosVacia() {
+        TextView tv = findViewById(R.id.tvConveniosVacio);
+        tv.setText(getResources().getString(R.string.conveniosListaVacia));
+    }
+
+    @Override
+    public void openMainView() {
+        Intent intent = new Intent(this, MainView.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void refresh() {
+        recreate();
     }
 }

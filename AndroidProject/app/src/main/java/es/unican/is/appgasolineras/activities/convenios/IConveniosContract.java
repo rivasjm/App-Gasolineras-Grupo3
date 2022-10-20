@@ -3,7 +3,6 @@ package es.unican.is.appgasolineras.activities.convenios;
 import java.util.List;
 
 import es.unican.is.appgasolineras.model.Convenio;
-import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 /**

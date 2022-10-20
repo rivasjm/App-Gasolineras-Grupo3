@@ -58,7 +58,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
      * convenios de precios".
      * @param conveniosDao la DAO de convenios.
      */
-    private void insertaDatosTemp(ConvenioDao conveniosDao) {
+    public void insertaDatosTemp(ConvenioDao conveniosDao) {
         Convenio c1 = new Convenio();
         c1.setMarca("Campsa");
         c1.setDescuento(20);

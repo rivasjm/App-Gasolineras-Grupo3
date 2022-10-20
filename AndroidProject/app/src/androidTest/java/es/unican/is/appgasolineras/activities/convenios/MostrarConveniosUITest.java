@@ -18,9 +18,12 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.not;
 import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
 
 import android.view.View;
@@ -33,8 +36,8 @@ public class MostrarConveniosUITest {
     @BeforeClass
     public static void setUp() {
         GasolinerasServiceConstants.setStaticURL();
-
     }
+    /*
     @Before
     public void set(){
         activityRule.getScenario().onActivity(new ActivityScenario.ActivityAction<ConveniosView>() {
@@ -43,33 +46,19 @@ public class MostrarConveniosUITest {
                 decorView = activity.getWindow().getDecorView();
             }
         });
-    }
+    }*/
 
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();
     }
-
-
-
     @Test
-    public void openConveniosViewTest() {
-        onView(withText("Se han cargado 0 convenios"))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here we use decorView
-                .check(matches(isDisplayed()));
-        //onView(withId(R.id.lvConvenios)).check(matches(isDisplayed()));
-        //onView(withId(R.id.Toas))
-        //onView(withId(R.id.)).check(matches(withText("CONVENIOS")));
+    public void openEmptyConveniosViewTest() {
+        onView(withId(R.id.tvConveniosVacio)).check(matches(withText("La lista de convenios esta vacía")));
+        onView(withId(R.id.lvConvenios)).check(matches(not(hasDescendant(any(View.class)))));
     }
-    /*
-    @Test
-    public void homeIcon(){
-        //onView(withId(R.id.menuHome)).perform(click());
-       // onView(withId(R.id.lvGasolineras)).check(matches(isDisplayed()));
-    }*/
-    public void backButton(){
 
 
-    }
+
 
 }

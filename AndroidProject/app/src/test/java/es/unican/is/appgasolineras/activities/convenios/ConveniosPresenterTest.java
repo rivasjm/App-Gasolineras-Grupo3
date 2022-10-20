@@ -29,7 +29,7 @@ public class ConveniosPresenterTest {
     private GasolineraDatabase mockDb;
     private List<Convenio> convenios;
 
-    private void llenarDatos(){
+    private void llenarDatos(Boolean anomalos){
         Convenio c1 = new Convenio();
         c1.setMarca("Campsa");
         c1.setDescuento(20);
@@ -38,6 +38,15 @@ public class ConveniosPresenterTest {
         c2.setDescuento(5);
         convenios.add(c1);
         convenios.add(c2);
+        if(anomalos){
+            Convenio c3 = new Convenio();
+            c3.setMarca("Repsol");
+            c3.setDescuento(-10);
+            convenios.add(c3);
+            Convenio c4 = new Convenio();
+            c4.setMarca("");
+            convenios.add(c4);
+        }
     }
     @Before
     public void setUp()  {
@@ -48,7 +57,7 @@ public class ConveniosPresenterTest {
     public void testInitCorrecto(){
         sut = new ConveniosPresenter(mockView);
         convenios = new ArrayList<Convenio>();
-        llenarDatos();
+        llenarDatos(false);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
         when(mockDb.convenioDao()).thenReturn(mockDao);
@@ -95,4 +104,46 @@ public class ConveniosPresenterTest {
         verify(mockDao).getAll();
     }
 
+    @Test
+    public void testInitDatosAnomalos(){
+        sut = new ConveniosPresenter(mockView);
+        convenios = new ArrayList<Convenio>();
+        llenarDatos(true);
+
+        when(mockView.getDatabase()).thenReturn(mockDb);
+        when(mockDb.convenioDao()).thenReturn(mockDao);
+        when(mockDao.getAll()).thenReturn(convenios);
+
+        sut.init();
+        assert(sut.shownConvenios.equals(convenios));
+        verify(mockView).showConvenios(convenios);
+        verify(mockView).getDatabase();
+        verify(mockDb).convenioDao();
+    }
+
+    @Test
+    public void testOnErrorAceptarClicked(){
+        sut = new ConveniosPresenter(mockView);
+
+        when(mockView.getDatabase()).thenReturn(mockDb);
+        when(mockDb.convenioDao()).thenReturn(mockDao);
+        when(mockDao.getAll()).thenReturn(null);
+
+        sut.init();
+        sut.onErrorAceptarClicked();
+        verify(mockView).openMainView();
+    }
+
+    @Test
+    public void onErrorReintentarClicked(){
+        sut = new ConveniosPresenter(mockView);
+
+        when(mockView.getDatabase()).thenReturn(mockDb);
+        when(mockDb.convenioDao()).thenReturn(mockDao);
+        when(mockDao.getAll()).thenReturn(null);
+
+        sut.init();
+        sut.onErrorReintentarClicked();
+        verify(mockView).refresh();
+    }
 }

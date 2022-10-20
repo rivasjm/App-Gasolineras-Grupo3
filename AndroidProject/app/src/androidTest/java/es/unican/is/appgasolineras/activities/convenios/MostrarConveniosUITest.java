@@ -24,6 +24,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.CoreMatchers.not;
+
+import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
 
 @RunWith(AndroidJUnit4.class)
 public class MostrarConveniosUITest {
@@ -46,8 +49,9 @@ public class MostrarConveniosUITest {
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(anyOf(withText("Convenios"), withId(R.id.menuConvenios))).perform(click());
         onView(withId(R.id.tvConveniosVacio)).check(matches(withText("La lista de convenios esta vacía")));
+        onView(withId(R.id.lvConvenios)).check(matches(not(hasElements())));
         pressBack();
-        onView(withId(R.id.lvGasolineras)).check(matches(isDisplayed()));
+        onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
     }
 
     @Test

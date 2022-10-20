@@ -16,12 +16,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvConveniosMessage"
+        android:id="@+id/tvConveniosVacio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lvConvenios"
+        app:layout_constraintEnd_toEndOf="@+id/lvConvenios"
+        app:layout_constraintStart_toStartOf="@+id/lvConvenios"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <ListView
+        android:id="@+id/lvConvenios"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
+
+    </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

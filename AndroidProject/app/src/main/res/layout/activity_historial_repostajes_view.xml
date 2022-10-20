@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.main.MainView">
+    tools:context=".activities.historialRepostajes.HistorialRepostajesView">
 
     <include
         android:id="@+id/toolbar"
@@ -14,9 +14,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvRepostajesVacios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lvHistoricoGasolineras"
+        app:layout_constraintEnd_toEndOf="@+id/lvHistoricoGasolineras"
+        app:layout_constraintStart_toStartOf="@+id/lvHistoricoGasolineras"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ListView
-        android:id="@+id/lvGasolineras"
+        android:id="@+id/lvHistoricoGasolineras"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

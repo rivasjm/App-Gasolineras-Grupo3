@@ -11,10 +11,7 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.model.GasolinerasResponse;
 import es.unican.is.appgasolineras.model.IDCCAAs;
 import retrofit2.Call;
-
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
  * Class to access the gas stations REST API using Retrofit
  * Usage: https://square.github.io/retrofit/
@@ -70,4 +67,7 @@ public class GasolinerasService {
         return response;
     }
 
+    private GasolinerasService() {
+        throw new IllegalStateException();
+    }
 }

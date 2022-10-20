@@ -1,24 +1,13 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
 
-import static es.unican.is.appgasolineras.repository.db.GasolineraDatabase.getDB;
-
-import android.content.Context;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
-
-import androidx.room.Room;
 
 import java.util.List;
 
-import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.common.Callback;
-import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.model.Repostaje;
-import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.db.RepostajeDao;
-import es.unican.is.appgasolineras.repository.db.RepostajeDao_Impl;
 
 public class HistorialRepostajesPresenter implements IHistorialRepostajesContract.Presenter{
 
@@ -92,11 +81,11 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
             Repostaje r = new Repostaje();
             r.setFechaRepostaje(String.format("%d/%d/2023", i, 3+i)); // algunas fechas mal
             if (i != 4) {
-                r.setLitros(Double.toString(-23 + i*8)); // algun litro negativo
+                r.setLitros(Double.toString(-23 + (double)i*8)); // algun litro negativo
             } else { // poner un litro nulo
                 r.setLitros("");
             }
-            r.setPrecio(Double.toString(2 * (-3 + i))); // algun precio negativo y poco realista
+            r.setPrecio(Double.toString(2 * (-3 + (double)i))); // algun precio negativo y poco realista
             if (i > 2) {
                 r.setLocalizacion(String.format("Direccion %d", i)); // alguna direccion vacia
             } else {

@@ -1,6 +1,5 @@
 package es.unican.is.appgasolineras.activities.detail;
 
-import android.util.Log;
 
 import es.unican.is.appgasolineras.model.Gasolinera;
 

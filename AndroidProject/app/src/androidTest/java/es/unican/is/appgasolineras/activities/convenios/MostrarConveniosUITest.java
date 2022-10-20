@@ -30,6 +30,7 @@ import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
 
 @RunWith(AndroidJUnit4.class)
 public class MostrarConveniosUITest {
+    //Pruebas de interfaz realizadas para la muestra de convenios considerando que la base de datos está vacía
     @Rule
     public ActivityScenarioRule<MainView> activityRule =
             new ActivityScenarioRule(MainView.class);

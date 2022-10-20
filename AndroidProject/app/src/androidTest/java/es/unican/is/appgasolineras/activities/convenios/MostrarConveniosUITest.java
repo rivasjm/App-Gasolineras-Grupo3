@@ -53,13 +53,4 @@ public class MostrarConveniosUITest {
         pressBack();
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
     }
-
-    @Test
-    public void testConvenioVacioVolverBotonInicio() {
-        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
-        onView(anyOf(withText("Convenios"), withId(R.id.menuConvenios))).perform(click());
-        onView(withId(R.id.lvConvenios)).check(matches(not(hasElements())));
-        onView(withId(R.id.ivLogo)).perform(click());
-        onView(withId(R.id.lvGasolineras)).check(matches(isDisplayed()));
-    }
 }

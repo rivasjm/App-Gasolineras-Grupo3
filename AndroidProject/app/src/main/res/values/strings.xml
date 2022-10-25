@@ -23,4 +23,7 @@
     <string name="conveniosFalloAccesoDatos">Ha ocurrido un error al acceder a los datos.</string>
     <string name="aceptar">Aceptar</string>
     <string name="reintentar">Reintentar</string>
+
+    <string name="ordenarDistanciaAplicado">Se han ordenado las gasolineras por distancia</string>
+    <string name="ordenarPrecioAplicado">Se han ordenado las gasolineras por precio</string>
 </resources>

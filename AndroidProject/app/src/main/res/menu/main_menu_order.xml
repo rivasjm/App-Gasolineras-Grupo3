@@ -15,4 +15,14 @@
     <item
         android:id="@+id/menuRefresh"
         android:title="@string/refresh" />
+    <item
+        android:id="@+id/menuDistancia"
+        android:title="Ordenar distancia"
+        android:icon="@drawable/location_32"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuPrecio"
+        android:title="Ordenar precio"
+        android:icon="@drawable/low_price_57"
+        app:showAsAction="always" />
 </menu>

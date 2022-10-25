@@ -49,7 +49,7 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return barraHerramientasView.onCreateOptionsMenu(menu);
+        return barraHerramientasView.onCreateOptionsMenu(menu, false);
     }
 
     @Override

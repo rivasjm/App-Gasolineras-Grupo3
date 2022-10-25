@@ -6,9 +6,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 
 import java.lang.reflect.Field;
@@ -24,6 +26,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     private IBarraHerramientasContract.Presenter presenter;
     private Toolbar toolbar;
     private AppCompatActivity activity;
+    Menu menu;
 
     public BarraHerramientasView(Toolbar toolbar, AppCompatActivity activity) {
         this.toolbar = toolbar;
@@ -80,11 +83,14 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      * @param menu
      * @return
      */
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu, boolean mostrarOrdenacion) {
         MenuInflater menuInflater = activity.getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
+        this.menu = menu;
+        if (mostrarOrdenacion) {
+            menuInflater.inflate(R.menu.main_menu_order, menu);
+        } else {
+            menuInflater.inflate(R.menu.main_menu, menu);
+        }
         return true;
     }
 
@@ -93,7 +99,6 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      * @param item
      * @return
      */
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuInfo:
@@ -108,6 +113,11 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
             case R.id.menuHistorialRepostajes:
                 presenter.onHistorialRepostajesClicked();
                 return true;
+            case R.id.menuDistancia:
+                presenter.onOrdenarDistanciaClicked();
+                return true;
+            case R.id.menuPrecio:
+                presenter.onOrdenarPrecioClicked();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -140,5 +150,31 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     @Override
     public AppCompatActivity getActivity() {
         return activity;
+    }
+
+    @Override
+    public void showOrdenarDistanciaSelected() {
+        String text = activity.getResources().getString(R.string.ordenarDistanciaAplicado);
+        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
+
+        menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_selected_32));
+    }
+
+    @Override
+    public void showOrdenarPrecioSelected() {
+        String text = activity.getResources().getString(R.string.ordenarPrecioAplicado);
+        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
+
+        menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_selected_57));
+    }
+
+    @Override
+    public void showOrdenarDistanciaDeselected() {
+        menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_32));
+    }
+
+    @Override
+    public void showOrdenarPrecioDeselected() {
+        menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_57));
     }
 }

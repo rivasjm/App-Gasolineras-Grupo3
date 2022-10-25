@@ -32,4 +32,20 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     public void onLogoClicked() {
         view.openMainView();
     }
+
+    @Override
+    public void onOrdenarDistanciaClicked() {
+        view.showOrdenarDistanciaSelected();
+        view.showOrdenarPrecioDeselected();
+        // Creo que aqui iria el codigo de la funcionalidad
+
+    }
+
+    @Override
+    public void onOrdenarPrecioClicked() {
+        view.showOrdenarPrecioSelected();
+        view.showOrdenarDistanciaDeselected();
+        // Creo que aqui iria el codigo de la funcionalidad
+
+    }
 }

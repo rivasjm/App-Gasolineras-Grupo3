@@ -1,11 +1,15 @@
 package es.unican.is.appgasolineras.activities.toolbar;
 
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
+
 public class BarraHerramientasPresenter implements IBarraHerramientasContract.Presenter {
-
     private final IBarraHerramientasContract.View view;
-
-    public BarraHerramientasPresenter(IBarraHerramientasContract.View view) {
+    private final IPrefs prefs;
+    public final static String ORDENAR="Ordenar";
+    public BarraHerramientasPresenter(IBarraHerramientasContract.View view, final IPrefs  prefs ) {
         this.view = view;
+        this.prefs = prefs;
     }
 
     @Override
@@ -31,6 +35,7 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     @Override
     public void onLogoClicked() {
         view.openMainView();
+        this.prefs.putInt(ORDENAR,0);
     }
 
     @Override
@@ -45,7 +50,7 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     public void onOrdenarPrecioClicked() {
         view.showOrdenarPrecioSelected();
         view.showOrdenarDistanciaDeselected();
-        // Creo que aqui iria el codigo de la funcionalidad
-
+        this.prefs.putInt(ORDENAR,2);
+        view.openMainView();
     }
 }

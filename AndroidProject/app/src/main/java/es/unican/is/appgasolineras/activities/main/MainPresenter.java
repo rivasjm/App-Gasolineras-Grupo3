@@ -1,8 +1,14 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailPresenter;
 import es.unican.is.appgasolineras.common.Callback;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
@@ -13,10 +19,13 @@ public class MainPresenter implements IMainContract.Presenter {
 
     private List<Gasolinera> shownGasolineras;
 
-    public MainPresenter(IMainContract.View view) {
-        this.view = view;
-    }
+    private final IPrefs prefs;
+    public MainPresenter(IMainContract.View view, IPrefs prefs) {
 
+        this.view = view;
+        this.prefs=prefs;
+    }
+    //añadir el IPref
     @Override
     public void init() {
         if (repository == null) {
@@ -44,14 +53,34 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         });
     }
-
+    private void ordenarPrecio(){
+        Collections.sort(shownGasolineras, new Comparator<Gasolinera>(){
+            @Override
+            public int compare(Gasolinera g1, Gasolinera g2) {
+                GasolineraDetailPresenter sumarioA = new GasolineraDetailPresenter(g1);
+                GasolineraDetailPresenter sumarioB = new GasolineraDetailPresenter(g2);
+                return sumarioA.getPrecioSumario().compareToIgnoreCase(sumarioB.getPrecioSumario());
+            }
+        });
+    }
+    private void ordenar(int sort){
+        if(sort==2){
+            ordenarPrecio();
+        }
+    }
     private void doSyncInit() {
         List<Gasolinera> data = repository.getGasolineras();
 
         if (data != null) {
-            view.showGasolineras(data);
+            int sort = prefs.getInt(ORDENAR);
             shownGasolineras = data;
-            view.showLoadCorrect(data.size());
+            if(sort!=0){
+                ordenar(sort);
+            }
+
+            view.showGasolineras(shownGasolineras);
+
+            view.showLoadCorrect(shownGasolineras.size());
 
         } else {
             shownGasolineras = null;

@@ -20,18 +20,21 @@ import es.unican.is.appgasolineras.activities.convenios.ConveniosView;
 import es.unican.is.appgasolineras.activities.historialRepostajes.HistorialRepostajesView;
 import es.unican.is.appgasolineras.activities.info.InfoView;
 import es.unican.is.appgasolineras.activities.main.MainView;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 
 public class BarraHerramientasView extends AppCompatActivity implements IBarraHerramientasContract.View {
-
+    //añadir el pref para guardar
     private IBarraHerramientasContract.Presenter presenter;
     private Toolbar toolbar;
     private AppCompatActivity activity;
+    private Prefs prefs;
     Menu menu;
 
     public BarraHerramientasView(Toolbar toolbar, AppCompatActivity activity) {
         this.toolbar = toolbar;
         this.activity = activity;
-        presenter = new BarraHerramientasPresenter(this);
+        this.prefs=Prefs.from(activity);
+        presenter = new BarraHerramientasPresenter(this,this.prefs);
         setUpToolBar();
     }
 
@@ -145,6 +148,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public void openMainView() {
         Intent intent = new Intent(activity, MainView.class);
         activity.startActivity(intent);
+        //TODO: se crea la actividad, pero se necesita especificar que se quiere ordenar y se debe considerar que no siempre que se crea la actividad se quiere ordenar → home button
     }
 
     @Override

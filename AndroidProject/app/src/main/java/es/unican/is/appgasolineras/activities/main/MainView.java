@@ -17,6 +17,7 @@ import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.convenios.ConveniosView;
 import es.unican.is.appgasolineras.activities.historialRepostajes.HistorialRepostajesView;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -27,7 +28,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     private IMainContract.Presenter presenter;
     private BarraHerramientasView barraHerramientasView;
-
+    private Prefs prefs;
     /*
     Activity lifecycle methods
      */
@@ -41,11 +42,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        this.prefs=Prefs.from(this);
         // Toolbar
         barraHerramientasView = new BarraHerramientasView(findViewById(R.id.toolbar), this);
 
-        presenter = new MainPresenter(this);
+        presenter = new MainPresenter(this,prefs);
         presenter.init();
         this.init();
     }

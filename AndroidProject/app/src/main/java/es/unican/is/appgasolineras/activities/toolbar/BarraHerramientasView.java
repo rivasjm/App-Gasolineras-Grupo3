@@ -101,7 +101,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         }
         if(this.prefs.getInt(ORDENAR)==2){
             showOrdenarPrecioSelected();
-        }
+        } // TODO ver si falta algo para distancia o las dos
         return true;
     }
 

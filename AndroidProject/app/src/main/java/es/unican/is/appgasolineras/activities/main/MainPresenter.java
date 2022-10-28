@@ -28,6 +28,7 @@ public class MainPresenter implements IMainContract.Presenter {
     //añadir el IPref
     @Override
     public void init() {
+        //TODO gestionar preferencia
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }

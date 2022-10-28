@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.model;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,9 +9,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
-
-import es.unican.is.appgasolineras.common.ILocation;
-import es.unican.is.appgasolineras.common.Location;
 
 /**
  * Class that represents a Gas Station, with the attributes defined in the following REST API
@@ -119,9 +117,11 @@ public class Gasolinera implements Parcelable {
      * numeros reales.
      * @return La ubicacion
      */
-    public ILocation getLocation() {
-        return new Location(Double.parseDouble(this.longitud),
-                Double.parseDouble(this.latitud));
+    public Location getLocation() {
+        Location loc = new Location(""); // ubicacion vacia
+        loc.setLongitude(Double.parseDouble(this.longitud));
+        loc.setAltitude(Double.parseDouble(this.latitud));
+        return loc;
     }
 
     /**

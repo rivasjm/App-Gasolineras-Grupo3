@@ -19,6 +19,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void init() {
+        //TODO gestionar preferencia
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }

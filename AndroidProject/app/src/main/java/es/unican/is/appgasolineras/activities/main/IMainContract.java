@@ -27,6 +27,8 @@ public interface IMainContract {
          * @param index the index of the gas station (position in the list)
          */
         void onGasolineraClicked(int index);
+
+
     }
 
     /**

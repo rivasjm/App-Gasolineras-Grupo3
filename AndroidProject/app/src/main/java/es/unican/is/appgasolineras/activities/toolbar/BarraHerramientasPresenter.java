@@ -48,9 +48,18 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
 
     @Override
     public void onOrdenarPrecioClicked() {
-        view.showOrdenarPrecioSelected();
-        view.showOrdenarDistanciaDeselected();
-        this.prefs.putInt(ORDENAR,2);
-        view.openMainView();
+        if(this.prefs.getInt(ORDENAR)!=2){
+            view.showOrdenarPrecioSelected();
+            view.showOrdenarDistanciaDeselected();
+            this.prefs.putInt(ORDENAR,2);
+            view.openMainView();
+        }
+        else{
+            if(this.prefs.getInt(ORDENAR)==2){
+                view.showOrdenarPrecioDeselected();
+                this.prefs.putInt(ORDENAR,0);
+                view.openMainView();
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.toolbar;
 
+import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
+
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,8 +36,10 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         this.toolbar = toolbar;
         this.activity = activity;
         this.prefs=Prefs.from(activity);
+
         presenter = new BarraHerramientasPresenter(this,this.prefs);
         setUpToolBar();
+
     }
 
     /**
@@ -57,6 +61,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
             }
         });
         activity.getSupportActionBar().setDisplayUseLogoEnabled(true);
+
     }
 
     /**
@@ -93,6 +98,9 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
             menuInflater.inflate(R.menu.main_menu_order, menu);
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
+        }
+        if(this.prefs.getInt(ORDENAR)==2){
+            showOrdenarPrecioSelected();
         }
         return true;
     }

@@ -1,10 +1,13 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,7 +53,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         presenter.init();
         this.init();
     }
+    @Override
+    protected void onDestroy(){
 
+        Log.d("destroy", "onDestroy: ");
+
+        this.prefs.putInt(ORDENAR,0);
+        Log.d("destroy", "....:"+this.prefs.getInt(ORDENAR));
+        super.onDestroy();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return barraHerramientasView.onCreateOptionsMenu(menu, true);

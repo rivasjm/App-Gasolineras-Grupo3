@@ -41,7 +41,9 @@ public interface IPrefs {
      * @return the integer
      */
     public int getInt(String key);
-
+    // 0→ no se ordena
+    //1→ distancia
+    //2→ precio
     /**
      * Put an integer in the preferences store
      * @param key the key of the integer

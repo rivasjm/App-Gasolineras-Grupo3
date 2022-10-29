@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.model;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -35,7 +36,7 @@ public class Gasolinera implements Parcelable {
     @SerializedName(value="Horario")                private String schedule;
 
     @SerializedName(value = "Latitud")              private String latitud;
-    @SerializedName(value = "Longitud")             private String longitud;
+    @SerializedName(value = "Longitud (WGS84)")   private String longitud;
 
     public Gasolinera() {
         id = "0";
@@ -119,9 +120,20 @@ public class Gasolinera implements Parcelable {
      */
     public Location getLocation() {
         Location loc = new Location(""); // ubicacion vacia
-        loc.setLongitude(Double.parseDouble(this.longitud));
-        loc.setAltitude(Double.parseDouble(this.latitud));
+        loc.setLongitude(Double.parseDouble(this.longitud.replace(',', '.')));
+        loc.setAltitude(Double.parseDouble(this.latitud.replace(',', '.')));
         return loc;
+    }
+
+    /**
+     * Devuelve la distancia en km a la ubicacion actual, con coma decimal.
+     * @return
+     */
+    public String getDistanceToCurrent() { //TODO ver si hay que meter ubicacion actual como argumento o no
+        Location gasolinera = this.getLocation();
+        double distancia = 4.5; //TODO
+        String txt = String.format("%.2f", distancia).replace('.', ',');
+        return txt;
     }
 
     /**

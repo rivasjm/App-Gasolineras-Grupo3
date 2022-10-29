@@ -96,4 +96,14 @@ public class MainPresenter implements IMainContract.Presenter {
             view.openGasolineraDetails(gasolinera);
         }
     }
+
+    @Override
+    public void onAceptarGpsClicked() {
+        //TODO es el modo de ver sin la distancia
+    }
+
+    @Override
+    public void onReintentarGpsClicked() {
+        view.init(); // TODO ver si es otro metodo, no tiene refresh o recreate
+    }
 }

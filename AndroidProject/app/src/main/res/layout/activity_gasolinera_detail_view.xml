@@ -47,13 +47,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="76dp"
         android:layout_marginBottom="84dp"
         android:text="Horario"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.67"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvtTxtHorario" />
 
@@ -61,14 +59,13 @@
         android:id="@+id/tvPrecioSumario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:text="Precio"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tvMunicipio"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="@+id/tvMunicipio"
-        app:layout_constraintTop_toBottomOf="@+id/tvMunicipio" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTxtDistancia" />
 
     <TextView
         android:id="@+id/tvPrecioGasolina95"
@@ -97,7 +94,7 @@
         android:id="@+id/tvTxtPrecioGasolina95"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:text="Gasolina 95"
         android:textAlignment="viewEnd"
         android:textSize="16sp"
@@ -124,8 +121,29 @@
         android:text="Horario"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/tvHorario"
-        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="@+id/tvHorario"
         app:layout_constraintTop_toBottomOf="@+id/tvTxtDieselA" />
+
+    <TextView
+        android:id="@+id/tvTxtDistancia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/detail_distancia"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvDistancia"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMunicipio" />
+
+    <TextView
+        android:id="@+id/tvDistancia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="92dp"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTxtDistancia"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="4,50 km" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

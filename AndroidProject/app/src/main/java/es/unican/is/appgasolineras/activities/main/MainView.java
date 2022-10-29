@@ -110,6 +110,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     @Override
+    public void showGpsError() {
+        //TODO
+    }
+
+    @Override
     public void openGasolineraDetails(Gasolinera gasolinera) {
         Intent intent = new Intent(this, GasolineraDetailView.class);
         intent.putExtra(GasolineraDetailView.INTENT_GASOLINERA, gasolinera);

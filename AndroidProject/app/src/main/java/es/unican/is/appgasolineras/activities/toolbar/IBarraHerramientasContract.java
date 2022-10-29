@@ -49,7 +49,7 @@ public interface IBarraHerramientasContract {
          * Este metodo debe ser usado por la View para notificar al Presenter que el icono
          * de ordenar gasolineras por precio ha sido pulsado.
          */
-        void onOrdenarPrecioClicked();
+        void onOrdenarPrecioAscClicked();
     }
 
     /**
@@ -93,8 +93,10 @@ public interface IBarraHerramientasContract {
          * Se solicita a la View que muestre un mensaje informativo de que la ordenacion por
          * precio ha sido aplicada. Así como destacar su respectivo boton.
          */
-        void showOrdenarPrecioSelected();
+        void showOrdenarPrecioAscSelected();
 
+        //TODO modificar esta parte, esto seria dar logica a la vista(mal), hay que hacer solo 2
+        // metodos (los de arriba) y que estos se encarguen de que pasa en cada caso
         /**
          * Se solicita a la View que muestre el icono de ordenar por distancia deseleccionado.
          */

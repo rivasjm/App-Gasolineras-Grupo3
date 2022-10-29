@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RepostApp</string>
+    <string name="app_name">RepostApp</string> <!-- Nombre de la aplicacion -->
     <string name="gasolina95label">Gasolina</string>
     <string name="dieselAlabel">Diesel</string>
     <string name="refresh">Recargar</string>

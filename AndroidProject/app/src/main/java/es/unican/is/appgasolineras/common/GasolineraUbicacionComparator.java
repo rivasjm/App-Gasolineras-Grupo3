@@ -29,9 +29,9 @@ public class GasolineraUbicacionComparator implements Comparator<Gasolinera> {
         double d1 = ubicacionBase.distanceTo(gasolinera.getLocation());
         double d2 = ubicacionBase.distanceTo(otra.getLocation());
         if (d1 < d2) {
-            return 1;
-        } else if (d2 > d1) {
             return -1;
+        } else if (d1 > d2) {
+            return 1;
         } else {
             return 0;
         }

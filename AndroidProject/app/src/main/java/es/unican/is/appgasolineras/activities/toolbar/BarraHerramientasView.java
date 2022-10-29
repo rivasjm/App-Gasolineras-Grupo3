@@ -54,12 +54,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         }
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         activity.getSupportActionBar().setLogo(R.drawable.logo_repost_app_50);
-        setLogoOnClickListener(toolbar, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.onLogoClicked();
-            }
-        });
+        setLogoOnClickListener(toolbar, view -> presenter.onLogoClicked());
         activity.getSupportActionBar().setDisplayUseLogoEnabled(true);
 
     }
@@ -79,10 +74,8 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
             if(logoView != null) {
                 logoView.setOnClickListener(listener);
             }
-        }
-        catch (NoSuchFieldException |
-                IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            // No hago nada
         }
     }
 
@@ -110,6 +103,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      * @param item
      * @return
      */
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuInfo:
@@ -129,6 +123,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
                 return true;
             case R.id.menuPrecio:
                 presenter.onOrdenarPrecioClicked();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

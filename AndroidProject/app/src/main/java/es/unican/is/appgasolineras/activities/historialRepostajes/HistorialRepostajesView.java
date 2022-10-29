@@ -71,24 +71,8 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
     public void showLoadError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.repostajesFalloAccesoDatos);
-        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.onAceptarClicked();
-            }
-        });
-        builder.setNegativeButton(R.string.reintentar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.onReintentarClicked();
-            }
-        });
-        builder.setPositiveButton("Aceptar", ((DialogInterface dialogInf1, int which) -> {
-            presenter.onAceptarClicked();
-        }));
-        builder.setNegativeButton(R.string.reintentar, ((DialogInterface dialogInf2, int which) -> {
-            presenter.onReintentarClicked();
-        }));
+        builder.setPositiveButton("Aceptar", (dialogInterface, i) ->  presenter.onAceptarClicked());
+        builder.setNegativeButton(R.string.reintentar, (dialogInterface, i) -> presenter.onReintentarClicked());
         AlertDialog dialog = builder.create();
         dialog.show();
     }

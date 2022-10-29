@@ -55,14 +55,7 @@ public class MainPresenter implements IMainContract.Presenter {
         });
     }
     private void ordenarPrecio(){
-        Collections.sort(shownGasolineras, new Comparator<Gasolinera>(){
-            @Override
-            public int compare(Gasolinera g1, Gasolinera g2) {
-                GasolineraDetailPresenter sumarioA = new GasolineraDetailPresenter(g1);
-                GasolineraDetailPresenter sumarioB = new GasolineraDetailPresenter(g2);
-                return sumarioA.getPrecioSumario().compareToIgnoreCase(sumarioB.getPrecioSumario());
-            }
-        });
+        Collections.sort(shownGasolineras, (g1, g2) -> (new GasolineraDetailPresenter(g1).getPrecioSumario().compareToIgnoreCase((new GasolineraDetailPresenter(g2)).getPrecioSumario())));
     }
     private void ordenar(int sort){
         if(sort==2){

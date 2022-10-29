@@ -76,18 +76,8 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
     public void showLoadError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.conveniosFalloAccesoDatos);
-        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.onErrorAceptarClicked();
-            }
-        });
-        builder.setNegativeButton(R.string.reintentar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.onErrorReintentarClicked();
-            }
-        });
+        builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onErrorAceptarClicked());
+        builder.setNegativeButton(R.string.reintentar, (dialogInterface, i) -> presenter.onErrorReintentarClicked());
         AlertDialog dialog = builder.create();
         dialog.show();
     }

@@ -155,7 +155,6 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public void openMainView() {
         Intent intent = new Intent(activity, MainView.class);
         activity.startActivity(intent);
-        //TODO: se crea la actividad, pero se necesita especificar que se quiere ordenar y se debe considerar que no siempre que se crea la actividad se quiere ordenar → home button
     }
 
     @Override

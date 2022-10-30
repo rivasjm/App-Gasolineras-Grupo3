@@ -3,11 +3,10 @@ package es.unican.is.appgasolineras.activities.main;
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import es.unican.is.appgasolineras.activities.detail.GasolineraDetailPresenter;
 import es.unican.is.appgasolineras.common.Callback;
+import es.unican.is.appgasolineras.common.GasolineraPrecioComparator;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -25,7 +24,7 @@ public class MainPresenter implements IMainContract.Presenter {
         this.view = view;
         this.prefs=prefs;
     }
-    //añadir el IPref
+
     @Override
     public void init() {
         //TODO gestionar preferencia
@@ -54,19 +53,12 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         });
     }
-    private void ordenarPrecio(){
-        Collections.sort(shownGasolineras, new Comparator<Gasolinera>(){
-            @Override
-            public int compare(Gasolinera g1, Gasolinera g2) {
-                GasolineraDetailPresenter sumarioA = new GasolineraDetailPresenter(g1);
-                GasolineraDetailPresenter sumarioB = new GasolineraDetailPresenter(g2);
-                return sumarioA.getPrecioSumario().compareToIgnoreCase(sumarioB.getPrecioSumario());
-            }
-        });
+    private void ordenarPorPrecio(){
+        Collections.sort(shownGasolineras, new GasolineraPrecioComparator(){});
     }
     private void ordenar(int sort){
         if(sort==2){
-            ordenarPrecio();
+            ordenarPorPrecio();
         }
     }
     private void doSyncInit() {

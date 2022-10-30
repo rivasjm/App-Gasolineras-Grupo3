@@ -55,11 +55,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
     @Override
     protected void onDestroy(){
-
-        Log.d("destroy", "onDestroy: ");
-
         this.prefs.putInt(ORDENAR,0);
-        Log.d("destroy", "....:"+this.prefs.getInt(ORDENAR));
         super.onDestroy();
     }
     @Override

@@ -2,6 +2,10 @@ package es.unican.is.appgasolineras.activities.main;
 
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
 
+import android.location.Location;
+
+import androidx.appcompat.app.AlertDialog;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -15,10 +19,10 @@ public class MainPresenter implements IMainContract.Presenter {
 
     private final IMainContract.View view;
     private IGasolinerasRepository repository;
-
     private List<Gasolinera> shownGasolineras;
-
     private final IPrefs prefs;
+    private Location location;
+
     public MainPresenter(IMainContract.View view, IPrefs prefs) {
 
         this.view = view;
@@ -35,6 +39,17 @@ public class MainPresenter implements IMainContract.Presenter {
         if (repository != null) {
             doSyncInit();
         }
+        // obtener ubicacion y respuesta en caso de fallo
+        location = view.getLocation(new Callback<Location>() {
+            @Override
+            public void onSuccess(Location data) {
+                // no hacer nada, ya se guarda la ubicacion
+            }
+            @Override
+            public void onFailure() {
+                view.showGpsError(); // mostrar error ubicacion
+            }
+        });
     }
 
     private void doAsyncInit() {
@@ -56,11 +71,13 @@ public class MainPresenter implements IMainContract.Presenter {
     private void ordenarPorPrecio(){
         Collections.sort(shownGasolineras, new GasolineraPrecioComparator(){});
     }
+
     private void ordenar(int sort){
         if(sort==2){
             ordenarPorPrecio();
         }
     }
+
     private void doSyncInit() {
         List<Gasolinera> data = repository.getGasolineras();
 
@@ -90,12 +107,11 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     @Override
-    public void onAceptarGpsClicked() {
-        //TODO es el modo de ver sin la distancia
-    }
-
-    @Override
     public void onReintentarGpsClicked() {
         view.init(); // TODO ver si es otro metodo, no tiene refresh o recreate
+    }
+
+    public void getUbicacionActual() {
+
     }
 }

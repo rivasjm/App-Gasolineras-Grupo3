@@ -8,7 +8,7 @@ import android.location.Location;
 public class DistanceUtilities {
 
     /**
-     * Devuelve la distancia entre dos ubicaciones.
+     * Devuelve la distancia entre dos ubicaciones como string.
      * @param l1
      * @param l2
      * @return La distancia en km, con 2 decimales y coma decimal, entre las 2
@@ -18,8 +18,9 @@ public class DistanceUtilities {
         if (l1 == null || l2 == null) {
             return "-";
         }
-        double distancia = l1.distanceTo(l2);
-        String txt = String.format("%.2f", distancia).replace('.', ',');
+        double distance = l1.distanceTo(l2) / 1000; // por defecto es en metros
+
+        String txt = String.format("%.2f", distance).replace('.', ',');
         return txt;
     }
 }

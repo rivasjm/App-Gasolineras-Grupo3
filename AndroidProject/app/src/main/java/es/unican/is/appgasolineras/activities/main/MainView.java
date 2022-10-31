@@ -5,33 +5,25 @@ import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPr
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.location.Priority;
 
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.convenios.ConveniosView;
-import es.unican.is.appgasolineras.activities.historialRepostajes.HistorialRepostajesView;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.common.Callback;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
@@ -39,7 +31,6 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
-import es.unican.is.appgasolineras.activities.info.InfoView;
 
 public class MainView extends AppCompatActivity implements IMainContract.View {
 
@@ -79,21 +70,25 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * Respuesta para el presenter de la ubicacion del dispositivo.
      * @param cb Callback
      * @return null si no se tienen permisos de ubicacion o hay un fallo raro, la ultima ubicacion
-     * del dispositivo si se tienen permisos y todo va bien.
+     * del dispositivo si se tienen permisos y va bien.
      */
     public Location getLocation(Callback<Location> cb) {
+        // ver si se tiene alguno de los permisos
         if (ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(
+                && ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO ver si hacer permission request de Android, es mejor que la emergente
             return null; // devuelvo null si no tiene los permisos
         }
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this,
+        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+                .addOnSuccessListener(this,
                 location -> {
-                    // Got last known location. In some rare situations this can be null.
+                    // Got current location. In some rare situations this can be null.
                     if (location != null) {
                         // devolver la ubicacion obtenida
                         currentLocation = location;
+                        cb.onSuccess(currentLocation); // pasar al success la ubicacion
                     }
                 });
         return currentLocation;

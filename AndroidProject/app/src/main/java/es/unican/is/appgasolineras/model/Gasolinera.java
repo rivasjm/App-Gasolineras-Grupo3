@@ -121,7 +121,6 @@ public class Gasolinera implements Parcelable {
         Location loc = new Location("");
         loc.setLongitude(Double.parseDouble(this.longitud.replace(',', '.')));
         loc.setLatitude(Double.parseDouble(this.latitud.replace(',', '.')));
-        loc.setAltitude(0); // altura desconocida, nivel del mar
         return loc;
     }
 
@@ -178,8 +177,8 @@ public class Gasolinera implements Parcelable {
         dieselA = in.readString();
         normal95 = in.readString();
         schedule = in.readString();
-        longitud = in.readString();
         latitud = in.readString();
+        longitud = in.readString();
     }
 
     public static final Creator<Gasolinera> CREATOR = new Creator<Gasolinera>() {

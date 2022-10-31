@@ -65,7 +65,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
 
         // distance
         showInfo(convertView, R.id.tvDistance, DistanceUtilities.
-                distanceBetweenLocations(gasolinera.getLocation(), location));
+                distanceBetweenLocations(gasolinera.getLocation(), location) + " km");
 
         return convertView;
     }

@@ -3,8 +3,7 @@ package es.unican.is.appgasolineras.activities.main;
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
 
 import android.location.Location;
-
-import androidx.appcompat.app.AlertDialog;
+import android.util.Log;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,29 +20,34 @@ public class MainPresenter implements IMainContract.Presenter {
     private IGasolinerasRepository repository;
     private List<Gasolinera> shownGasolineras;
     private final IPrefs prefs;
-    private Location location;
 
     public MainPresenter(IMainContract.View view, IPrefs prefs) {
 
         this.view = view;
-        this.prefs=prefs;
+        this.prefs = prefs;
     }
 
     @Override
     public void init() {
-        //TODO gestionar preferencia
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }
-
         if (repository != null) {
             doSyncInit();
         }
+
         // obtener ubicacion y respuesta en caso de fallo
-        location = view.getLocation(new Callback<Location>() {
+        view.getLocation(new Callback<>() {
             @Override
-            public void onSuccess(Location data) {
-                // no hacer nada, ya se guarda la ubicacion
+            public void onSuccess(Location data) { // en data recibe Location
+                // guardar ubicacion en preferencias para el resto de actividades
+                prefs.putString("longitud", Double.toString(data.getLongitude()));
+                prefs.putString("latitud", Double.toString(data.getLatitude()));
+                Log.d("IVAN", "Recogido: " + data);
+
+
+                // recargar las gasolineras con la distancia
+                MainPresenter.this.doSyncInit();
             }
             @Override
             public void onFailure() {
@@ -106,12 +110,9 @@ public class MainPresenter implements IMainContract.Presenter {
         }
     }
 
+    // no hay metodo de aceptar, porque solo cierra la ventana y eso se hace mejor desde la vista
     @Override
     public void onReintentarGpsClicked() {
         view.init(); // TODO ver si es otro metodo, no tiene refresh o recreate
-    }
-
-    public void getUbicacionActual() {
-
     }
 }

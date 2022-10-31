@@ -2,7 +2,10 @@ package es.unican.is.appgasolineras.activities.detail;
 
 
 import android.location.Location;
+import android.util.Log;
 
+import es.unican.is.appgasolineras.common.DistanceUtilities;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 
 /**
@@ -12,7 +15,17 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 public class GasolineraDetailPresenter {
 
     private Gasolinera gasolinera;
+    private IPrefs prefs;
 
+    /**
+     * Constructor, pasa la gasolinera.
+     * @param gasolinera la gasolinera
+     * @param prefs Preferencias de la aplicacion para recoger la ubicacion
+     */
+    public GasolineraDetailPresenter(Gasolinera gasolinera, IPrefs prefs) {
+        this.gasolinera = gasolinera;
+        this.prefs = prefs;
+    }
     /**
      * Constructor, pasa la gasolinera.
      * @param gasolinera la gasolinera
@@ -69,12 +82,21 @@ public class GasolineraDetailPresenter {
     }
 
     public String getDistancia() {
-        if (gasolinera.getLocation() == null) {
-            return "-";
+        String txt = "-";
+        Location actual;
+        try {
+            actual = new Location("");
+            actual.setLongitude(Double.parseDouble(prefs.getString("longitud")));
+            actual.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+            //Log.d("IVAN", "Pref: " + prefs.getString("latitud") + ", " + prefs.getString("longitud"));
+        } catch (NumberFormatException e) {
+            // si no recoge un numero (la preferencia no existe)
+            return txt;
         }
-        //TODO ver donde se obtiene ubicacion (view al usar Android, argumentos, ...)
-        // hallar distancia, metodo gasolinera.getDistanceToCurrent() o el que sea
-        String distancia = String.format("%.2f km", 4.53).replace('.', ',');
-        return distancia;
+        Location gasLoc = gasolinera.getLocation();
+        if (gasLoc != null) {
+            txt = DistanceUtilities.distanceBetweenLocations(gasLoc, actual) + " km";
+        }
+        return txt;
     }
 }

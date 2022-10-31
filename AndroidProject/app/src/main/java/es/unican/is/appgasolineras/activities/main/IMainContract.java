@@ -27,6 +27,18 @@ public interface IMainContract {
          * @param index the index of the gas station (position in the list)
          */
         void onGasolineraClicked(int index);
+
+        /**
+         * Metodo para cuando se pulsa el boton "aceptar" en la ventana emergente por
+         * fallo al acceder a la ubicacion actual.
+         */
+        void onAceptarGpsClicked();
+
+        /**
+         * Metodo para cuando se pulsa el boton "reintentar" en la ventana emergente por
+         * fallo al acceder a la ubicacion actual.
+         */
+        void onReintentarGpsClicked();
     }
 
     /**
@@ -68,6 +80,12 @@ public interface IMainContract {
          * loading the gas stations
          */
         void showLoadError();
+
+        /**
+         * The View is requested to show an alert informing that there was an error while
+         * getting the current location
+         */
+        void showGpsError();
 
         /**
          * The View is requested to open a Details view on the given gas station

@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 
 import java.lang.reflect.Field;
@@ -93,7 +92,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
             menuInflater.inflate(R.menu.main_menu, menu);
         }
         if(this.prefs.getInt(ORDENAR)==2){
-            showOrdenarPrecioSelected();
+            showOrdenarPrecioAscSelected();
         } // TODO ver si falta algo para distancia o las dos
         return true;
     }
@@ -122,8 +121,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
                 presenter.onOrdenarDistanciaClicked();
                 return true;
             case R.id.menuPrecio:
-                presenter.onOrdenarPrecioClicked();
-                return true;
+                presenter.onOrdenarPrecioAscClicked();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -151,7 +149,6 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public void openMainView() {
         Intent intent = new Intent(activity, MainView.class);
         activity.startActivity(intent);
-        //TODO: se crea la actividad, pero se necesita especificar que se quiere ordenar y se debe considerar que no siempre que se crea la actividad se quiere ordenar → home button
     }
 
     @Override
@@ -168,7 +165,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     }
 
     @Override
-    public void showOrdenarPrecioSelected() {
+    public void showOrdenarPrecioAscSelected() {
         String text = activity.getResources().getString(R.string.ordenarPrecioAplicado);
         Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
 

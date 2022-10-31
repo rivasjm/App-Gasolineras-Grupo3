@@ -26,6 +26,7 @@ public class GasolineraDetailView extends AppCompatActivity {
         TextView tvPrecioDieselA = findViewById(R.id.tvPrecioDieselA);
         TextView tvPrecioGasolina95 = findViewById(R.id.tvPrecioGasolina95);
         TextView tvPrecioSumario =findViewById(R.id.tvPrecioSumario);
+        TextView tvDistancia = findViewById(R.id.tvDistancia);
 
 
         // Get Gas Station from the intent that triggered this activity
@@ -44,6 +45,7 @@ public class GasolineraDetailView extends AppCompatActivity {
         tvPrecioDieselA.setText(gs.getDieselA());
         tvPrecioGasolina95.setText(gs.getNormal95());
         tvPrecioSumario.setText(gs.getPrecioSumario());
+        tvDistancia.setText(gs.getDistancia());
 
     }
 }

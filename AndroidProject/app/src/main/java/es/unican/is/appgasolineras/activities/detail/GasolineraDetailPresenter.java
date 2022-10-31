@@ -1,6 +1,8 @@
 package es.unican.is.appgasolineras.activities.detail;
 
 
+import android.location.Location;
+
 import es.unican.is.appgasolineras.model.Gasolinera;
 
 /**
@@ -24,36 +26,10 @@ public class GasolineraDetailPresenter {
      * @return String con el precio sumario en dos decimales, - si un precio es negativo
      */
     public String getPrecioSumario() {
-        double precioSumario;
-        double precioDiesel;
-        double precio95;
-        try {
-             precioDiesel = Double.parseDouble(
-                    gasolinera.getDieselA().replace(',', '.'));
-        } catch (NumberFormatException e){
-            precioDiesel = 0;
-        }
-        try {
-            precio95 = Double.parseDouble(
-                    gasolinera.getNormal95().replace(',', '.'));
-        } catch (NumberFormatException e){
-            precio95 = 0;
-        }
-        // gestionar que se devuelve dependiendo de los valores disponibles
-        if (precio95 <= 0 && precioDiesel <= 0) {
+        if (gasolinera.getPrecioSumario() == null || gasolinera.getPrecioSumario().equals("")) {
             return "-";
-        } else if (precio95 <= 0) {
-            precioSumario = precioDiesel;
-        } else if (precioDiesel <= 0) {
-            precioSumario = precio95;
-        } else {
-            precioSumario = (precio95 * 2+ precioDiesel * 1) / 3.0;
         }
-        // mostrar precio con coma
-        String precio = Double.toString(precioSumario);
-        precio = precio.replace('.', ',');
-        precio = precio.substring(0, 4);
-        return precio;
+        return gasolinera.getPrecioSumario();
     }
 
     public String getRotulo() {
@@ -62,19 +38,6 @@ public class GasolineraDetailPresenter {
         }
         return gasolinera.getRotulo();
     }
-
-    public String getCp() {
-        if (gasolinera.getCp() == null || gasolinera.getCp().equals("")) {
-            return "-";
-        }
-        return gasolinera.getCp();
-    }
-
-    public String getDireccion() {
-        if (gasolinera.getDireccion() == null || gasolinera.getDireccion().equals("")) {
-        return "-";
-    }
-        return gasolinera.getDireccion(); }
 
     public String getMunicipio() {
         if (gasolinera.getMunicipio() == null || gasolinera.getMunicipio().equals("")) {
@@ -103,5 +66,15 @@ public class GasolineraDetailPresenter {
             return "-";
         }
         return gasolinera.getSchedule();
+    }
+
+    public String getDistancia() {
+        if (gasolinera.getLocation() == null) {
+            return "-";
+        }
+        //TODO ver donde se obtiene ubicacion (view al usar Android, argumentos, ...)
+        // hallar distancia, metodo gasolinera.getDistanceToCurrent() o el que sea
+        String distancia = String.format("%.2f km", 4.53).replace('.', ',');
+        return distancia;
     }
 }

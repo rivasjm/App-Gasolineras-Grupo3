@@ -52,6 +52,9 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
         showInfo(convertView, R.id.tvDieselALabel, labelDieselALabel + ":");
         showInfo(convertView, R.id.tvDieselA, gasolinera.getDieselA());
 
+        // distance TODO (no tocar lo otro porque tiene string automatico
+        showInfo(convertView, R.id.tvDistance, gasolinera.getDistanceToCurrent()); // TODO a la espera
+
         return convertView;
     }
 

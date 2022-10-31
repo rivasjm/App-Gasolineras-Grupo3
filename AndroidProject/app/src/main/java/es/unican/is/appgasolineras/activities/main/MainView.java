@@ -55,11 +55,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
     @Override
     protected void onDestroy(){
-
-        Log.d("destroy", "onDestroy: ");
-
         this.prefs.putInt(ORDENAR,0);
-        Log.d("destroy", "....:"+this.prefs.getInt(ORDENAR));
         super.onDestroy();
     }
     @Override
@@ -107,6 +103,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showLoadError() {
         String text = getResources().getString(R.string.loadError);
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showGpsError() {
+        //TODO
     }
 
     @Override

@@ -1,7 +1,6 @@
 package es.unican.is.appgasolineras.activities.toolbar;
 
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
-import es.unican.is.appgasolineras.common.prefs.Prefs;
 
 public class BarraHerramientasPresenter implements IBarraHerramientasContract.Presenter {
     private final IBarraHerramientasContract.View view;
@@ -47,16 +46,13 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     }
 
     @Override
-    public void onOrdenarPrecioClicked() {
+    public void onOrdenarPrecioAscClicked() {
         if(this.prefs.getInt(ORDENAR)!=2){
-            view.showOrdenarPrecioSelected();
-            view.showOrdenarDistanciaDeselected();
             this.prefs.putInt(ORDENAR,2);
             view.openMainView();
         }
         else{
             if(this.prefs.getInt(ORDENAR)==2){
-                view.showOrdenarPrecioDeselected();
                 this.prefs.putInt(ORDENAR,0);
                 view.openMainView();
             }

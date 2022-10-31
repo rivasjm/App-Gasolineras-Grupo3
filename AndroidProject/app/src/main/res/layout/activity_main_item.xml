@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
         android:layout_marginStart="16dp"
         android:contentDescription="Logo"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,35 +22,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        tools:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/ivLogo"
-        app:layout_constraintTop_toTopOf="@+id/ivLogo" />
+        app:layout_constraintTop_toTopOf="@+id/ivLogo"
+        tools:text="TextView" />
 
     <TextView
         android:id="@+id/tvAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        tools:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/tv95"
         app:layout_constraintStart_toEndOf="@+id/ivLogo"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="TextView" />
 
     <TextView
         android:id="@+id/tv95Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="58dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
-        app:layout_constraintStart_toEndOf="@+id/ivLogo" />
+        app:layout_constraintBottom_toTopOf="@+id/tvDistanceLabel"
+        app:layout_constraintStart_toEndOf="@+id/ivLogo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tv95"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv95Label"
         app:layout_constraintStart_toEndOf="@+id/tv95Label"
         tools:text="TextView" />
 
@@ -71,4 +75,25 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/tv95"
         app:layout_constraintStart_toEndOf="@+id/tv95" />
+
+    <TextView
+        android:id="@+id/tvDistanceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/detail_distancia"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
+        app:layout_constraintStart_toEndOf="@+id/ivLogo"
+        tools:text="Distancia:" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDistanceLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvDistanceLabel"
+        tools:text="5,35 km" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.model;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -35,7 +36,7 @@ public class Gasolinera implements Parcelable {
     @SerializedName(value="Horario")                private String schedule;
 
     @SerializedName(value = "Latitud")              private String latitud;
-    @SerializedName(value = "Longitud")             private String longitud;
+    @SerializedName(value = "Longitud (WGS84)")   private String longitud;
 
     public Gasolinera() {
         id = "0";
@@ -119,9 +120,57 @@ public class Gasolinera implements Parcelable {
      */
     public Location getLocation() {
         Location loc = new Location(""); // ubicacion vacia
-        loc.setLongitude(Double.parseDouble(this.longitud));
-        loc.setAltitude(Double.parseDouble(this.latitud));
+        loc.setLongitude(Double.parseDouble(this.longitud.replace(',', '.')));
+        loc.setAltitude(Double.parseDouble(this.latitud.replace(',', '.')));
         return loc;
+    }
+
+    /**
+     * Devuelve la distancia en km a la ubicacion actual, con coma decimal.
+     * @return
+     */
+    public String getDistanceToCurrent() { //TODO ver si hay que meter ubicacion actual como argumento o no
+        Location gasolinera = this.getLocation();
+        double distancia = 4.5; //TODO
+        String txt = String.format("%.2f", distancia).replace('.', ',');
+        return txt;
+    }
+
+    /**
+     * Retorna el precio sumario de una gasolinera (media del diesel A y gasolina 95).
+     * @return String con el precio sumario en dos decimales, - si un precio es negativo
+     */
+    public String getPrecioSumario() {
+        double precioSumario;
+        double precioDiesel;
+        double precio95;
+        try {
+            precioDiesel = Double.parseDouble(
+                    this.getDieselA().replace(',', '.'));
+        } catch (NumberFormatException e){
+            precioDiesel = 0;
+        }
+        try {
+            precio95 = Double.parseDouble(
+                    this.getNormal95().replace(',', '.'));
+        } catch (NumberFormatException e){
+            precio95 = 0;
+        }
+        // gestionar que se devuelve dependiendo de los valores disponibles
+        if (precio95 <= 0 && precioDiesel <= 0) {
+            return "-";
+        } else if (precio95 <= 0) {
+            precioSumario = precioDiesel;
+        } else if (precioDiesel <= 0) {
+            precioSumario = precio95;
+        } else {
+            precioSumario = (precio95 * 2+ precioDiesel * 1) / 3.0;
+        }
+        // mostrar precio con coma
+        String precio = Double.toString(precioSumario);
+        precio = precio.replace('.', ',');
+        precio = precio.substring(0, 4);
+        return precio;
     }
 
     /*

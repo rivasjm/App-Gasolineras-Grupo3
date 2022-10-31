@@ -3,11 +3,10 @@ package es.unican.is.appgasolineras.activities.main;
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import es.unican.is.appgasolineras.activities.detail.GasolineraDetailPresenter;
 import es.unican.is.appgasolineras.common.Callback;
+import es.unican.is.appgasolineras.common.GasolineraPrecioComparator;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -25,7 +24,7 @@ public class MainPresenter implements IMainContract.Presenter {
         this.view = view;
         this.prefs=prefs;
     }
-    //añadir el IPref
+
     @Override
     public void init() {
         //TODO gestionar preferencia
@@ -54,12 +53,12 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         });
     }
-    private void ordenarPrecio(){
-        Collections.sort(shownGasolineras, (g1, g2) -> (new GasolineraDetailPresenter(g1).getPrecioSumario().compareToIgnoreCase((new GasolineraDetailPresenter(g2)).getPrecioSumario())));
+    private void ordenarPorPrecio(){
+        Collections.sort(shownGasolineras, new GasolineraPrecioComparator(){});
     }
     private void ordenar(int sort){
         if(sort==2){
-            ordenarPrecio();
+            ordenarPorPrecio();
         }
     }
     private void doSyncInit() {
@@ -88,5 +87,15 @@ public class MainPresenter implements IMainContract.Presenter {
             Gasolinera gasolinera = shownGasolineras.get(index);
             view.openGasolineraDetails(gasolinera);
         }
+    }
+
+    @Override
+    public void onAceptarGpsClicked() {
+        //TODO es el modo de ver sin la distancia
+    }
+
+    @Override
+    public void onReintentarGpsClicked() {
+        view.init(); // TODO ver si es otro metodo, no tiene refresh o recreate
     }
 }

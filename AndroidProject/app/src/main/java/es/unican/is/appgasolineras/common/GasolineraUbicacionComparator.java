@@ -20,20 +20,14 @@ public class GasolineraUbicacionComparator implements Comparator<Gasolinera> {
      * Compara gasolineras por su distancia a la base.
      * @param gasolinera Una
      * @param otra Otra
-     * @return -1 si Una esta mas cerca que la otra de la ubicacion base
-     *          0 si estan a la misma distancia
-     *          1 si otra esta mas cerca que una de la ubicacion base
+     * @return  <0 si Una esta mas cerca que la otra de la ubicacion base
+     *           0 si estan a la misma distancia
+     *          >0 si otra esta mas cerca que una de la ubicacion base
      */
     @Override
     public int compare(Gasolinera gasolinera, Gasolinera otra) {
         double d1 = ubicacionBase.distanceTo(gasolinera.getLocation());
         double d2 = ubicacionBase.distanceTo(otra.getLocation());
-        if (d1 < d2) {
-            return -1;
-        } else if (d1 > d2) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Double.compare(d1, d2);
     }
 }

@@ -5,7 +5,7 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
 public class BarraHerramientasPresenter implements IBarraHerramientasContract.Presenter {
     private final IBarraHerramientasContract.View view;
     private final IPrefs prefs;
-    public final static String ORDENAR="Ordenar";
+    public final static String ORDENAR = "Ordenar";
     public BarraHerramientasPresenter(IBarraHerramientasContract.View view, final IPrefs  prefs ) {
         this.view = view;
         this.prefs = prefs;

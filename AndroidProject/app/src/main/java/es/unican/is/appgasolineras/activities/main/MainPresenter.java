@@ -2,6 +2,9 @@ package es.unican.is.appgasolineras.activities.main;
 
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
 
+import android.location.Location;
+import android.util.Log;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -15,26 +18,42 @@ public class MainPresenter implements IMainContract.Presenter {
 
     private final IMainContract.View view;
     private IGasolinerasRepository repository;
-
     private List<Gasolinera> shownGasolineras;
-
     private final IPrefs prefs;
+
     public MainPresenter(IMainContract.View view, IPrefs prefs) {
 
         this.view = view;
-        this.prefs=prefs;
+        this.prefs = prefs;
     }
 
     @Override
     public void init() {
-        //TODO gestionar preferencia
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }
-
         if (repository != null) {
             doSyncInit();
         }
+
+        // obtener ubicacion y respuesta en caso de fallo
+        view.getLocation(new Callback<>() {
+            @Override
+            public void onSuccess(Location data) { // en data recibe Location
+                // guardar ubicacion en preferencias para el resto de actividades
+                prefs.putString("longitud", Double.toString(data.getLongitude()));
+                prefs.putString("latitud", Double.toString(data.getLatitude()));
+                Log.d("IVAN", "Recogido: " + data);
+
+
+                // recargar las gasolineras con la distancia
+                MainPresenter.this.doSyncInit();
+            }
+            @Override
+            public void onFailure() {
+                view.showGpsError(); // mostrar error ubicacion
+            }
+        });
     }
 
     private void doAsyncInit() {
@@ -56,11 +75,13 @@ public class MainPresenter implements IMainContract.Presenter {
     private void ordenarPorPrecio(){
         Collections.sort(shownGasolineras, new GasolineraPrecioComparator(){});
     }
+
     private void ordenar(int sort){
         if(sort==2){
             ordenarPorPrecio();
         }
     }
+
     private void doSyncInit() {
         List<Gasolinera> data = repository.getGasolineras();
 
@@ -89,11 +110,7 @@ public class MainPresenter implements IMainContract.Presenter {
         }
     }
 
-    @Override
-    public void onAceptarGpsClicked() {
-        //TODO es el modo de ver sin la distancia
-    }
-
+    // no hay metodo de aceptar, porque solo cierra la ventana y eso se hace mejor desde la vista
     @Override
     public void onReintentarGpsClicked() {
         view.init(); // TODO ver si es otro metodo, no tiene refresh o recreate

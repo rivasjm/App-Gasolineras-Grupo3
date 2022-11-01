@@ -1,7 +1,12 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import android.location.Location;
+
+import androidx.appcompat.app.AlertDialog;
+
 import java.util.List;
 
+import es.unican.is.appgasolineras.common.Callback;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
@@ -22,6 +27,11 @@ public interface IMainContract {
         void init();
 
         /**
+         * Refreshes the list without requesting location again.
+         */
+        void refresh();
+
+        /**
          * This method should be used by the View to notify the Presenter that a Gas Station
          * has been clicked
          * @param index the index of the gas station (position in the list)
@@ -29,16 +39,11 @@ public interface IMainContract {
         void onGasolineraClicked(int index);
 
         /**
-         * Metodo para cuando se pulsa el boton "aceptar" en la ventana emergente por
-         * fallo al acceder a la ubicacion actual.
-         */
-        void onAceptarGpsClicked();
-
-        /**
          * Metodo para cuando se pulsa el boton "reintentar" en la ventana emergente por
          * fallo al acceder a la ubicacion actual.
          */
         void onReintentarGpsClicked();
+
     }
 
     /**
@@ -65,8 +70,9 @@ public interface IMainContract {
         /**
          * The View is requested to show a list of gas stations
          * @param gasolineras the list of gas stations
+         * @param location the current location
          */
-        void showGasolineras(List<Gasolinera> gasolineras);
+        void showGasolineras(List<Gasolinera> gasolineras, Location location);
 
         /**
          * The View is requested to show an alert informing that the gas stations were loaded
@@ -86,6 +92,24 @@ public interface IMainContract {
          * getting the current location
          */
         void showGpsError();
+
+        /**
+         * View is requested to notify the user when sort by distance is enabled.
+         */
+        void showDistanceSort();
+
+        /**
+         * View is requested to notify the user when sort by increasing price is enabled.
+         */
+        void showPriceAscSort();
+
+        /**
+         * Respuesta para el presenter de la ubicacion del dispositivo.
+         * @param cb Callback
+         * @return null si no se tienen permisos de ubicacion o hay un fallo raro, la ultima ubicacion
+         * del dispositivo si se tienen permisos y todo va bien.
+         */
+        Location getLocation(Callback<Location> cb);
 
         /**
          * The View is requested to open a Details view on the given gas station

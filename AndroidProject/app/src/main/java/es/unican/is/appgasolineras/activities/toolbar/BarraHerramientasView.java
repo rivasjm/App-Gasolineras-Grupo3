@@ -34,7 +34,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public BarraHerramientasView(Toolbar toolbar, AppCompatActivity activity) {
         this.toolbar = toolbar;
         this.activity = activity;
-        this.prefs=Prefs.from(activity);
+        this.prefs = Prefs.from(activity);
 
         presenter = new BarraHerramientasPresenter(this,this.prefs);
         setUpToolBar();
@@ -98,9 +98,22 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
         }
-        if(this.prefs.getInt(ORDENAR)==2){
-            showOrdenarPrecioAscSelected();
-        } // TODO ver si falta algo para distancia o las dos
+        // poner iconos ordenacion correctamente
+        int ordenacion = this.prefs.getInt(ORDENAR);
+        switch (ordenacion) {
+            case 1: // distancia
+                showOrdenarDistanciaSelected();
+                showOrdenarPrecioAscDeselected();
+                break;
+            case 2: // precio
+                showOrdenarDistanciaDeselected();
+                showOrdenarPrecioAscSelected();
+                break;
+            default: // sin
+                showOrdenarPrecioAscDeselected();
+                showOrdenarDistanciaDeselected();
+                break;
+        }
         return true;
     }
 
@@ -164,18 +177,12 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
 
     @Override
     public void showOrdenarDistanciaSelected() {
-        String text = activity.getResources().getString(R.string.ordenarDistanciaAplicado);
-        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
-
         menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_selected_32));
         menu.getItem(4).setTitle("DistanciaMarcada");
     }
 
     @Override
     public void showOrdenarPrecioAscSelected() {
-        String text = activity.getResources().getString(R.string.ordenarPrecioAplicado);
-        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
-
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_selected_57));
         menu.getItem(5).setTitle("PrecioMarcado");
     }
@@ -187,7 +194,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     }
 
     @Override
-    public void showOrdenarPrecioDeselected() {
+    public void showOrdenarPrecioAscDeselected() {
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_57));
         menu.getItem(5).setTitle("PrecioNoMarcado");
     }

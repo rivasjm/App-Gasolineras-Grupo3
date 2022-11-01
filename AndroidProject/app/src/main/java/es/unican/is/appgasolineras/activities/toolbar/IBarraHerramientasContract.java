@@ -83,6 +83,7 @@ public interface IBarraHerramientasContract {
          */
         AppCompatActivity getActivity();
 
+        // estos metodos solo actualizan los logos, no hacen mas
         /**
          * Se solicita a la View que muestre un mensaje informativo de que la ordenacion por
          * distancia ha sido aplicada. Así como destacar su respectivo boton.
@@ -95,8 +96,6 @@ public interface IBarraHerramientasContract {
          */
         void showOrdenarPrecioAscSelected();
 
-        //TODO modificar esta parte, esto seria dar logica a la vista(mal), hay que hacer solo 2
-        // metodos (los de arriba) y que estos se encarguen de que pasa en cada caso
         /**
          * Se solicita a la View que muestre el icono de ordenar por distancia deseleccionado.
          */
@@ -105,6 +104,6 @@ public interface IBarraHerramientasContract {
         /**
          * Se solicita a la View que muestre el icono de ordenar por precio deseleccionado.
          */
-        void showOrdenarPrecioDeselected();
+        void showOrdenarPrecioAscDeselected();
     }
 }

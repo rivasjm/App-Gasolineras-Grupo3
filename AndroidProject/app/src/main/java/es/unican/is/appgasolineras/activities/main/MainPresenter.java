@@ -98,4 +98,8 @@ public class MainPresenter implements IMainContract.Presenter {
     public void onReintentarGpsClicked() {
         view.init(); // TODO ver si es otro metodo, no tiene refresh o recreate
     }
+
+    public List<Gasolinera> getShownGasolineras() {
+        return shownGasolineras;
+    }
 }

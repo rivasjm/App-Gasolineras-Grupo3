@@ -47,7 +47,6 @@ public class BarraHerramientasPresenterTest {
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(0);
         sut.onOrdenarPrecioAscClicked();
 
-        //assert(prefsMock.getInt(sut.ORDENAR).equals(2));
         verify(viewMock).showOrdenarPrecioAscSelected();
         verify(viewMock).openMainView();
     }
@@ -60,7 +59,6 @@ public class BarraHerramientasPresenterTest {
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(1);
         sut.onOrdenarPrecioAscClicked();
 
-        //assert(prefsMock.getInt(sut.ORDENAR).equals(2));
         verify(viewMock).showOrdenarDistanciaDeselected();
         verify(viewMock).showOrdenarPrecioAscSelected();
         verify(viewMock).openMainView();
@@ -74,7 +72,6 @@ public class BarraHerramientasPresenterTest {
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(2);
         sut.onOrdenarPrecioAscClicked();
 
-        //assert(prefsMock.getInt(sut.ORDENAR).equals(0));
         verify(viewMock).showOrdenarPrecioAscSelected();
         verify(viewMock).openMainView();
     }

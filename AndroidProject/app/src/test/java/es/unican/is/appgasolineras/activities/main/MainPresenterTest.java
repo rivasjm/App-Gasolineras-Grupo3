@@ -28,7 +28,7 @@ public class MainPresenterTest {
     private MainPresenter sut;
     private List<Gasolinera> gasolineras;
     private List<Gasolinera> gasolinerasPrecio;
-    private List<Gasolinera> gasolinerasDistanciaPrecio;
+    private List<Gasolinera> gasolinerasDistancia;
     private List<Gasolinera> gasolinerasSinPrecio;
 
     @Mock
@@ -49,31 +49,54 @@ public class MainPresenterTest {
         sut = new MainPresenter(viewMock, prefsMock);
         gasolineras = new LinkedList<Gasolinera>();
         gasolinerasPrecio = new LinkedList<Gasolinera>();
-        gasolinerasDistanciaPrecio = new LinkedList<Gasolinera>();
+        gasolinerasDistancia = new LinkedList<Gasolinera>();
         gasolinerasSinPrecio = new LinkedList<Gasolinera>();
 
-        //Solo se da valor a los campos utilizados durante el test
-        for (int i = 0; i < 5; i++) {
+        //Solo se da valor a los campos utilizados durante el test (precio, distancia, id)
+
+        //Lista generica de gasolineras (precio mas alto a mas bajo; distancia mas cercana a mas lejana)
+        double j = 0.10;
+        for (int i = 0; i < 4; i++) {
             Gasolinera g = new Gasolinera();
-            g.setId(String.valueOf(i+1000));
+            g.setId(String.valueOf(i));
             g.setNormal95(String.valueOf(10-i));
             g.setDieselA(String.valueOf(20-i));
+            g.setLatitud(String.valueOf(43.46 + j));
+            g.setLongitud(String.valueOf(-3.8 - j));
+            j += 0.05;
             gasolineras.add(g);
         }
 
-        for (int i = 5; i < 0; i--) {
-            Gasolinera g = new Gasolinera();
-            g.setId(String.valueOf(i+1000));
-            g.setNormal95(String.valueOf(10-i));
-            g.setDieselA(String.valueOf(20-i));
-            gasolinerasPrecio.add(g);
-        }
+        //Para conseguir algo de variacion en el test, se introducen valores manualmente en la ultima gasolinera
+        //De esta forma ordenar la lista no implica solo darle la vuelta
+        Gasolinera g = new Gasolinera();
+        g.setId(String.valueOf(4));
+        g.setNormal95(String.valueOf(10-4));
+        g.setDieselA(String.valueOf(20-4));
+        g.setLatitud(String.valueOf(43.46 + 5.60));
+        g.setLongitud(String.valueOf(-3.8 - 5.60));
+        gasolineras.add(g);
 
+        //Lista de gasolineras ordenada por precio
+        gasolinerasPrecio.add(gasolineras.get(4));
+        gasolinerasPrecio.add(gasolineras.get(3));
+        gasolinerasPrecio.add(gasolineras.get(2));
+        gasolinerasPrecio.add(gasolineras.get(1));
+        gasolinerasPrecio.add(gasolineras.get(0));
+
+        //Lista de gasolineras sin precio
         for (int i = 0; i < 5; i++) {
-            Gasolinera g = new Gasolinera();
-            g.setId(String.valueOf(i+1000));
+            g = new Gasolinera();
+            g.setId(String.valueOf(i));
             gasolinerasSinPrecio.add(g);
         }
+
+        //Lista de gasolineras ordenada por distancia
+        gasolinerasDistancia.add(gasolineras.get(4));
+        gasolinerasDistancia.add(gasolineras.get(0));
+        gasolinerasDistancia.add(gasolineras.get(1));
+        gasolinerasDistancia.add(gasolineras.get(2));
+        gasolinerasDistancia.add(gasolineras.get(3));
 
         //Comportamiento de los mocks
         when(viewMock.getGasolineraRepository()).thenReturn(repositoryMock);
@@ -85,17 +108,15 @@ public class MainPresenterTest {
 
 
     //Corresponde a UPR465236.1a
-    //TODO: como pruebo la distancia?? como sé que está más cerca y más lejos? emulo la distancia??
     @Test
     public void doSyncInitOrdenarDistancia() {
         //Comportamiento de los mocks
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(1);
         sut.init();
 
-        //assert(sut.shownGasolineras.equals(gasolinerasDistancia));
+        assert(sut.getShownGasolineras().equals(gasolinerasDistancia));
         verify(repositoryMock).getGasolineras();
-        verify(prefsMock).getInt(BarraHerramientasPresenter.ORDENAR);
-        verify(viewMock).showGasolineras(gasolineras);
+        verify(viewMock).showGasolineras(gasolinerasDistancia);
     }
 
     //Corresponde a UPR465236.1b
@@ -105,10 +126,9 @@ public class MainPresenterTest {
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(2);
         sut.init();
 
-        //assert(sut.shownGasolineras.equals(gasolinerasPrecio));
+        assert(sut.getShownGasolineras().equals(gasolinerasPrecio));
         verify(repositoryMock).getGasolineras();
-        verify(prefsMock).getInt(BarraHerramientasPresenter.ORDENAR);
-        verify(viewMock).showGasolineras(gasolineras);
+        verify(viewMock).showGasolineras(gasolinerasPrecio);
     }
 
     //Corresponde a UPR465236.1c
@@ -118,9 +138,8 @@ public class MainPresenterTest {
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(0);
         sut.init();
 
-        //assert(sut.shownGasolineras.equals(gasolineras));
+        assert(sut.getShownGasolineras().equals(gasolineras));
         verify(repositoryMock).getGasolineras();
-        verify(prefsMock).getInt(BarraHerramientasPresenter.ORDENAR);
         verify(viewMock).showGasolineras(gasolineras);
     }
 
@@ -131,9 +150,8 @@ public class MainPresenterTest {
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(5);
         sut.init();
 
-        //assert(sut.shownGasolineras.equals(gasolinerasPrecio));
+        assert(sut.getShownGasolineras().equals(gasolineras));
         verify(repositoryMock).getGasolineras();
-        verify(prefsMock).getInt(BarraHerramientasPresenter.ORDENAR);
         verify(viewMock).showGasolineras(gasolineras);
     }
 
@@ -145,7 +163,7 @@ public class MainPresenterTest {
         when(repositoryMock.getGasolineras()).thenReturn(new LinkedList<Gasolinera>());
         sut.init();
 
-        //assert(sut.shownGasolineras.equals(gasolinerasPrecio));
+        assert(sut.getShownGasolineras().equals(gasolinerasPrecio));
         verify(repositoryMock).getGasolineras();
         verify(viewMock).showLoadError();
     }
@@ -159,7 +177,7 @@ public class MainPresenterTest {
         when(repositoryMock.getGasolineras()).thenReturn(gasolinerasSinPrecio);
         sut.init();
 
-        //assert(sut.shownGasolineras.equals(gasolinerasPrecio));
+        assert(sut.getShownGasolineras().equals(gasolinerasPrecio));
         verify(repositoryMock).getGasolineras();
         verify(prefsMock).getInt(BarraHerramientasPresenter.ORDENAR);
         verify(viewMock).showGasolineras(gasolineras);

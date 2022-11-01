@@ -35,6 +35,8 @@ import es.unican.is.appgasolineras.utils.Matchers;
  * @author Irene Zamanillo Zubizarreta
  */
 
+//TODO: añadir localizacion/leerla de prefs
+
 public class OrdenarGasolinerasPorPrecioUITest {
 
     @Rule
@@ -76,6 +78,6 @@ public class OrdenarGasolinerasPorPrecioUITest {
                 onChildView(withId(R.id.tvName)).check(matches(withText("EASYGAS")));
 
         //Comprobar que se muestra el Toast
-        onView(withText(R.string.ordenarPrecioAplicado)).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+        onView(withText(R.string.ordenarPrecioAscAplicado)).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 }

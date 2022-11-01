@@ -8,6 +8,8 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.location.Location;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,8 +26,10 @@ import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
  * @author Irene Zamanillo Zubizarreta
  */
 
+//TODO: añadir argumento de Location a los show
+
 public class MainPresenterTest {
-    private MainPresenter sut;
+    /*private MainPresenter sut;
     private List<Gasolinera> gasolineras;
     private List<Gasolinera> gasolinerasPrecio;
     private List<Gasolinera> gasolinerasDistancia;

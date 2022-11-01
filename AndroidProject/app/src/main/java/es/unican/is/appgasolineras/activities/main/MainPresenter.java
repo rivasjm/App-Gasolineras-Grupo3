@@ -3,7 +3,6 @@ package es.unican.is.appgasolineras.activities.main;
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
 
 import android.location.Location;
-import android.util.Log;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,8 +42,6 @@ public class MainPresenter implements IMainContract.Presenter {
                 // guardar ubicacion en preferencias para el resto de actividades
                 prefs.putString("longitud", Double.toString(data.getLongitude()));
                 prefs.putString("latitud", Double.toString(data.getLatitude()));
-                Log.d("IVAN", "Recogido: " + data);
-
 
                 // recargar las gasolineras con la distancia
                 MainPresenter.this.doSyncInit();

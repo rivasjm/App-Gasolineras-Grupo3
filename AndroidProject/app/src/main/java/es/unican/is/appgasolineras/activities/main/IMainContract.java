@@ -27,6 +27,11 @@ public interface IMainContract {
         void init();
 
         /**
+         * Refreshes the list without requesting location again.
+         */
+        void refresh();
+
+        /**
          * This method should be used by the View to notify the Presenter that a Gas Station
          * has been clicked
          * @param index the index of the gas station (position in the list)
@@ -38,7 +43,6 @@ public interface IMainContract {
          * fallo al acceder a la ubicacion actual.
          */
         void onReintentarGpsClicked();
-
 
     }
 
@@ -66,8 +70,9 @@ public interface IMainContract {
         /**
          * The View is requested to show a list of gas stations
          * @param gasolineras the list of gas stations
+         * @param location the current location
          */
-        void showGasolineras(List<Gasolinera> gasolineras);
+        void showGasolineras(List<Gasolinera> gasolineras, Location location);
 
         /**
          * The View is requested to show an alert informing that the gas stations were loaded
@@ -87,6 +92,16 @@ public interface IMainContract {
          * getting the current location
          */
         void showGpsError();
+
+        /**
+         * View is requested to notify the user when sort by distance is enabled.
+         */
+        void showDistanceSort();
+
+        /**
+         * View is requested to notify the user when sort by increasing price is enabled.
+         */
+        void showPriceAscSort();
 
         /**
          * Respuesta para el presenter de la ubicacion del dispositivo.

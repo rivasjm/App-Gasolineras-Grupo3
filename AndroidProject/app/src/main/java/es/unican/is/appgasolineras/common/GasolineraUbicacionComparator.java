@@ -16,6 +16,10 @@ public class GasolineraUbicacionComparator implements Comparator<Gasolinera> {
 
     public void setUbicacionBase(Location base) { this.ubicacionBase = base; }
 
+    public GasolineraUbicacionComparator(Location ubicacionBase) {
+        this.ubicacionBase = ubicacionBase;
+    }
+
     /**
      * Compara gasolineras por su distancia a la base.
      * @param gasolinera Una

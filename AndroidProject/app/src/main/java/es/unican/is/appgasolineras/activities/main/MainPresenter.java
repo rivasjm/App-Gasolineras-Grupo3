@@ -9,6 +9,7 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.common.Callback;
 import es.unican.is.appgasolineras.common.GasolineraPrecioComparator;
+import es.unican.is.appgasolineras.common.GasolineraUbicacionComparator;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -19,6 +20,7 @@ public class MainPresenter implements IMainContract.Presenter {
     private IGasolinerasRepository repository;
     private List<Gasolinera> shownGasolineras;
     private final IPrefs prefs;
+    private Location location;
 
     public MainPresenter(IMainContract.View view, IPrefs prefs) {
 
@@ -34,17 +36,17 @@ public class MainPresenter implements IMainContract.Presenter {
         if (repository != null) {
             doSyncInit();
         }
-
         // obtener ubicacion y respuesta en caso de fallo
         view.getLocation(new Callback<>() {
             @Override
             public void onSuccess(Location data) { // en data recibe Location
                 // guardar ubicacion en preferencias para el resto de actividades
+                location = data;
                 prefs.putString("longitud", Double.toString(data.getLongitude()));
                 prefs.putString("latitud", Double.toString(data.getLatitude()));
 
                 // recargar las gasolineras con la distancia
-                MainPresenter.this.doSyncInit();
+                MainPresenter.this.refresh();
             }
             @Override
             public void onFailure() {
@@ -53,11 +55,16 @@ public class MainPresenter implements IMainContract.Presenter {
         });
     }
 
+    @Override
+    public void refresh() {
+        this.doSyncInit();
+    }
+
     private void doAsyncInit() {
         repository.requestGasolineras(new Callback<List<Gasolinera>>() {
             @Override
             public void onSuccess(List<Gasolinera> data) {
-                view.showGasolineras(data);
+                view.showGasolineras(data, location);
                 shownGasolineras = data;
                 view.showLoadCorrect(data.size());
             }
@@ -69,34 +76,43 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         });
     }
-    private void ordenarPorPrecio(){
-        Collections.sort(shownGasolineras, new GasolineraPrecioComparator(){});
-    }
-
-    private void ordenar(int sort){
-        if(sort==2){
-            ordenarPorPrecio();
-        }
-    }
 
     private void doSyncInit() {
         List<Gasolinera> data = repository.getGasolineras();
 
         if (data != null) {
-            int sort = prefs.getInt(ORDENAR);
             shownGasolineras = data;
-            if(sort!=0){
-                ordenar(sort);
-            }
-
-            view.showGasolineras(shownGasolineras);
-
-            view.showLoadCorrect(shownGasolineras.size());
+            // hacer la ordenacion de las gasolineras usando las preferencias
+            sortGasolineras();
 
         } else {
             shownGasolineras = null;
             view.showLoadError();
         }
+    }
+
+    public void sortGasolineras() {
+        int sort = prefs.getInt(ORDENAR);
+        switch (sort) {
+            case 1: // por distancia
+                // recoger la distancia (es un nuevo presenter, quizas no lo tiene)
+                if (location == null) {
+                    location = new Location("");
+                    location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
+                    location.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+                }
+                Collections.sort(shownGasolineras, new GasolineraUbicacionComparator(location));
+                view.showDistanceSort();
+                break;
+            case 2: // por precio
+                Collections.sort(shownGasolineras, new GasolineraPrecioComparator());
+                view.showPriceAscSort();
+                break;
+            default: // si es 0 u otro valor, no ordenar
+                view.showLoadCorrect(shownGasolineras.size());
+        }
+        // mostrar las gasolineras ya ordenadas
+        view.showGasolineras(shownGasolineras, location);
     }
 
     @Override

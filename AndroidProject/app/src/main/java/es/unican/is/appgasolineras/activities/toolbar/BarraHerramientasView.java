@@ -34,7 +34,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public BarraHerramientasView(Toolbar toolbar, AppCompatActivity activity) {
         this.toolbar = toolbar;
         this.activity = activity;
-        this.prefs=Prefs.from(activity);
+        this.prefs = Prefs.from(activity);
 
         presenter = new BarraHerramientasPresenter(this,this.prefs);
         setUpToolBar();
@@ -164,17 +164,11 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
 
     @Override
     public void showOrdenarDistanciaSelected() {
-        String text = activity.getResources().getString(R.string.ordenarDistanciaAplicado);
-        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
-
         menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_selected_32));
     }
 
     @Override
     public void showOrdenarPrecioAscSelected() {
-        String text = activity.getResources().getString(R.string.ordenarPrecioAplicado);
-        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
-
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_selected_57));
     }
 
@@ -184,7 +178,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     }
 
     @Override
-    public void showOrdenarPrecioDeselected() {
+    public void showOrdenarPrecioAscDeselected() {
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_57));
     }
 }

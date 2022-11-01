@@ -28,5 +28,5 @@
     <string name="reintentar">Reintentar</string>
 
     <string name="ordenarDistanciaAplicado">Gasolineras ordenadas por distancia</string>
-    <string name="ordenarPrecioAscAplicado">Gasolineras ordenadas por precio ascendente</string>
+    <string name="ordenarPrecioAscAplicado">Gasolineras ordenadas por precio</string>
 </resources>

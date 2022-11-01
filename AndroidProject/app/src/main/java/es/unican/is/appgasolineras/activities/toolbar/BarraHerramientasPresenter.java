@@ -40,14 +40,11 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     @Override
     public void onOrdenarDistanciaClicked() {
         if (this.prefs.getInt(ORDENAR) != 1){ // actualmente no ordena por distancia
-            view.showOrdenarDistanciaSelected();
-            view.showOrdenarPrecioAscDeselected();
             this.prefs.putInt(ORDENAR, 1);
         }
         else {
             if (this.prefs.getInt(ORDENAR) == 1){ // desmarcar, que no ordene
                 this.prefs.putInt(ORDENAR, 0);
-                view.showOrdenarDistanciaDeselected();
             }
         }
         view.openMainView();
@@ -56,17 +53,12 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     @Override
     public void onOrdenarPrecioAscClicked() {
         if (this.prefs.getInt(ORDENAR) != 2) { // actualmente no ordena por precio
-            // cambiar logos
-            view.showOrdenarDistanciaDeselected();
-            view.showOrdenarPrecioAscSelected();
-            //recargar actividad
             this.prefs.putInt(ORDENAR,2);
             view.openMainView();
         }
         else{
             if(this.prefs.getInt(ORDENAR)==2){ // desmarcar, que no ordene
                 this.prefs.putInt(ORDENAR,0);
-                view.showOrdenarPrecioAscDeselected();
                 view.openMainView();
             }
         }

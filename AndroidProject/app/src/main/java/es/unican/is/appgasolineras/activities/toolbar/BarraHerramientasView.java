@@ -98,9 +98,22 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
         }
-        if(this.prefs.getInt(ORDENAR)==2){
-            showOrdenarPrecioAscSelected();
-        } // TODO ver si falta algo para distancia o las dos
+        // poner iconos ordenacion correctamente
+        int ordenacion = this.prefs.getInt(ORDENAR);
+        switch (ordenacion) {
+            case 1: // distancia
+                showOrdenarDistanciaSelected();
+                showOrdenarPrecioAscDeselected();
+                break;
+            case 2: // precio
+                showOrdenarDistanciaDeselected();
+                showOrdenarPrecioAscSelected();
+                break;
+            default: // sin
+                showOrdenarPrecioAscDeselected();
+                showOrdenarDistanciaDeselected();
+                break;
+        }
         return true;
     }
 

@@ -1,8 +1,8 @@
 package es.unican.is.appgasolineras.activities.detail;
 
-
+import android.content.Context;
 import android.location.Location;
-import android.util.Log;
+import android.text.TextUtils;
 
 import es.unican.is.appgasolineras.common.DistanceUtilities;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
@@ -46,39 +46,60 @@ public class GasolineraDetailPresenter {
     }
 
     public String getRotulo() {
-        if (gasolinera.getRotulo() == null || gasolinera.getRotulo().equals("")) {
-            return "-";
+        String rotulo = gasolinera.getRotulo();
+        if (!rotulo.equals("")) {
+            return rotulo;
         }
-        return gasolinera.getRotulo();
+        return "-";
     }
 
     public String getMunicipio() {
-        if (gasolinera.getMunicipio() == null || gasolinera.getMunicipio().equals("")) {
-            return "-";
+        String txt = "-";
+        String municipio = gasolinera.getMunicipio();
+        if (!municipio.equals("")) {
+            txt = municipio;
         }
-        return gasolinera.getMunicipio();
+        return txt;
     }
 
     public String getDieselA() {
-        if (gasolinera.getDieselA() == null ||
-                Double.parseDouble(gasolinera.getDieselA().replace(',', '.')) <= 0) {
-        return "-";
+        String txt = "-";
+        String diesel = gasolinera.getDieselA();
+        if (!diesel.equals("") && Double.parseDouble(diesel.replace(',', '.')) > 0) {
+            txt = diesel;
         }
-        return gasolinera.getDieselA(); }
+        return txt;
+    }
 
     public String getNormal95() {
-        if (gasolinera.getNormal95() == null ||
-                Double.parseDouble(gasolinera.getNormal95().replace(',', '.')) <= 0) {
-        return "-";
+        String txt = "-";
+        String gasolina = gasolinera.getNormal95();
+        if (!gasolina.equals("")  && Double.parseDouble(gasolina.replace(',', '.')) > 0) {
+            txt = gasolina;
         }
-        return gasolinera.getNormal95();
+        return txt;
     }
 
     public String getSchedule() {
-        if (gasolinera.getSchedule() == null || gasolinera.getSchedule().equals("")) {
-            return "-";
+        String txt = "-";
+        String schedule = gasolinera.getSchedule();
+        if (!schedule.equals("")) {
+            txt = schedule;
         }
-        return gasolinera.getSchedule();
+        return txt;
+    }
+
+    public int getLogoId(Context context) {
+        String rotulo = gasolinera.getRotulo().toLowerCase();
+        int imageID = context.getResources().getIdentifier(rotulo, "drawable", context.getPackageName());
+        // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
+        // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
+        // que coincida con esos números
+        if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
+            imageID = context.getResources()
+                    .getIdentifier("generic", "drawable", context.getPackageName());
+        }
+        return imageID;
     }
 
     public String getDistancia() {
@@ -88,7 +109,6 @@ public class GasolineraDetailPresenter {
             actual = new Location("");
             actual.setLongitude(Double.parseDouble(prefs.getString("longitud")));
             actual.setLatitude(Double.parseDouble(prefs.getString("latitud")));
-            //Log.d("IVAN", "Pref: " + prefs.getString("latitud") + ", " + prefs.getString("longitud"));
         } catch (NumberFormatException e) {
             // si no recoge un numero (la preferencia no existe)
             return txt;

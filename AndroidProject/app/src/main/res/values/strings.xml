@@ -27,6 +27,6 @@
     <string name="aceptar">Aceptar</string>
     <string name="reintentar">Reintentar</string>
 
-    <string name="ordenarDistanciaAplicado">Se han ordenado las gasolineras por distancia</string>
-    <string name="ordenarPrecioAplicado">Se han ordenado las gasolineras por precio</string>
+    <string name="ordenarDistanciaAplicado">Gasolineras ordenadas por distancia</string>
+    <string name="ordenarPrecioAscAplicado">Gasolineras ordenadas por precio</string>
 </resources>

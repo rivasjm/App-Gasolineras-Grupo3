@@ -66,39 +66,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         this.init();
     }
 
-    /**
-     * Respuesta para el presenter de la ubicacion del dispositivo.
-     * @param cb Callback
-     * @return null si no se tienen permisos de ubicacion o hay un fallo raro, la ultima ubicacion
-     * del dispositivo si se tienen permisos y va bien.
+    /*
+    Metodos de la barra de herramientas
      */
-    public Location getLocation(Callback<Location> cb) {
-        // ver si se tiene alguno de los permisos
-        if (ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO ver si hacer permission request de Android, es mejor que la emergente
-            return null; // devuelvo null si no tiene los permisos
-        }
-        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
-                .addOnSuccessListener(this,
-                location -> {
-                    // Got current location. In some rare situations this can be null.
-                    if (location != null) {
-                        // devolver la ubicacion obtenida
-                        currentLocation = location;
-                        cb.onSuccess(currentLocation); // pasar al success la ubicacion
-                    }
-                });
-        return currentLocation;
-    }
-
-    @Override
-    protected void onDestroy(){
-        this.prefs.putInt(ORDENAR,0);
-        super.onDestroy();
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return barraHerramientasView.onCreateOptionsMenu(menu, true);
@@ -122,15 +92,45 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
+    /**
+     * Respuesta para el presenter de la ubicacion del dispositivo.
+     * @param cb Callback
+     * @return null si no se tienen permisos de ubicacion o hay un fallo raro, la ultima ubicacion
+     * del dispositivo si se tienen permisos y va bien.
+     */
+    @Override
+    public Location getLocation(Callback<Location> cb) {
+        // ver si se tiene alguno de los permisos
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // si no tiene permisos, llamar onFailure para la ventana emergente
+            cb.onFailure();
+            return null;
+        }
+        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+                .addOnSuccessListener(this,
+                        location -> {
+                            // Got current location. In some rare situations this can be null.
+                            if (location != null) {
+                                // devolver la ubicacion obtenida
+                                currentLocation = location;
+                                cb.onSuccess(currentLocation); // pasar al success la ubicacion
+                            }
+                        });
+        return currentLocation;
+    }
+
     @Override
     public IGasolinerasRepository getGasolineraRepository() {
         return new GasolinerasRepository(this);
     }
 
     @Override
-    public void showGasolineras(List<Gasolinera> gasolineras) {
+    public void showGasolineras(List<Gasolinera> gasolineras, Location location) {
         GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras,
-                currentLocation);
+                location);
         ListView list = findViewById(R.id.lvGasolineras);
         list.setAdapter(adapter);
     }
@@ -139,6 +139,18 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showLoadCorrect(int gasolinerasCount) {
         String text = getResources().getString(R.string.loadCorrect);
         Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDistanceSort() {
+        String text = getResources().getString(R.string.ordenarDistanciaAplicado);
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showPriceAscSort() {
+        String text = getResources().getString(R.string.ordenarPrecioAscAplicado);
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -156,7 +168,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         builder.setPositiveButton(R.string.aceptar, (dialogInterface, i)
                 -> dialogInterface.cancel());
         builder.setNegativeButton(R.string.reintentar, (dialogInterface, i)
-                -> presenter.onReintentarGpsClicked());
+                -> { //TODO si no llamar a reintentar
+            presenter = new MainPresenter(this, prefs);
+            presenter.init();
+        });
 
         dialog = builder.create();
         dialog.show();

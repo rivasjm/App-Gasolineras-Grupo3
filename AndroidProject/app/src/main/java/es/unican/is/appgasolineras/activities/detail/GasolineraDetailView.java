@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.activities.detail;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +32,6 @@ public class GasolineraDetailView extends AppCompatActivity {
         TextView tvPrecioSumario =findViewById(R.id.tvPrecioSumario);
         TextView tvDistancia = findViewById(R.id.tvDistancia);
 
-
         // Get Gas Station from the intent that triggered this activity
         Gasolinera gasolinera = getIntent().getExtras().getParcelable(INTENT_GASOLINERA);
         //Create item from class gasolineraDetailPresenter in order to get the added price
@@ -39,8 +39,7 @@ public class GasolineraDetailView extends AppCompatActivity {
         GasolineraDetailPresenter gs = new GasolineraDetailPresenter(gasolinera, prefs);
 
         // Set logo
-        int imageID = getResources().getIdentifier("generic", "drawable", getPackageName());
-        ivRotulo.setImageResource(imageID);
+        ivRotulo.setImageResource(gs.getLogoId(this));
 
         // Set Texts
         tvRotulo.setText(gs.getRotulo());

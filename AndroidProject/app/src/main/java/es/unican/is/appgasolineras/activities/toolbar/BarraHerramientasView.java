@@ -178,20 +178,24 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     @Override
     public void showOrdenarDistanciaSelected() {
         menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_selected_32));
+        menu.getItem(4).setTitle("DistanciaMarcada");
     }
 
     @Override
     public void showOrdenarPrecioAscSelected() {
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_selected_57));
+        menu.getItem(5).setTitle("PrecioMarcado");
     }
 
     @Override
     public void showOrdenarDistanciaDeselected() {
         menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_32));
+        menu.getItem(4).setTitle("DistanciaSinMarcar");
     }
 
     @Override
     public void showOrdenarPrecioAscDeselected() {
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_57));
+        menu.getItem(5).setTitle("PrecioNoMarcado");
     }
 }

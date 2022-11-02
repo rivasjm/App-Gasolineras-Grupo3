@@ -166,9 +166,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         builder.setMessage(R.string.gpsError);
         builder.setPositiveButton(R.string.aceptar, (dialogInterface, i)
-                -> dialogInterface.cancel());
+                -> {
+            dialogInterface.cancel();
+        } );
         builder.setNegativeButton(R.string.reintentar, (dialogInterface, i)
-                -> { //TODO si no llamar a reintentar
+                -> { // funciona bien
             presenter = new MainPresenter(this, prefs);
             presenter.init();
         });

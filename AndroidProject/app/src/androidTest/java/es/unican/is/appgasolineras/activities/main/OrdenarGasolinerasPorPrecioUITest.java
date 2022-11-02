@@ -35,8 +35,6 @@ import es.unican.is.appgasolineras.utils.Matchers;
  * @author Irene Zamanillo Zubizarreta
  */
 
-//TODO: añadir localizacion/leerla de prefs
-
 public class OrdenarGasolinerasPorPrecioUITest {
 
     @Rule

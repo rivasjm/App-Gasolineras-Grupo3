@@ -5,7 +5,7 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
 public class BarraHerramientasPresenter implements IBarraHerramientasContract.Presenter {
     private final IBarraHerramientasContract.View view;
     private final IPrefs prefs;
-    public final static String ORDENAR="Ordenar";
+    public final static String ORDENAR = "Ordenar";
     public BarraHerramientasPresenter(IBarraHerramientasContract.View view, final IPrefs  prefs ) {
         this.view = view;
         this.prefs = prefs;
@@ -39,20 +39,25 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
 
     @Override
     public void onOrdenarDistanciaClicked() {
-        view.showOrdenarDistanciaSelected();
-        view.showOrdenarPrecioDeselected();
-        // Creo que aqui iria el codigo de la funcionalidad
-
+        if (this.prefs.getInt(ORDENAR) != 1){ // actualmente no ordena por distancia
+            this.prefs.putInt(ORDENAR, 1);
+        }
+        else {
+            if (this.prefs.getInt(ORDENAR) == 1){ // desmarcar, que no ordene
+                this.prefs.putInt(ORDENAR, 0);
+            }
+        }
+        view.openMainView();
     }
 
     @Override
     public void onOrdenarPrecioAscClicked() {
-        if(this.prefs.getInt(ORDENAR)!=2){
+        if (this.prefs.getInt(ORDENAR) != 2) { // actualmente no ordena por precio
             this.prefs.putInt(ORDENAR,2);
             view.openMainView();
         }
         else{
-            if(this.prefs.getInt(ORDENAR)==2){
+            if(this.prefs.getInt(ORDENAR)==2){ // desmarcar, que no ordene
                 this.prefs.putInt(ORDENAR,0);
                 view.openMainView();
             }

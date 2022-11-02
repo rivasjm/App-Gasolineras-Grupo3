@@ -8,6 +8,7 @@
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
 
     <string name="detail_distancia">Distancia:</string>
+    <string name="gpsError">Ha habido un error al acceder a la ubicación actual. Por favor, compruebe que los permisos de ubicación están activados.</string>
 
     <string name="historial_repostaje_campo_adress">Localizacion:</string>
     <string name="historial_repostaje_campo_date">Fecha:</string>
@@ -26,6 +27,6 @@
     <string name="aceptar">Aceptar</string>
     <string name="reintentar">Reintentar</string>
 
-    <string name="ordenarDistanciaAplicado">Se han ordenado las gasolineras por distancia</string>
-    <string name="ordenarPrecioAplicado">Se han ordenado las gasolineras por precio</string>
+    <string name="ordenarDistanciaAplicado">Gasolineras ordenadas por distancia</string>
+    <string name="ordenarPrecioAscAplicado">Gasolineras ordenadas por precio</string>
 </resources>

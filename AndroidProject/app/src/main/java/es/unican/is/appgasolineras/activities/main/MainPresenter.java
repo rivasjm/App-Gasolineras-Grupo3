@@ -36,8 +36,8 @@ public class MainPresenter implements IMainContract.Presenter {
         if (repository != null) {
             doSyncInit();
         }
-        // obtener ubicacion si no se ordena por nada
-        if (prefs.getInt(ORDENAR) == 0) {
+        // obtener ubicacion si no se ordena por precio
+        if (prefs.getInt(ORDENAR) != 2) {
             view.getLocation(new Callback<>() {
                 @Override
                 public void onSuccess(Location data) { // en data recibe Location
@@ -105,11 +105,22 @@ public class MainPresenter implements IMainContract.Presenter {
                         view.showGpsError();
                         return;
                     }
+                    // si se puede obtener la ubicacion
+                    location = new Location("");
+                    location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
+                    location.setLatitude(Double.parseDouble(prefs.getString("latitud")));
                 }
                 Collections.sort(shownGasolineras, new GasolineraUbicacionComparator(location));
                 view.showDistanceSort();
                 break;
             case 2: // por precio
+                // si se puede obtener la ubicacion
+                if (!prefs.getString("longitud").equals("") &&
+                        !prefs.getString("longitud").equals("")) {
+                    location = new Location("");
+                    location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
+                    location.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+                }
                 Collections.sort(shownGasolineras, new GasolineraPrecioComparator());
                 view.showPriceAscSort();
                 break;

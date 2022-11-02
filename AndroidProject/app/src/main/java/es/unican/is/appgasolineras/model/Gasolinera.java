@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.model;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -119,8 +120,10 @@ public class Gasolinera implements Parcelable {
      */
     public Location getLocation() {
         Location loc = new Location("");
+
         loc.setLongitude(Double.parseDouble(this.longitud.replace(',', '.')));
         loc.setLatitude(Double.parseDouble(this.latitud.replace(',', '.')));
+        Log.d("aaa", String.valueOf(loc.getLatitude()));
         return loc;
     }
 

@@ -30,6 +30,7 @@ public class GasolineraUbicacionComparator implements Comparator<Gasolinera> {
      */
     @Override
     public int compare(Gasolinera gasolinera, Gasolinera otra) {
+
         double d1 = ubicacionBase.distanceTo(gasolinera.getLocation());
         double d2 = ubicacionBase.distanceTo(otra.getLocation());
         return Double.compare(d1, d2);

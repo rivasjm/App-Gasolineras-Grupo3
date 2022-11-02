@@ -11,7 +11,7 @@ import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     private final IConveniosContract.View view;
-    public List<Convenio> shownConvenios;
+    private List<Convenio> shownConvenios;
 
     public ConveniosPresenter(IConveniosContract.View view) {
         this.view = view;
@@ -22,8 +22,6 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         final GasolineraDatabase db = view.getDatabase();
         final ConvenioDao conveniosDao = db.convenioDao();
         // Ejecutar solo la primera vez que se ejecuta la app
-        //insertaDatosTemp(conveniosDao);
-
         List<Convenio> data = null;
 
         // Fallo en el acceso a datos
@@ -32,7 +30,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         } catch (SQLiteException e) {
             view.showLoadError();
         }
-        if (data!=null && data.size() != 0) {
+        if (data!=null && !data.isEmpty()) {
             // Caso exito
             view.showConvenios(data);
             shownConvenios = data;
@@ -74,5 +72,9 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         conveniosDao.insertConvenio(c2);
         conveniosDao.insertConvenio(c3);
         conveniosDao.insertConvenio(c4);
+    }
+
+    public List<Convenio> getShownConvenios(){
+        return shownConvenios;
     }
 }

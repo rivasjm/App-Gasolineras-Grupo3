@@ -75,15 +75,16 @@ public class Repostaje {
      */
     @Override
     public boolean equals(Object obj) {
+        Boolean result = false;
         if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
+            return result;
         }
         Repostaje o = (Repostaje) obj;
         if (this.fechaRepostaje.equals(o.fechaRepostaje) && this.localizacion.equals(o.localizacion)
                 && this.precio.equals(o.precio) && this.litros.equals(o.litros)) {
-            return true;
+            result=true;
         }
-        return false;
+        return result;
     }
 
     @Override

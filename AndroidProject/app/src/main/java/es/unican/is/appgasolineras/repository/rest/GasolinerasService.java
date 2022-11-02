@@ -40,7 +40,7 @@ public class GasolinerasService {
      */
     public static void requestGasolineras(Callback<GasolinerasResponse> cb) {
         final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
-        call.enqueue(new CallbackAdapter<GasolinerasResponse>(cb));
+        call.enqueue(new CallbackAdapter<>(cb));
     }
 
     /**
@@ -64,8 +64,7 @@ public class GasolinerasService {
         }
 
         // if there was some problem, response is null
-        GasolinerasResponse response = runnable.response;
-        return response;
+        return runnable.response;
     }
 
     private GasolinerasService() {

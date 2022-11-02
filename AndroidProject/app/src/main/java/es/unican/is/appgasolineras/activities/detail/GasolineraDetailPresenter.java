@@ -2,7 +2,6 @@ package es.unican.is.appgasolineras.activities.detail;
 
 
 import android.location.Location;
-import android.util.Log;
 
 import es.unican.is.appgasolineras.common.DistanceUtilities;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
@@ -88,7 +87,6 @@ public class GasolineraDetailPresenter {
             actual = new Location("");
             actual.setLongitude(Double.parseDouble(prefs.getString("longitud")));
             actual.setLatitude(Double.parseDouble(prefs.getString("latitud")));
-            //Log.d("IVAN", "Pref: " + prefs.getString("latitud") + ", " + prefs.getString("longitud"));
         } catch (NumberFormatException e) {
             // si no recoge un numero (la preferencia no existe)
             return txt;

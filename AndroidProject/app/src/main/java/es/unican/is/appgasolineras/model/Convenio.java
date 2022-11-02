@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
+
 
 /**
  * Clase que representa la tabla "convenios" de la base de datos. Cada convenio tiene los siguientes campos:

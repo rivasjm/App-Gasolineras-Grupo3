@@ -5,13 +5,15 @@ import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPr
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -74,9 +76,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      */
     public Location getLocation(Callback<Location> cb) {
         // ver si se tiene alguno de los permisos
-        if (ActivityCompat.checkSelfPermission(
+        if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
+                && ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO ver si hacer permission request de Android, es mejor que la emergente
             return null; // devuelvo null si no tiene los permisos
@@ -117,9 +119,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void init() {
         // init UI listeners
         ListView lvGasolineras = findViewById(R.id.lvGasolineras);
-        lvGasolineras.setOnItemClickListener((parent, view, position, id) -> {
-            presenter.onGasolineraClicked(position);
-        });
+        lvGasolineras.setOnItemClickListener((parent, view, position, id) -> presenter.onGasolineraClicked(position));
     }
 
     @Override

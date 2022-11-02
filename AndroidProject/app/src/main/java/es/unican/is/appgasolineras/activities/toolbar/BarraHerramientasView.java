@@ -93,7 +93,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         }
         if(this.prefs.getInt(ORDENAR)==2){
             showOrdenarPrecioAscSelected();
-        } // TODO ver si falta algo para distancia o las dos
+        }
         return true;
     }
 
@@ -122,6 +122,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
                 return true;
             case R.id.menuPrecio:
                 presenter.onOrdenarPrecioAscClicked();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

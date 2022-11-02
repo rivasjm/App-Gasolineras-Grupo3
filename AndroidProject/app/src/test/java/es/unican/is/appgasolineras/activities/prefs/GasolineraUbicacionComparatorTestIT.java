@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.ordenarPorDistancia;
+package es.unican.is.appgasolineras.activities.prefs;
 
 import android.location.Location;
 import android.os.Build;

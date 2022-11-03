@@ -67,41 +67,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         presenter.init();
         this.init();
     }
-
-    /*
-    Metodos de la barra de herramientas
-     */
-    @Override
-    public Location getLocation(Callback<Location> cb) {
-        if(debug == 0) {
-            // ver si se tiene alguno de los permisos
-            if (ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // si no tiene permisos, llamar onFailure para la ventana emergente
-                cb.onFailure();
-                return null;
-            }
-            fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
-                    .addOnSuccessListener(this,
-                            location -> {
-                                // Got current location. In some rare situations this can be null.
-                                if (location != null) {
-                                    // devolver la ubicacion obtenida
-                                    currentLocation = location;
-                                    cb.onSuccess(currentLocation); // pasar al success la ubicacion
-                                }
-                            });
-        } else {
-            currentLocation = new Location("");
-            currentLocation.setLongitude(43.4714);
-            currentLocation.setLatitude(-3.8013);
-            this.prefs.putString("longitud","43.4714");
-            this.prefs.putString("latitud","-3.8013");
-        }
-        return currentLocation;
-    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return barraHerramientasView.onCreateOptionsMenu(menu, true);
@@ -133,9 +99,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public Location getLocation(Callback<Location> cb) {
         if(debug == 0) {
             // ver si se tiene alguno de los permisos
-            if (ActivityCompat.checkSelfPermission(
+            if (ContextCompat.checkSelfPermission(
                     this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(
+                    && ContextCompat.checkSelfPermission(
                     this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // si no tiene permisos, llamar onFailure para la ventana emergente
                 cb.onFailure();

@@ -95,25 +95,26 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         this.menu = menu;
         if (mostrarOrdenacion) {
             menuInflater.inflate(R.menu.main_menu_order, menu);
+            // poner iconos ordenacion correctamente
+            int ordenacion = this.prefs.getInt(ORDENAR);
+            switch (ordenacion) {
+                case 1: // distancia
+                    showOrdenarDistanciaSelected();
+                    showOrdenarPrecioAscDeselected();
+                    break;
+                case 2: // precio
+                    showOrdenarDistanciaDeselected();
+                    showOrdenarPrecioAscSelected();
+                    break;
+                default: // sin
+                    showOrdenarPrecioAscDeselected();
+                    showOrdenarDistanciaDeselected();
+                    break;
+            }
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
         }
-        // poner iconos ordenacion correctamente
-        int ordenacion = this.prefs.getInt(ORDENAR);
-        switch (ordenacion) {
-            case 1: // distancia
-                showOrdenarDistanciaSelected();
-                showOrdenarPrecioAscDeselected();
-                break;
-            case 2: // precio
-                showOrdenarDistanciaDeselected();
-                showOrdenarPrecioAscSelected();
-                break;
-            default: // sin
-                showOrdenarPrecioAscDeselected();
-                showOrdenarDistanciaDeselected();
-                break;
-        }
+
         return true;
     }
 
@@ -179,6 +180,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     public void showOrdenarDistanciaSelected() {
         menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_selected_32));
         menu.getItem(4).setTitle("DistanciaMarcada");
+
     }
 
     @Override

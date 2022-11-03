@@ -36,23 +36,25 @@ public class MainPresenter implements IMainContract.Presenter {
         if (repository != null) {
             doSyncInit();
         }
-        // obtener ubicacion y respuesta en caso de fallo
-        view.getLocation(new Callback<>() {
-            @Override
-            public void onSuccess(Location data) { // en data recibe Location
-                // guardar ubicacion en preferencias para el resto de actividades
-                location = data;
-                prefs.putString("longitud", Double.toString(data.getLongitude()));
-                prefs.putString("latitud", Double.toString(data.getLatitude()));
+        // obtener ubicacion si no se ordena por precio
+        if (prefs.getInt(ORDENAR) != 2) {
+            view.getLocation(new Callback<>() {
+                @Override
+                public void onSuccess(Location data) { // en data recibe Location
+                    // guardar ubicacion en preferencias para el resto de actividades
+                    location = data;
+                    prefs.putString("longitud", Double.toString(data.getLongitude()));
+                    prefs.putString("latitud", Double.toString(data.getLatitude()));
 
-                // recargar las gasolineras con la distancia
-                MainPresenter.this.refresh();
-            }
-            @Override
-            public void onFailure() {
-                view.showGpsError(); // mostrar error ubicacion
-            }
-        });
+                    // recargar las gasolineras con la distancia
+                    MainPresenter.this.refresh();
+                }
+                @Override
+                public void onFailure() {
+                    view.showGpsError(); // mostrar error ubicacion
+                }
+            });
+        }
     }
 
     @Override
@@ -97,6 +99,13 @@ public class MainPresenter implements IMainContract.Presenter {
             case 1: // por distancia
                 // recoger la distancia (es un nuevo presenter, quizas no lo tiene)
                 if (location == null) {
+                    // no hay nada guardado en preferencias, error
+                    if (prefs.getString("longitud").equals("") ||
+                            prefs.getString("longitud").equals("")) {
+                        view.showGpsError();
+                        return;
+                    }
+                    // si se puede obtener la ubicacion
                     location = new Location("");
                     location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
                     location.setLatitude(Double.parseDouble(prefs.getString("latitud")));
@@ -105,6 +114,13 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showDistanceSort();
                 break;
             case 2: // por precio
+                // si se puede obtener la ubicacion
+                if (!prefs.getString("longitud").equals("") &&
+                        !prefs.getString("longitud").equals("")) {
+                    location = new Location("");
+                    location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
+                    location.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+                }
                 Collections.sort(shownGasolineras, new GasolineraPrecioComparator());
                 view.showPriceAscSort();
                 break;
@@ -126,6 +142,10 @@ public class MainPresenter implements IMainContract.Presenter {
     // no hay metodo de aceptar, porque solo cierra la ventana y eso se hace mejor desde la vista
     @Override
     public void onReintentarGpsClicked() {
-        view.init(); // TODO ver si es otro metodo, no tiene refresh o recreate
+        view.init();
+    }
+
+    public List<Gasolinera> getShownGasolineras() {
+        return shownGasolineras;
     }
 }

@@ -23,4 +23,7 @@ public class DistanceUtilities {
         String txt = String.format("%.2f", distance).replace('.', ',');
         return txt;
     }
+
+    // constructor privado para calidad
+    private DistanceUtilities(){}
 }

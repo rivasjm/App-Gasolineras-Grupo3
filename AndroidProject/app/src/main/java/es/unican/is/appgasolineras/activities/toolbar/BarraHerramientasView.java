@@ -88,25 +88,26 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         this.menu = menu;
         if (mostrarOrdenacion) {
             menuInflater.inflate(R.menu.main_menu_order, menu);
+            // poner iconos ordenacion correctamente
+            int ordenacion = this.prefs.getInt(ORDENAR);
+            switch (ordenacion) {
+                case 1: // distancia
+                    showOrdenarDistanciaSelected();
+                    showOrdenarPrecioAscDeselected();
+                    break;
+                case 2: // precio
+                    showOrdenarDistanciaDeselected();
+                    showOrdenarPrecioAscSelected();
+                    break;
+                default: // sin
+                    showOrdenarPrecioAscDeselected();
+                    showOrdenarDistanciaDeselected();
+                    break;
+            }
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
         }
-        // poner iconos ordenacion correctamente
-        int ordenacion = this.prefs.getInt(ORDENAR);
-        switch (ordenacion) {
-            case 1: // distancia
-                showOrdenarDistanciaSelected();
-                showOrdenarPrecioAscDeselected();
-                break;
-            case 2: // precio
-                showOrdenarDistanciaDeselected();
-                showOrdenarPrecioAscSelected();
-                break;
-            default: // sin
-                showOrdenarPrecioAscDeselected();
-                showOrdenarDistanciaDeselected();
-                break;
-        }
+
         return true;
     }
 
@@ -172,20 +173,25 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
     @Override
     public void showOrdenarDistanciaSelected() {
         menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_selected_32));
+        menu.getItem(4).setTitle("DistanciaMarcada");
+
     }
 
     @Override
     public void showOrdenarPrecioAscSelected() {
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_selected_57));
+        menu.getItem(5).setTitle("PrecioMarcado");
     }
 
     @Override
     public void showOrdenarDistanciaDeselected() {
         menu.getItem(4).setIcon(activity.getDrawable(R.drawable.location_32));
+        menu.getItem(4).setTitle("DistanciaSinMarcar");
     }
 
     @Override
     public void showOrdenarPrecioAscDeselected() {
         menu.getItem(5).setIcon(activity.getDrawable(R.drawable.low_price_57));
+        menu.getItem(5).setTitle("PrecioNoMarcado");
     }
 }

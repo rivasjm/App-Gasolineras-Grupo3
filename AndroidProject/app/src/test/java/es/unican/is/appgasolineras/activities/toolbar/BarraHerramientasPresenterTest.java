@@ -20,9 +20,6 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
  * y UOGD465235.1-3
  * @author Irene Zamanillo Zubizarreta y Alberto Moro Carrera
  */
-
-//TODO: añadir argumento de Location a los show
-
 public class BarraHerramientasPresenterTest {
     private BarraHerramientasPresenter sut;
 

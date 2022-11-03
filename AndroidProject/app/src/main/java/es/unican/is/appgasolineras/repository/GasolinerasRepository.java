@@ -89,7 +89,7 @@ public class GasolinerasRepository implements IGasolinerasRepository {
         } else {
             Instant now = Instant.now();
             long sinceLastDownloaded = ChronoUnit.MINUTES.between(lastDownloaded, now);  // minutes
-            return (sinceLastDownloaded > minutes) ? true : false;
+            return (sinceLastDownloaded > minutes);
         }
     }
 

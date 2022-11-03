@@ -107,7 +107,13 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
         }
+<<<<<<< HEAD
 
+=======
+        if(this.prefs.getInt(ORDENAR)==2){
+            showOrdenarPrecioAscSelected();
+        }
+>>>>>>> developLocal
         return true;
     }
 
@@ -136,6 +142,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
                 return true;
             case R.id.menuPrecio:
                 presenter.onOrdenarPrecioAscClicked();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

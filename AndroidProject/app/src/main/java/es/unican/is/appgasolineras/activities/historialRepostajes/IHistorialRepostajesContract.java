@@ -1,14 +1,13 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
-import android.content.Context;
+
 
 import java.util.List;
 
-import es.unican.is.appgasolineras.model.Gasolinera;
+
 import es.unican.is.appgasolineras.model.Repostaje;
-import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
-import es.unican.is.appgasolineras.repository.db.RepostajeDao;
+
 
 public interface IHistorialRepostajesContract {
 

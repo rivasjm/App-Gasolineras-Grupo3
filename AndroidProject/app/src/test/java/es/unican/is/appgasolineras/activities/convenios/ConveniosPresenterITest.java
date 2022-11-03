@@ -86,9 +86,9 @@ public class ConveniosPresenterITest {
         llenarDatos();
 
         sut.init();
-        assertTrue(verifyEquals(sut.shownConvenios,convenios_));
+        assertTrue(verifyEquals(sut.getShownConvenios(),convenios_));
         verify(mockView).getDatabase();
-        verify(mockView).showConvenios(sut.shownConvenios);
+        verify(mockView).showConvenios(sut.getShownConvenios());
     }
     @Test
     public void testInitVacio(){

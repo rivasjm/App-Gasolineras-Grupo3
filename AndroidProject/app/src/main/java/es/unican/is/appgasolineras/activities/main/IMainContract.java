@@ -2,8 +2,6 @@ package es.unican.is.appgasolineras.activities.main;
 
 import android.location.Location;
 
-import androidx.appcompat.app.AlertDialog;
-
 import java.util.List;
 
 import es.unican.is.appgasolineras.common.Callback;
@@ -107,7 +105,7 @@ public interface IMainContract {
          * Respuesta para el presenter de la ubicacion del dispositivo.
          * @param cb Callback
          * @return null si no se tienen permisos de ubicacion o hay un fallo raro, la ultima ubicacion
-         * del dispositivo si se tienen permisos y todo va bien.
+         * del dispositivo si se tienen permisos y to do va bien.
          */
         Location getLocation(Callback<Location> cb);
 

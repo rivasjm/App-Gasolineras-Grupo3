@@ -16,8 +16,16 @@ public class GasolineraPrecioComparator implements Comparator<Gasolinera> {
      */
     @Override
     public int compare(Gasolinera g1, Gasolinera g2) {
-        GasolineraDetailPresenter sumarioA = new GasolineraDetailPresenter(g1);
-        GasolineraDetailPresenter sumarioB = new GasolineraDetailPresenter(g2);
-        return sumarioA.getPrecioSumario().compareToIgnoreCase(sumarioB.getPrecioSumario());
+        int compare;
+        if (g1.getPrecioSumario() == "-") {
+            compare = 1;
+        } else if (g2.getPrecioSumario() == "-") {
+            compare = -1;
+        } else {
+            GasolineraDetailPresenter sumarioA = new GasolineraDetailPresenter(g1);
+            GasolineraDetailPresenter sumarioB = new GasolineraDetailPresenter(g2);
+            compare = sumarioA.getPrecioSumario().compareToIgnoreCase(sumarioB.getPrecioSumario());
+        }
+        return compare;
     }
 }

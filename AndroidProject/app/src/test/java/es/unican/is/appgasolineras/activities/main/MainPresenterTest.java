@@ -11,10 +11,9 @@ import org.robolectric.annotation.Config;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.location.Location;
 import android.os.Build;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter;
@@ -56,9 +55,11 @@ public class MainPresenterTest {
 
         //Inicializacion generica
         sut = new MainPresenter(viewMock, prefsMock);
-        gasolineras = new LinkedList<Gasolinera>();
-        gasolinerasPrecio = new LinkedList<Gasolinera>();
-        gasolinerasDistancia = new LinkedList<Gasolinera>();
+        gasolineras = new ArrayList<Gasolinera>();
+        gasolinerasPrecio = new ArrayList<Gasolinera>();
+        gasolinerasDistancia = new ArrayList<Gasolinera>();
+        gasolinerasSinPrecio = new ArrayList<Gasolinera>();
+        gasolinerasSinPrecioOrdenadas = new ArrayList<Gasolinera>();
 
         //Solo se da valor a los campos utilizados durante el test (precio, distancia, id)
 
@@ -92,6 +93,31 @@ public class MainPresenterTest {
         gasolinerasPrecio.add(gasolineras.get(3));
         gasolinerasPrecio.add(gasolineras.get(2));
         gasolinerasPrecio.add(gasolineras.get(1));
+
+        //Lista de gasolineras sin precio
+        for (int i = 0; i < 4; i++) {
+            g = new Gasolinera();
+            g.setId(String.valueOf(i));
+            g.setNormal95(String.valueOf(200-i));
+            g.setDieselA(String.valueOf(100-i));
+            g.getPrecioSumario();
+            gasolinerasSinPrecio.add(g);
+        }
+
+        //Gasolineras sin campo de precio sumario (por tener precios negativos)
+        Gasolinera g2 = new Gasolinera();
+        g2.setId(String.valueOf(4));
+        g2.setNormal95(String.valueOf(-200));
+        g2.setDieselA(String.valueOf(-100));
+        g2.getPrecioSumario();
+        gasolinerasSinPrecio.add(0, g2);
+
+
+        gasolinerasSinPrecioOrdenadas.add(gasolinerasSinPrecio.get(4));
+        gasolinerasSinPrecioOrdenadas.add(gasolinerasSinPrecio.get(3));
+        gasolinerasSinPrecioOrdenadas.add(gasolinerasSinPrecio.get(2));
+        gasolinerasSinPrecioOrdenadas.add(gasolinerasSinPrecio.get(1));
+        gasolinerasSinPrecioOrdenadas.add(gasolinerasSinPrecio.get(0));
 
         //Lista de gasolineras ordenada por distancia
         gasolinerasDistancia.add(gasolineras.get(1));
@@ -168,5 +194,17 @@ public class MainPresenterTest {
 
         verify(repositoryMock).getGasolineras();
         verify(viewMock).showLoadError();
+    }
+
+    //Corresponde a PR465236.1f
+    @Test
+    public void doSyncInitCargaSinPrecio() {
+        //Comportamiento de los mocks
+        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(2);
+        when(repositoryMock.getGasolineras()).thenReturn(gasolinerasSinPrecio);
+        sut.init();
+
+        assert(sut.getShownGasolineras().equals(gasolinerasSinPrecioOrdenadas));
+        verify(repositoryMock).getGasolineras();
     }
 }

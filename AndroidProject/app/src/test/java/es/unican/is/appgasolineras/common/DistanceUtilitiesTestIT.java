@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.common.prefs;
+package es.unican.is.appgasolineras.common;
 
 import android.location.Location;
 import android.os.Build;

@@ -36,7 +36,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     private IMainContract.Presenter presenter;
     private BarraHerramientasView barraHerramientasView;
-    private Prefs prefs;
+    private static Prefs prefs;
     private FusedLocationProviderClient fusedLocationClient;
     private Location currentLocation;
     private static int debug = 0;
@@ -199,6 +199,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     public static void acabaTest() {
+        prefs.putInt(ORDENAR, 0);
         debug = 0;
     }
 

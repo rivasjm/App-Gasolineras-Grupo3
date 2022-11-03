@@ -86,4 +86,40 @@ public class BarraHerramientasPresenterTest {
         verify(prefsMock).putInt(BarraHerramientasPresenter.ORDENAR, 1);
         verify(viewMock).openMainView();
     }
+
+    //Corresponde a UBHPR465236.1a
+    //Se pulsa el boton de ordenar por precio sin que hubiese pulsado ninguno anteriormente
+    @Test
+    public void onOrdenarPrecioAscClickedInicial() {
+        //Comportamiento de los mocks
+        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(0);
+        sut.onOrdenarPrecioAscClicked();
+
+        verify(prefsMock).putInt(BarraHerramientasPresenter.ORDENAR, 2);
+        verify(viewMock).openMainView();
+    }
+
+    //Corresponde a UBHPR465236.1b
+    //Se pulsa el boton de ordenar por precio tras pulsar el de ordenar por distancia
+    @Test
+    public void onOrdenarPrecioAscClickedDistanciaPrevia() {
+        //Comportamiento de los mocks
+        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(1);
+        sut.onOrdenarPrecioAscClicked();
+
+        verify(prefsMock).putInt(BarraHerramientasPresenter.ORDENAR, 2);
+        verify(viewMock).openMainView();
+    }
+
+    //Corresponde a UBHPR465236.1c
+    //Se pulsa el boton de ordenar por precio tras haberlo pulsado previamente
+    @Test
+    public void onOrdenarPrecioAscClickedPrecioPrevio() {
+        //Comportamiento de los mocks
+        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(2);
+        sut.onOrdenarPrecioAscClicked();
+
+        verify(prefsMock).putInt(BarraHerramientasPresenter.ORDENAR, 0);
+        verify(viewMock).openMainView();
+    }
 }

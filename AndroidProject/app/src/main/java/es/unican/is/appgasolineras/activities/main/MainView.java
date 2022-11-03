@@ -67,7 +67,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         presenter.init();
         this.init();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return barraHerramientasView.onCreateOptionsMenu(menu, true);

@@ -7,6 +7,7 @@ import android.location.Location;
  */
 public class DistanceUtilities {
 
+    // constructor privado para calidad
     private DistanceUtilities(){}
 
     /**
@@ -26,6 +27,5 @@ public class DistanceUtilities {
 
     }
 
-    // constructor privado para calidad
-    private DistanceUtilities(){}
+
 }

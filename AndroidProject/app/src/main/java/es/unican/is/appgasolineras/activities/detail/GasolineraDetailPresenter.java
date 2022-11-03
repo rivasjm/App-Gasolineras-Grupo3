@@ -2,6 +2,7 @@ package es.unican.is.appgasolineras.activities.detail;
 
 import android.content.Context;
 import android.location.Location;
+import android.text.TextUtils;
 
 import es.unican.is.appgasolineras.common.DistanceUtilities;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;

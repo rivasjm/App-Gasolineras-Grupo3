@@ -104,7 +104,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 if (location == null) {
                     // no hay nada guardado en preferencias, error
                     if (prefs.getString("longitud").equals("") ||
-                            prefs.getString("longitud").equals("")) {
+                            prefs.getString("latitud").equals("")) {
                         view.showGpsError();
                         return;
                     }
@@ -119,7 +119,7 @@ public class MainPresenter implements IMainContract.Presenter {
             case 2: // por precio
                 // si se puede obtener la ubicacion
                 if (!prefs.getString("longitud").equals("") &&
-                        !prefs.getString("longitud").equals("")) {
+                        !prefs.getString("latitud").equals("")) {
                     location = new Location("");
                     location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
                     location.setLatitude(Double.parseDouble(prefs.getString("latitud")));

@@ -17,9 +17,9 @@ public class GasolineraPrecioComparator implements Comparator<Gasolinera> {
     @Override
     public int compare(Gasolinera g1, Gasolinera g2) {
         int compare;
-        if (g1.getPrecioSumario() == "-") {
+        if (g1.getPrecioSumario().equals("-")) {
             compare = 1;
-        } else if (g2.getPrecioSumario() == "-") {
+        } else if (g2.getPrecioSumario().equals("-")) {
             compare = -1;
         } else {
             GasolineraDetailPresenter sumarioA = new GasolineraDetailPresenter(g1);

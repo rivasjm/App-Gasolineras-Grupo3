@@ -16,6 +16,7 @@ import android.view.View;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -23,6 +24,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 /**
@@ -42,37 +44,47 @@ public class OrdenarGasolinerasPorDistanciaUITest {
     @BeforeClass
     public static void setUp() {
         GasolinerasServiceConstants.setStaticURL();
+        MainView.inicializaTest();
     }
 
     @Before
-    public void setUp2() { activityRule.getScenario().onActivity(activity -> vista = activity.getWindow().getDecorView()); }
+    public void setUp2() {
+        activityRule.getScenario().onActivity(activity -> vista = activity.getWindow().getDecorView());
+        MainView.inicializaTest();
+    }
 
     /**
      * Test de interfaz de interfaz identificado como IGUI465235.a.
      */
     @Test
-    public void ordenarGasolinerasPorPrecioTest() {
-
+    public void ordenarGasolinerasPorDistanciaTest() {
 
         onView(withId(R.id.menuDistancia)).perform(click());
 
         //Comprobamos tanto la localización como el nombre de las gasolineras para que sean
         //uniequivocas
+
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(0).
-                onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
+                onChildView(withId(R.id.tvName)).check(matches(withText("CEPSA")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(1).
-                onChildView(withId(R.id.tvName)).check(matches(withText("COMBUSCAN")));
+                onChildView(withId(R.id.tvName)).check(matches(withText("CEPSA")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(2).
-                onChildView(withId(R.id.tvName)).check(matches(withText("E.S.SOLBAS")));
+                onChildView(withId(R.id.tvName)).check(matches(withText("EASYGAS")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(3).
-                onChildView(withId(R.id.tvName)).check(matches(withText("ESTACION DE SERVICIO LIEBANA S.L")));
+                onChildView(withId(R.id.tvName)).check(matches(withText("BP CASTRO URDIALES")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(0).
-                onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA E-70/N-634 KM. 279")));
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA N-634 KM. 136,400")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(1).
-                onChildView(withId(R.id.tvAddress)).check(matches(withText("LANSAR, S/N (N-634 km 284,5)")));
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA N-634 KM. 136,4")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(2).
-                onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA E-70/N-634 KM. 270")));
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("AUTV.A-8 (AUTOV. CANTABRICO) km 141")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(3).
-                onChildView(withId(R.id.tvAddress)).check(matches(withText("CN-621 km 150")));
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("BARRIO BRAZOMAR S/N, S/N")));
+    }
+
+    @AfterClass
+    public static void clean() {
+        GasolinerasServiceConstants.setMinecoURL();
+        MainView.acabaTest();
     }
 }

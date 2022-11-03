@@ -39,7 +39,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private Prefs prefs;
     private FusedLocationProviderClient fusedLocationClient;
     private Location currentLocation;
-
+    private static int debug = 0;
     /*
     Activity lifecycle methods
      */
@@ -100,25 +100,33 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      */
     @Override
     public Location getLocation(Callback<Location> cb) {
-        // ver si se tiene alguno de los permisos
-        if (ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // si no tiene permisos, llamar onFailure para la ventana emergente
-            cb.onFailure();
-            return null;
+        if(debug == 0) {
+            // ver si se tiene alguno de los permisos
+            if (ActivityCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // si no tiene permisos, llamar onFailure para la ventana emergente
+                cb.onFailure();
+                return null;
+            }
+            fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+                    .addOnSuccessListener(this,
+                            location -> {
+                                // Got current location. In some rare situations this can be null.
+                                if (location != null) {
+                                    // devolver la ubicacion obtenida
+                                    currentLocation = location;
+                                    cb.onSuccess(currentLocation); // pasar al success la ubicacion
+                                }
+                            });
+        } else {
+            currentLocation = new Location("");
+            currentLocation.setLongitude(43.4714);
+            currentLocation.setLatitude(-3.8013);
+            this.prefs.putString("longitud","43.4714");
+            this.prefs.putString("latitud","-3.8013");
         }
-        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
-                .addOnSuccessListener(this,
-                        location -> {
-                            // Got current location. In some rare situations this can be null.
-                            if (location != null) {
-                                // devolver la ubicacion obtenida
-                                currentLocation = location;
-                                cb.onSuccess(currentLocation); // pasar al success la ubicacion
-                            }
-                        });
         return currentLocation;
     }
 
@@ -185,4 +193,17 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         intent.putExtra(GasolineraDetailView.INTENT_GASOLINERA, gasolinera);
         startActivity(intent);
     }
+
+    public static void inicializaTest() {
+        debug = 1;
+    }
+
+    public static void acabaTest() {
+        debug = 0;
+    }
+
+    public static int getDebug(){
+        return debug;
+    }
+
 }

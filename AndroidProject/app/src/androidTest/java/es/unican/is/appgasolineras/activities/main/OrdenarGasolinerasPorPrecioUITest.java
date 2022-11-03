@@ -20,12 +20,14 @@ import android.view.View;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 import es.unican.is.appgasolineras.utils.Matchers;
 
@@ -46,6 +48,8 @@ public class OrdenarGasolinerasPorPrecioUITest {
     @BeforeClass
     public static void setUp() {
         GasolinerasServiceConstants.setStaticURL();
+        MainView.inicializaTest();
+
     }
 
     @Before
@@ -77,5 +81,10 @@ public class OrdenarGasolinerasPorPrecioUITest {
 
         //Comprobar que se muestra el Toast
         onView(withText(R.string.ordenarPrecioAscAplicado)).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+    }
+    @AfterClass
+    public static void clean() {
+        GasolinerasServiceConstants.setMinecoURL();
+        MainView.acabaTest();
     }
 }

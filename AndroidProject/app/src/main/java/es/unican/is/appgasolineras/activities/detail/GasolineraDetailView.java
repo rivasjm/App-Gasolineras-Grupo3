@@ -51,4 +51,5 @@ public class GasolineraDetailView extends AppCompatActivity {
         tvDistancia.setText(gs.getDistancia());
 
     }
+
 }

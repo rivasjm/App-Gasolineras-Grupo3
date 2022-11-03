@@ -51,7 +51,10 @@ public class MainPresenter implements IMainContract.Presenter {
                 }
                 @Override
                 public void onFailure() {
-                    view.showGpsError(); // mostrar error ubicacion
+                    if(MainView.getDebug() != 1){
+                        view.showGpsError(); // mostrar error ubicacion
+                    }
+
                 }
             });
         }

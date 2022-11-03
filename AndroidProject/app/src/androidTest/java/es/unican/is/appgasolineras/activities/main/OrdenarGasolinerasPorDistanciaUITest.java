@@ -4,15 +4,11 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.PreferenceMatchers.withTitle;
-import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.not;
-
 import static es.unican.is.appgasolineras.utils.Matchers.hasNElements;
 
 import android.view.View;
@@ -21,6 +17,7 @@ import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -29,59 +26,62 @@ import org.junit.Test;
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
-import es.unican.is.appgasolineras.utils.Matchers;
 
 /**
- * Test de interfaz para el escenario "Ordenar Gasolineras Por Precio".
  *
- * @author Irene Zamanillo Zubizarreta
+ * En este test se comprueba que tras clickar el botón de ordenar por
+ * distancia, las gasolineras que se muestren esten en efecto ordenadas por distancia.
+ *
+ * @author Alberto Moro
  */
-
-public class OrdenarGasolinerasPorPrecioUITest {
-
+public class OrdenarGasolinerasPorDistanciaUITest {
     @Rule
     public ActivityScenarioRule<MainView> activityRule = new
             ActivityScenarioRule<>(MainView.class);
 
-    private View decorView;
+    private View vista;
 
     @BeforeClass
     public static void setUp() {
         GasolinerasServiceConstants.setStaticURL();
         MainView.inicializaTest();
-
     }
 
     @Before
-    public void setUp2() { activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView()); }
+    public void setUp2() {
+        activityRule.getScenario().onActivity(activity -> vista = activity.getWindow().getDecorView());
+        MainView.inicializaTest();
+    }
 
     /**
-     Este test se corresponde con el test IGUI465236.a segun el plan de pruebas.
-
-     Desde la vista main se pulsa el botón para ordenar por precio de la barra de herramientas.
-     Se carga una nueva activity en la que se muestra la lista de gasolineras ordenada por precio.
-     Se muestra un mensaje indicando que las gasolineras han sido ordenadas.
-     Se destaca el botón de ordenar que ha sido pulsado (no se puede comprobar por cuestiones del diseño del botón)
+     * Test de interfaz de interfaz identificado como IGUI465235.a.
      */
     @Test
-    public void ordenarGasolinerasPorPrecioTest() {
-        //Pulsar el boton de ordenar por precio
-        onView(withId(R.id.menuPrecio)).perform(click());
+    public void ordenarGasolinerasPorDistanciaTest() {
 
-        //Comprobar que está cargada la lista de gasolineras y tiene todas las gasolineras de Cantabria
-        onView(withId(R.id.lvGasolineras)).check(matches(hasNElements(156)));
+        onView(withId(R.id.menuDistancia)).perform(click());
 
-        //Comprobar que la lista de gasolineras esta ordenada
+        //Comprobamos tanto la localización como el nombre de las gasolineras para que sean
+        //uniequivocas
+
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(0).
-                onChildView(withId(R.id.tvName)).check(matches(withText("BALLENOIL")));
+                onChildView(withId(R.id.tvName)).check(matches(withText("CEPSA")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(1).
-                onChildView(withId(R.id.tvName)).check(matches(withText("EASYGAS")));
+                onChildView(withId(R.id.tvName)).check(matches(withText("CEPSA")));
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(2).
                 onChildView(withId(R.id.tvName)).check(matches(withText("EASYGAS")));
-
-        //Comprobar que se muestra el Toast
-        onView(withText(R.string.ordenarPrecioAscAplicado)).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+        onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(3).
+                onChildView(withId(R.id.tvName)).check(matches(withText("BP CASTRO URDIALES")));
+        onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(0).
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA N-634 KM. 136,400")));
+        onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(1).
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA N-634 KM. 136,4")));
+        onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(2).
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("AUTV.A-8 (AUTOV. CANTABRICO) km 141")));
+        onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(3).
+                onChildView(withId(R.id.tvAddress)).check(matches(withText("BARRIO BRAZOMAR S/N, S/N")));
     }
+
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();

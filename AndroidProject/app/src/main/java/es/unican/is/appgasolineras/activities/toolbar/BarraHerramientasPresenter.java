@@ -37,6 +37,7 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
         this.prefs.putInt(ORDENAR,0);
     }
 
+
     @Override
     public void onOrdenarDistanciaClicked() {
         if (this.prefs.getInt(ORDENAR) != 1){ // actualmente no ordena por distancia

@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 public class MostrarGasolinerasUITest {
@@ -21,11 +22,13 @@ public class MostrarGasolinerasUITest {
     @BeforeClass
     public static void setUp() {
         GasolinerasServiceConstants.setStaticURL();
+        MainView.inicializaTest();
     }
 
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();
+        MainView.acabaTest();
     }
 
     @Rule

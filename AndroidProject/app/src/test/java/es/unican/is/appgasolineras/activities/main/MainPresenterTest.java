@@ -2,13 +2,17 @@ package es.unican.is.appgasolineras.activities.main;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.location.Location;
+import android.os.Build;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,19 +25,20 @@ import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 /**
  * Test unitario del presentador general de la aplicación.
  *
- * Casos de prueba implementados: UPR465236.1a-UPR465236.1f
+ * Casos de prueba implementados: UPR465236.1a-UPR465236.1e
  *
  * @author Irene Zamanillo Zubizarreta
  */
 
-//TODO: añadir argumento de Location a los show
-
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.O_MR1})
 public class MainPresenterTest {
-    /*private MainPresenter sut;
+    private MainPresenter sut;
     private List<Gasolinera> gasolineras;
     private List<Gasolinera> gasolinerasPrecio;
     private List<Gasolinera> gasolinerasDistancia;
     private List<Gasolinera> gasolinerasSinPrecio;
+    private List<Gasolinera> gasolinerasSinPrecioOrdenadas;
 
     @Mock
     private IGasolinerasRepository repositoryMock;
@@ -54,20 +59,19 @@ public class MainPresenterTest {
         gasolineras = new LinkedList<Gasolinera>();
         gasolinerasPrecio = new LinkedList<Gasolinera>();
         gasolinerasDistancia = new LinkedList<Gasolinera>();
-        gasolinerasSinPrecio = new LinkedList<Gasolinera>();
 
         //Solo se da valor a los campos utilizados durante el test (precio, distancia, id)
 
         //Lista generica de gasolineras (precio mas alto a mas bajo; distancia mas cercana a mas lejana)
-        double j = 0.10;
+        double j = 0.0;
         for (int i = 0; i < 4; i++) {
             Gasolinera g = new Gasolinera();
             g.setId(String.valueOf(i));
-            g.setNormal95(String.valueOf(10-i));
-            g.setDieselA(String.valueOf(20-i));
-            g.setLatitud(String.valueOf(43.46 + j));
-            g.setLongitud(String.valueOf(-3.8 - j));
-            j += 0.05;
+            g.setNormal95(String.valueOf(200-i));
+            g.setDieselA(String.valueOf(100-i));
+            g.setLatitud(String.valueOf(43.4635088652 + j));
+            g.setLongitud(String.valueOf(-3.83251340152 + j));
+            j += 10.0;
             gasolineras.add(g);
         }
 
@@ -75,36 +79,36 @@ public class MainPresenterTest {
         //De esta forma ordenar la lista no implica solo darle la vuelta
         Gasolinera g = new Gasolinera();
         g.setId(String.valueOf(4));
-        g.setNormal95(String.valueOf(10-4));
-        g.setDieselA(String.valueOf(20-4));
-        g.setLatitud(String.valueOf(43.46 + 5.60));
-        g.setLongitud(String.valueOf(-3.8 - 5.60));
-        gasolineras.add(g);
+        g.setNormal95(String.valueOf(200-4));
+        g.setDieselA(String.valueOf(100-4));
+        //Coordenadas en Australia
+        g.setLatitud(String.valueOf(-25.274398));
+        g.setLongitud(String.valueOf(133.775136));
+        gasolineras.add(0, g);
 
         //Lista de gasolineras ordenada por precio
+        gasolinerasPrecio.add(gasolineras.get(0));
         gasolinerasPrecio.add(gasolineras.get(4));
         gasolinerasPrecio.add(gasolineras.get(3));
         gasolinerasPrecio.add(gasolineras.get(2));
         gasolinerasPrecio.add(gasolineras.get(1));
-        gasolinerasPrecio.add(gasolineras.get(0));
-
-        //Lista de gasolineras sin precio
-        for (int i = 0; i < 5; i++) {
-            g = new Gasolinera();
-            g.setId(String.valueOf(i));
-            gasolinerasSinPrecio.add(g);
-        }
 
         //Lista de gasolineras ordenada por distancia
-        gasolinerasDistancia.add(gasolineras.get(4));
-        gasolinerasDistancia.add(gasolineras.get(0));
         gasolinerasDistancia.add(gasolineras.get(1));
         gasolinerasDistancia.add(gasolineras.get(2));
         gasolinerasDistancia.add(gasolineras.get(3));
+        gasolinerasDistancia.add(gasolineras.get(4));
+        gasolinerasDistancia.add(gasolineras.get(0));
 
         //Comportamiento de los mocks
         when(viewMock.getGasolineraRepository()).thenReturn(repositoryMock);
         when(repositoryMock.getGasolineras()).thenReturn(gasolineras); //en la mayoria de los casos
+
+        //Gestion de la distancia
+        //Las coordenadas estan tomadas de las que se usan manualmente en el emulador
+        // y corresponden a Santander
+        when(prefsMock.getString("latitud")).thenReturn("43.4635088652");
+        when(prefsMock.getString("longitud")).thenReturn("-3.83251340152");
     }
 
     //Como doSyncInit() es un método privado, se llama al método init() en los tests
@@ -120,7 +124,6 @@ public class MainPresenterTest {
 
         assert(sut.getShownGasolineras().equals(gasolinerasDistancia));
         verify(repositoryMock).getGasolineras();
-        verify(viewMock).showGasolineras(gasolinerasDistancia);
     }
 
     //Corresponde a UPR465236.1b
@@ -132,7 +135,6 @@ public class MainPresenterTest {
 
         assert(sut.getShownGasolineras().equals(gasolinerasPrecio));
         verify(repositoryMock).getGasolineras();
-        verify(viewMock).showGasolineras(gasolinerasPrecio);
     }
 
     //Corresponde a UPR465236.1c
@@ -144,7 +146,6 @@ public class MainPresenterTest {
 
         assert(sut.getShownGasolineras().equals(gasolineras));
         verify(repositoryMock).getGasolineras();
-        verify(viewMock).showGasolineras(gasolineras);
     }
 
     //Corresponde a UPR465236.1d
@@ -156,34 +157,16 @@ public class MainPresenterTest {
 
         assert(sut.getShownGasolineras().equals(gasolineras));
         verify(repositoryMock).getGasolineras();
-        verify(viewMock).showGasolineras(gasolineras);
     }
 
     //Corresponde a UPR465236.1e
-    //TODO: no se muestra el error
-    /*@Test
+    @Test
     public void doSyncInitErrorCarga() {
         //Comportamiento de los mocks
-        when(repositoryMock.getGasolineras()).thenReturn(new LinkedList<Gasolinera>());
+        when(repositoryMock.getGasolineras()).thenReturn(null);
         sut.init();
 
-        assert(sut.getShownGasolineras().equals(gasolinerasPrecio));
         verify(repositoryMock).getGasolineras();
         verify(viewMock).showLoadError();
     }
-
-    //Corresponde a UPR465236.1f
-    //TODO: nullPointer porque se intenta operar sin precios
-    @Test
-    public void doSyncInitErrorCargaSinPrecio() {
-        //Comportamiento de los mocks
-        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(2);
-        when(repositoryMock.getGasolineras()).thenReturn(gasolinerasSinPrecio);
-        sut.init();
-
-        assert(sut.getShownGasolineras().equals(gasolinerasPrecio));
-        verify(repositoryMock).getGasolineras();
-        verify(prefsMock).getInt(BarraHerramientasPresenter.ORDENAR);
-        verify(viewMock).showGasolineras(gasolineras);
-    }*/
 }

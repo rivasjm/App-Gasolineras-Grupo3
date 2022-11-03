@@ -21,9 +21,7 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
  * @author Irene Zamanillo Zubizarreta
  */
 
-//TODO: añadir argumento de Location a los show
-
-/*public class BarraHerramientasPresenterTest {
+public class BarraHerramientasPresenterTest {
     private BarraHerramientasPresenter sut;
 
     @Mock
@@ -49,7 +47,6 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(0);
         sut.onOrdenarPrecioAscClicked();
 
-        verify(viewMock).showOrdenarPrecioAscSelected();
         verify(viewMock).openMainView();
     }
 
@@ -61,8 +58,6 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(1);
         sut.onOrdenarPrecioAscClicked();
 
-        verify(viewMock).showOrdenarDistanciaDeselected();
-        verify(viewMock).showOrdenarPrecioAscSelected();
         verify(viewMock).openMainView();
     }
 
@@ -74,7 +69,6 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
         when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(2);
         sut.onOrdenarPrecioAscClicked();
 
-        verify(viewMock).showOrdenarPrecioAscSelected();
         verify(viewMock).openMainView();
     }
-}*/
+}

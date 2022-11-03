@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -107,13 +107,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
         }
-<<<<<<< HEAD
 
-=======
-        if(this.prefs.getInt(ORDENAR)==2){
-            showOrdenarPrecioAscSelected();
-        }
->>>>>>> developLocal
         return true;
     }
 

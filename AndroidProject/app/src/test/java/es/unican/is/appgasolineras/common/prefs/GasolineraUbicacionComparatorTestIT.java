@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.prefs;
+package es.unican.is.appgasolineras.common.prefs;
 
 import android.location.Location;
 import android.os.Build;
@@ -13,12 +13,20 @@ import org.robolectric.annotation.Config;
 import es.unican.is.appgasolineras.common.GasolineraUbicacionComparator;
 import es.unican.is.appgasolineras.model.Gasolinera;
 
+/**
+ * Test de integración de la clase GasolineraUbicacionComparator
+ * con Gasolinera, los test siguen la nomenclatura INTTE465235.xx
+ * @author Alberto Moro
+ */
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {Build.VERSION_CODES.O_MR1})
 public class GasolineraUbicacionComparatorTestIT {
 
     private GasolineraUbicacionComparator sut;
 
+    /**
+     * Creamos el SUT con una ubicación por defecto.
+     */
     @Before
     public void setUp() {
         //Creamos la ubicacion actual
@@ -28,6 +36,12 @@ public class GasolineraUbicacionComparatorTestIT {
         sut = new GasolineraUbicacionComparator(locActual);
     }
 
+
+    /**
+     * Caso en el que la primer gasolinera está más cerca que la segunda
+     * de la ubicación base, por lo que esperamos que devuelva un -1.
+     * INTTE465235.1a
+     */
     @Test
     public void primeraMasCercaTest() {
 
@@ -49,6 +63,12 @@ public class GasolineraUbicacionComparatorTestIT {
         Assert.assertEquals(-1, sut.compare(gasolinera1, gasolinera2));
     }
 
+
+    /**
+     * Caso en el que la segunda gasolinera está más cerca que la primera
+     * de la ubicación base, por lo que esperamos que devuelva un 1.
+     * INTTE465235.1b
+     */
     @Test
     public void segundaMasCercaTest() {
 
@@ -66,6 +86,11 @@ public class GasolineraUbicacionComparatorTestIT {
         Assert.assertEquals(1, sut.compare(gasolinera1, gasolinera2));
     }
 
+    /**
+     * Caso en el que las dos gasolineras estáb a la misma distancia
+     * de la ubicación base, por lo que esperamos que devuelva un 1.
+     * INTTE465235.1c
+     */
     @Test
     public void dosMismaDistanciaTest() {
 

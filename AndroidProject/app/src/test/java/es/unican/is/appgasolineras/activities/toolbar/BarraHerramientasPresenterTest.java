@@ -17,13 +17,13 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
  * Test unitario del presentador de la barra de herramientas.
  *
  * Casos de prueba implementados: UBHPR465236.1a-UBHPR465236.1c
- *
- * @author Irene Zamanillo Zubizarreta
+ * y UOGD465235.1-3
+ * @author Irene Zamanillo Zubizarreta y Alberto Moro Carrera
  */
 
 //TODO: añadir argumento de Location a los show
 
-/*public class BarraHerramientasPresenterTest {
+public class BarraHerramientasPresenterTest {
     private BarraHerramientasPresenter sut;
 
     @Mock
@@ -41,6 +41,57 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
         sut = new BarraHerramientasPresenter(viewMock, prefsMock);
     }
 
+    /**
+     * Alberto Moro Carrera
+     * Primer test de onOrdenardDistanciaClicked
+     * Comprueba el caso base en el que se selecciona
+     * sin una selección previa.
+     * UOGD465235.1
+     */
+    @Test
+    public void onOrdenarDistanciaClicked() {
+        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(0);
+        sut.onOrdenarDistanciaClicked();
+
+        verify(prefsMock).putInt(BarraHerramientasPresenter.ORDENAR, 1);
+        verify(viewMock).openMainView();
+    }
+
+    /**
+     * Alberto Moro Carrera
+     * Segundo test de onOrdenardDistanciaClicked
+     * Comprueba el caso base de en el que se selecciona
+     * nuevamente, volviendo a la ordenación por defecto.
+     * UOGD465235.2
+     */
+    @Test
+    public void onOrdenarDistanciaClickedDesmarcar() {
+        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(1);
+        sut.onOrdenarDistanciaClicked();
+
+        verify(prefsMock).putInt(BarraHerramientasPresenter.ORDENAR, 0);
+        verify(viewMock).openMainView();
+    }
+
+    /**
+     * Alberto Moro Carrera
+     * Tercer test de onOrdenardDistanciaClicked
+     * Comprueba el caso base de en el que está seleccionada
+     * la opción de ordenar por precio y se pasa a ordenar por
+     * distancia.
+     * UOGD465235.3
+     */
+    @Test
+    public void onOrdenarDistanciaClickedTrasOrdenarPorPrecio() {
+        when(prefsMock.getInt(BarraHerramientasPresenter.ORDENAR)).thenReturn(2);
+        sut.onOrdenarDistanciaClicked();
+
+        verify(prefsMock).putInt(BarraHerramientasPresenter.ORDENAR, 1);
+        verify(viewMock).openMainView();
+    }
+
+
+    /**
     //Corresponde a UBHPR465236.1a
     //Se pulsa el boton de ordenar por precio sin que hubiese pulsado ninguno anteriormente
     @Test
@@ -77,4 +128,5 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
         verify(viewMock).showOrdenarPrecioAscSelected();
         verify(viewMock).openMainView();
     }
-}*/
+    **/
+}

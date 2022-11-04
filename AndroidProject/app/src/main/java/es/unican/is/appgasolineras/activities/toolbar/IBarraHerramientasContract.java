@@ -38,6 +38,18 @@ public interface IBarraHerramientasContract {
          * ha sido pulsado.
          */
         void onLogoClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el icono
+         * de ordenar gasolineras por distancia ha sido pulsado.
+         */
+        void onOrdenarDistanciaClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el icono
+         * de ordenar gasolineras por precio ha sido pulsado.
+         */
+        void onOrdenarPrecioAscClicked();
     }
 
     /**
@@ -70,5 +82,28 @@ public interface IBarraHerramientasContract {
          * @return la Activity con la que la toolbar esta ligada.
          */
         AppCompatActivity getActivity();
+
+        // estos metodos solo actualizan los logos, no hacen mas
+        /**
+         * Se solicita a la View que muestre un mensaje informativo de que la ordenacion por
+         * distancia ha sido aplicada. Así como destacar su respectivo boton.
+         */
+        void showOrdenarDistanciaSelected();
+
+        /**
+         * Se solicita a la View que muestre un mensaje informativo de que la ordenacion por
+         * precio ha sido aplicada. Así como destacar su respectivo boton.
+         */
+        void showOrdenarPrecioAscSelected();
+
+        /**
+         * Se solicita a la View que muestre el icono de ordenar por distancia deseleccionado.
+         */
+        void showOrdenarDistanciaDeselected();
+
+        /**
+         * Se solicita a la View que muestre el icono de ordenar por precio deseleccionado.
+         */
+        void showOrdenarPrecioAscDeselected();
     }
 }

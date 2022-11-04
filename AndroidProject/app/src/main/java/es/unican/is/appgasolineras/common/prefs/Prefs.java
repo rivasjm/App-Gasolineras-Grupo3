@@ -69,4 +69,5 @@ public class Prefs implements IPrefs {
         editor.putInt(key, value);
         editor.commit();
     }
+
 }

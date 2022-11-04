@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.activities.main;
 
 import android.content.Context;
+import android.location.Location;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,22 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.common.DistanceUtilities;
 import es.unican.is.appgasolineras.model.Gasolinera;
 
 public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
 
-    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects) {
+    private Location location;
+    /**
+     * Constructor del adapter de las gasolineras.
+     * @param context
+     * @param objects Lista de gasolineras que se van a mostrar.
+     * @param location Localizacion del dispositivo, puede ser nula si no se tienen permisos.
+     */
+    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects,
+                                   @Nullable Location location) {
         super(context, 0, objects);
+        this.location = location;
     }
 
     @NonNull
@@ -51,6 +62,10 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
         String labelDieselALabel = getContext().getResources().getString(R.string.dieselAlabel);
         showInfo(convertView, R.id.tvDieselALabel, labelDieselALabel + ":");
         showInfo(convertView, R.id.tvDieselA, gasolinera.getDieselA());
+
+        // distance
+        showInfo(convertView, R.id.tvDistance, DistanceUtilities.
+                distanceBetweenLocations(gasolinera.getLocation(), location) + " km");
 
         return convertView;
     }

@@ -1,6 +1,11 @@
 package es.unican.is.appgasolineras.activities.detail;
 
+import android.content.Context;
+import android.location.Location;
+import android.text.TextUtils;
 
+import es.unican.is.appgasolineras.common.DistanceUtilities;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 
 /**
@@ -10,7 +15,17 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 public class GasolineraDetailPresenter {
 
     private Gasolinera gasolinera;
+    private IPrefs prefs;
 
+    /**
+     * Constructor, pasa la gasolinera.
+     * @param gasolinera la gasolinera
+     * @param prefs Preferencias de la aplicacion para recoger la ubicacion
+     */
+    public GasolineraDetailPresenter(Gasolinera gasolinera, IPrefs prefs) {
+        this.gasolinera = gasolinera;
+        this.prefs = prefs;
+    }
     /**
      * Constructor, pasa la gasolinera.
      * @param gasolinera la gasolinera
@@ -24,84 +39,84 @@ public class GasolineraDetailPresenter {
      * @return String con el precio sumario en dos decimales, - si un precio es negativo
      */
     public String getPrecioSumario() {
-        double precioSumario;
-        double precioDiesel;
-        double precio95;
-        try {
-             precioDiesel = Double.parseDouble(
-                    gasolinera.getDieselA().replace(',', '.'));
-        } catch (NumberFormatException e){
-            precioDiesel = 0;
-        }
-        try {
-            precio95 = Double.parseDouble(
-                    gasolinera.getNormal95().replace(',', '.'));
-        } catch (NumberFormatException e){
-            precio95 = 0;
-        }
-        // gestionar que se devuelve dependiendo de los valores disponibles
-        if (precio95 <= 0 && precioDiesel <= 0) {
+        if (gasolinera.getPrecioSumario() == null || gasolinera.getPrecioSumario().equals("")) {
             return "-";
-        } else if (precio95 <= 0) {
-            precioSumario = precioDiesel;
-        } else if (precioDiesel <= 0) {
-            precioSumario = precio95;
-        } else {
-            precioSumario = (precio95 * 2+ precioDiesel * 1) / 3.0;
         }
-        // mostrar precio con coma
-        String precio = Double.toString(precioSumario);
-        precio = precio.replace('.', ',');
-        precio = precio.substring(0, 4);
-        return precio;
+        return gasolinera.getPrecioSumario();
     }
 
     public String getRotulo() {
-        if (gasolinera.getRotulo() == null || gasolinera.getRotulo().equals("")) {
-            return "-";
+        String rotulo = gasolinera.getRotulo();
+        if (!rotulo.equals("")) {
+            return rotulo;
         }
-        return gasolinera.getRotulo();
-    }
-
-    public String getCp() {
-        if (gasolinera.getCp() == null || gasolinera.getCp().equals("")) {
-            return "-";
-        }
-        return gasolinera.getCp();
-    }
-
-    public String getDireccion() {
-        if (gasolinera.getDireccion() == null || gasolinera.getDireccion().equals("")) {
         return "-";
     }
-        return gasolinera.getDireccion(); }
 
     public String getMunicipio() {
-        if (gasolinera.getMunicipio() == null || gasolinera.getMunicipio().equals("")) {
-            return "-";
+        String txt = "-";
+        String municipio = gasolinera.getMunicipio();
+        if (!municipio.equals("")) {
+            txt = municipio;
         }
-        return gasolinera.getMunicipio();
+        return txt;
     }
 
     public String getDieselA() {
-        if (gasolinera.getDieselA() == null ||
-                Double.parseDouble(gasolinera.getDieselA().replace(',', '.')) <= 0) {
-        return "-";
+        String txt = "-";
+        String diesel = gasolinera.getDieselA();
+        if (!diesel.equals("") && Double.parseDouble(diesel.replace(',', '.')) > 0) {
+            txt = diesel;
         }
-        return gasolinera.getDieselA(); }
+        return txt;
+    }
 
     public String getNormal95() {
-        if (gasolinera.getNormal95() == null ||
-                Double.parseDouble(gasolinera.getNormal95().replace(',', '.')) <= 0) {
-        return "-";
+        String txt = "-";
+        String gasolina = gasolinera.getNormal95();
+        if (!gasolina.equals("")  && Double.parseDouble(gasolina.replace(',', '.')) > 0) {
+            txt = gasolina;
         }
-        return gasolinera.getNormal95();
+        return txt;
     }
 
     public String getSchedule() {
-        if (gasolinera.getSchedule() == null || gasolinera.getSchedule().equals("")) {
-            return "-";
+        String txt = "-";
+        String schedule = gasolinera.getSchedule();
+        if (!schedule.equals("")) {
+            txt = schedule;
         }
-        return gasolinera.getSchedule();
+        return txt;
+    }
+
+    public int getLogoId(Context context) {
+        String rotulo = gasolinera.getRotulo().toLowerCase();
+        int imageID = context.getResources().getIdentifier(rotulo, "drawable", context.getPackageName());
+        // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
+        // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
+        // que coincida con esos números
+        if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
+            imageID = context.getResources()
+                    .getIdentifier("generic", "drawable", context.getPackageName());
+        }
+        return imageID;
+    }
+
+    public String getDistancia() {
+        String txt = "-";
+        Location actual;
+        try {
+            actual = new Location("");
+            actual.setLongitude(Double.parseDouble(prefs.getString("longitud")));
+            actual.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+        } catch (NumberFormatException e) {
+            // si no recoge un numero (la preferencia no existe)
+            return txt;
+        }
+        Location gasLoc = gasolinera.getLocation();
+        if (gasLoc != null) {
+            txt = DistanceUtilities.distanceBetweenLocations(gasLoc, actual) + " km";
+        }
+        return txt;
     }
 }

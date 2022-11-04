@@ -63,7 +63,7 @@ public class ConveniosPresenterTest {
         when(mockDao.getAll()).thenReturn(convenios);
 
         sut.init();
-        assert(sut.shownConvenios.equals(convenios));
+        assert(sut.getShownConvenios().equals(convenios));
         verify(mockView).showConvenios(convenios);
         verify(mockView).getDatabase();
         verify(mockDb).convenioDao();
@@ -81,7 +81,7 @@ public class ConveniosPresenterTest {
             sut.init();
         }
         catch (SQLiteException exception){}
-        assert(sut.shownConvenios==null);
+        assert(sut.getShownConvenios()==null);
         verify(mockView).showLoadError();
         verify(mockView).getDatabase();
         verify(mockDb).convenioDao();
@@ -114,7 +114,7 @@ public class ConveniosPresenterTest {
         when(mockDao.getAll()).thenReturn(convenios);
 
         sut.init();
-        assert(sut.shownConvenios.equals(convenios));
+        assert(sut.getShownConvenios().equals(convenios));
         verify(mockView).showConvenios(convenios);
         verify(mockView).getDatabase();
         verify(mockDb).convenioDao();

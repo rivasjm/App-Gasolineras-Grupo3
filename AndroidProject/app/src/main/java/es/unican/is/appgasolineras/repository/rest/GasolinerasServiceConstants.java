@@ -9,18 +9,18 @@ public class GasolinerasServiceConstants {
     private static final String STATIC_API_URL =
             "https://raw.githubusercontent.com/isunican/App-Gasolineras-Grupo3/master/StaticREST/ServiciosRESTCarburantes/PrecioCarburantes/";
 
-    private static String API_URL = MINECO_API_URL;
+    private static String apiUrl = MINECO_API_URL;
 
     public static void setStaticURL() {
-        API_URL = STATIC_API_URL;
+        apiUrl = STATIC_API_URL;
     }
 
     public static void setMinecoURL() {
-        API_URL = MINECO_API_URL;
+        apiUrl = MINECO_API_URL;
     }
 
     public static final String getAPIURL() {
-        return API_URL;
+        return apiUrl;
     }
 
     private GasolinerasServiceConstants() {

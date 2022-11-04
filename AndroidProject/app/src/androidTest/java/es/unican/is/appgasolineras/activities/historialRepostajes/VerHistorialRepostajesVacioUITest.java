@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
@@ -50,6 +51,7 @@ public class VerHistorialRepostajesVacioUITest {
     public static void setUp() {
         // usar URL estatica para controlar el entorno
         GasolinerasServiceConstants.setStaticURL();
+        MainView.inicializaTest();
     }
 
     /**
@@ -61,6 +63,7 @@ public class VerHistorialRepostajesVacioUITest {
      */
     @Test
     public void verHistorialRepostajesVacioTest() {
+
         // abrir el menu de los 3 puntos desde Main, empieza el test en si
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         // cuando se vea el desplegable
@@ -87,5 +90,6 @@ public class VerHistorialRepostajesVacioUITest {
     public static void tearDown() {
         // volver URL real
         GasolinerasServiceConstants.setMinecoURL();
+        MainView.acabaTest();
     }
 }

@@ -28,11 +28,6 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         //a partir de la base de datos podemos obtener la dao de repostajes con laqueinteractuar
         final RepostajeDao repDao = db.repostajeDao();
 
-        // Ejecutar la primera vez que se ejecuta la app para tener algun dato
-        //repDao.deleteAll();
-        //insertaDatosErroneosTemp(repDao);
-
-
         //Estructurapara sacarelhistorial de repostajes de nuestra base de datos
         try {
             shownRepostajes = repDao.getAll();
@@ -42,7 +37,7 @@ public class HistorialRepostajesPresenter implements IHistorialRepostajesContrac
         }
         
         //Si esta vacía mostramos se lo indicamos al usuario
-        if(shownRepostajes == null || shownRepostajes.size() == 0) {
+        if(shownRepostajes == null ||  shownRepostajes.isEmpty()) {
             view.showHistorialVacio();
         }else {
             view.showHistorialRepostajes(shownRepostajes);

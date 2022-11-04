@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,9 +18,7 @@ import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import java.util.List;
 
-import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.MainView;
-import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
@@ -49,7 +45,7 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return barraHerramientasView.onCreateOptionsMenu(menu);
+        return barraHerramientasView.onCreateOptionsMenu(menu, false);
     }
 
     @Override
@@ -76,18 +72,8 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
     public void showLoadError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.conveniosFalloAccesoDatos);
-        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.onErrorAceptarClicked();
-            }
-        });
-        builder.setNegativeButton(R.string.reintentar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.onErrorReintentarClicked();
-            }
-        });
+        builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onErrorAceptarClicked());
+        builder.setNegativeButton(R.string.reintentar, (dialogInterface, i) -> presenter.onErrorReintentarClicked());
         AlertDialog dialog = builder.create();
         dialog.show();
     }

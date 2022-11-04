@@ -67,7 +67,8 @@ public class OrdenarGasolinerasPorPrecioUITest {
     public void ordenarGasolinerasPorPrecioTest() {
         //Pulsar el boton de ordenar por precio
         onView(withId(R.id.menuPrecio)).perform(click());
-
+        //Comprobar que se muestra el Toast
+        onView(withText(R.string.ordenarPrecioAscAplicado)).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
         //Comprobar que está cargada la lista de gasolineras y tiene todas las gasolineras de Cantabria
         onView(withId(R.id.lvGasolineras)).check(matches(hasNElements(156)));
 
@@ -79,8 +80,7 @@ public class OrdenarGasolinerasPorPrecioUITest {
         onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(2).
                 onChildView(withId(R.id.tvName)).check(matches(withText("EASYGAS")));
 
-        //Comprobar que se muestra el Toast
-        onView(withText(R.string.ordenarPrecioAscAplicado)).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+
     }
     @AfterClass
     public static void clean() {

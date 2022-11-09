@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.detail;
 
+import static es.unican.is.appgasolineras.model.Gasolinera.DIVISA;
+
 import android.content.Context;
 import android.location.Location;
 import android.text.TextUtils;
@@ -66,7 +68,7 @@ public class GasolineraDetailPresenter {
         String txt = "-";
         String diesel = gasolinera.getDieselA();
         if (!diesel.equals("") && Double.parseDouble(diesel.replace(',', '.')) > 0) {
-            txt = diesel;
+            txt = diesel + DIVISA;
         }
         return txt;
     }
@@ -75,7 +77,7 @@ public class GasolineraDetailPresenter {
         String txt = "-";
         String gasolina = gasolinera.getNormal95();
         if (!gasolina.equals("")  && Double.parseDouble(gasolina.replace(',', '.')) > 0) {
-            txt = gasolina;
+            txt = gasolina + DIVISA;
         }
         return txt;
     }

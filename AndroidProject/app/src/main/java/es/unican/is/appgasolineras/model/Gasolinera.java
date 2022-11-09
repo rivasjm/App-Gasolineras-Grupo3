@@ -22,7 +22,7 @@ import com.google.gson.annotations.SerializedName;
  */
 @Entity(tableName = "gasolineras")
 public class Gasolinera implements Parcelable {
-
+    public static final  String DIVISA = " €";
     @SerializedName("IDEESS") @NonNull @PrimaryKey  private String id;
 
     @SerializedName("Rótulo")                       private String rotulo;
@@ -161,7 +161,7 @@ public class Gasolinera implements Parcelable {
         String precio = Double.toString(precioSumario);
         precio = precio.replace('.', ',');
         precio = precio.substring(0, 4);
-        return precio;
+        return precio+DIVISA;
     }
 
     /*

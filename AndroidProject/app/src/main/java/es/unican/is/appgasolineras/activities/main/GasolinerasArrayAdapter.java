@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import static es.unican.is.appgasolineras.model.Gasolinera.DIVISA;
+
 import android.content.Context;
 import android.location.Location;
 import android.text.TextUtils;
@@ -56,12 +58,12 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
         // 95 octanes price
         String label95 = getContext().getResources().getString(R.string.gasolina95label);
         showInfo(convertView, R.id.tv95Label, label95 + ":");
-        showInfo(convertView, R.id.tv95, gasolinera.getNormal95());
+        showInfo(convertView, R.id.tv95, gasolinera.getNormal95()+DIVISA);
 
         // diesel A price
         String labelDieselALabel = getContext().getResources().getString(R.string.dieselAlabel);
         showInfo(convertView, R.id.tvDieselALabel, labelDieselALabel + ":");
-        showInfo(convertView, R.id.tvDieselA, gasolinera.getDieselA());
+        showInfo(convertView, R.id.tvDieselA, gasolinera.getDieselA()+DIVISA);
 
         // distance
         showInfo(convertView, R.id.tvDistance, DistanceUtilities.

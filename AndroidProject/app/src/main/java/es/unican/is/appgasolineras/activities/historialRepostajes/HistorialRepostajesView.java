@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+//import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.List;
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.MainView;
@@ -21,6 +24,7 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
 
     private BarraHerramientasView barraHerramientasView;
     private IHistorialRepostajesContract.Presenter presenter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,16 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
 
         TextView tv = findViewById(R.id.tvHistorialRepostajeMessage);
         tv.setText("HISTORIAL REPOSTAJES");
+
+
+        swipeRefreshLayout = findViewById(R.id.swiperefreshRepostaje);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.init();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     /*

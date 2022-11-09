@@ -13,6 +13,8 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
@@ -27,6 +29,7 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
     private IConveniosContract.Presenter presenter;
 
     private BarraHerramientasView barraHerramientasView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,15 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
 
         presenter = new ConveniosPresenter(this);
         presenter.init();
+        swipeRefreshLayout = findViewById(R.id.swiperefreshConvenio);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.init();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
     }
 
     /*

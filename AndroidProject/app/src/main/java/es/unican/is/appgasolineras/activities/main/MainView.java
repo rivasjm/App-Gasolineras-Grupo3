@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import android.Manifest;
@@ -42,6 +43,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private FusedLocationProviderClient fusedLocationClient;
     private Location currentLocation;
     private static int debug = 0;
+    private SwipeRefreshLayout swipeRefreshLayout;
     /*
     Activity lifecycle methods
      */
@@ -65,6 +67,14 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         presenter = new MainPresenter(this, prefs);
         presenter.init();
+        swipeRefreshLayout = findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.init();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         this.init();
     }
 

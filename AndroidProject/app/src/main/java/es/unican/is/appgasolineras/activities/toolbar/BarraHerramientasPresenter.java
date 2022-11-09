@@ -64,4 +64,9 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
             }
         }
     }
+
+    @Override
+    public void onAnhadeConvenioClicked() {
+        view.openConveniosView();
+    }
 }

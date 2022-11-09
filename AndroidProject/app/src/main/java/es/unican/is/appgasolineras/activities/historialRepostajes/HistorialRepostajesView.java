@@ -42,7 +42,7 @@ public class HistorialRepostajesView extends AppCompatActivity implements IHisto
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return barraHerramientasView.onCreateOptionsMenu(menu, false);
+        return barraHerramientasView.onCreateOptionsMenu(menu, false, false);
     }
 
     @Override

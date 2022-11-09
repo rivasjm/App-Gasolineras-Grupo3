@@ -83,7 +83,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      * @param menu
      * @return
      */
-    public boolean onCreateOptionsMenu(Menu menu, boolean mostrarOrdenacion) {
+    public boolean onCreateOptionsMenu(Menu menu, boolean mostrarOrdenacion, boolean mostrarConvenio) {
         MenuInflater menuInflater = activity.getMenuInflater();
         this.menu = menu;
         if (mostrarOrdenacion) {
@@ -104,6 +104,8 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
                     showOrdenarDistanciaDeselected();
                     break;
             }
+        } else if (mostrarConvenio) {
+            menuInflater.inflate(R.menu.main_menu_convenio, menu);
         } else {
             menuInflater.inflate(R.menu.main_menu, menu);
         }
@@ -136,6 +138,9 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
                 return true;
             case R.id.menuPrecio:
                 presenter.onOrdenarPrecioAscClicked();
+                return true;
+            case R.id.menuAnadeConvenio:
+                presenter.onAnhadeConvenioClicked();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

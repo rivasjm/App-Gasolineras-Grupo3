@@ -59,6 +59,31 @@ public interface IConveniosContract {
         void showConvenios(List<Convenio> convenios);
 
         /**
+         * Se solicita a la View que muestre un mensaje indicando que se ha añadido el nuevo
+         * convenio.
+         */
+        void showConvenioAnhadido();
+
+        /**
+         * Se solicita a la View que muestre una ventana emergente que solicite los datos
+         * necesarios para añadir un nuevo convenio (marca, descuento), ofreciendo la opcion
+         * de añadir el nuevo convenio o cancelar
+         */
+        void showAnhadirConvenio();
+
+        /**
+         * Se solicita a la View que muestre una ventana emergente que informe de que ya existe
+         * un convenio asociado a la marca indicada, ofreciendo la opcion se sobreescribir o cancelar.
+         */
+        void showSobreescribirConvenio();
+
+        /**
+         * Se solicita a la View que muestre una ventana emergente que informe de que se ha
+         * introducido un dato erróneo en el descuento, ofreciendo la opción de aceptar el mensaje.
+         */
+        void showErrorDescuento();
+
+        /**
          * Se solicita a la View que muestre una ventana emergente informando de que ha ocurrido
          * un error al acceder a los datos y ofreciendo la opcion de reintentar o volver a la
          * vista principal.

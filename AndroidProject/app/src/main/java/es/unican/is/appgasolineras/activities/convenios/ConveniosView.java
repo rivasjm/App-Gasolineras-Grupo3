@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.content.Intent;
 
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,7 @@ import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
-public class ConveniosView extends AppCompatActivity implements  IConveniosContract.View {
+public class ConveniosView extends AppCompatActivity implements IConveniosContract.View {
 
     private IConveniosContract.Presenter presenter;
 
@@ -45,7 +46,7 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return barraHerramientasView.onCreateOptionsMenu(menu, false);
+        return barraHerramientasView.onCreateOptionsMenu(menu, false, true);
     }
 
     @Override
@@ -66,6 +67,33 @@ public class ConveniosView extends AppCompatActivity implements  IConveniosContr
         ConveniosArrayAdapter adapter = new ConveniosArrayAdapter(this, convenios);
         ListView list = findViewById(R.id.lvConvenios);
         list.setAdapter(adapter);
+    }
+
+    @Override
+    public void showConvenioAnhadido() {
+        String text = getResources().getString(R.string.anhadirConvenioExito);
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showAnhadirConvenio() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        
+    }
+
+    @Override
+    public void showSobreescribirConvenio() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.conveniosFalloAccesoDatos);
+        //builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onSobreescribirAceptarClicked());
+        //builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onSobreescribirCancelarClicked());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void showErrorDescuento() {
+
     }
 
     @Override

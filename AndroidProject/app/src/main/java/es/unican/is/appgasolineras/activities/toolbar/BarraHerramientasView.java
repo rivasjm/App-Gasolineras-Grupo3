@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.activities.toolbar;
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ORDENAR;
 
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -51,31 +53,22 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         if (activity.getSupportActionBar() != null) {
             activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        activity.getSupportActionBar().setLogo(R.drawable.logo_repost_app_50);
-        setLogoOnClickListener(toolbar, view -> presenter.onLogoClicked());
-        activity.getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-    }
+        ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setDisplayOptions(actionBar.getDisplayOptions()
+                | ActionBar.DISPLAY_SHOW_CUSTOM);
+        ImageView imageView = new ImageView(actionBar.getThemedContext());
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        imageView.setImageResource(R.drawable.letras_repost_app_230);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.LEFT
+                | Gravity.CENTER_VERTICAL);
+        layoutParams.rightMargin = 40;
+        imageView.setLayoutParams(layoutParams);
+        actionBar.setCustomView(imageView);
 
-    /**
-     * Metodo para poder asignar un listener al logo de la toolbar.
-     * @param toolbar Toolbar de la activity.
-     * @param listener funcion que se quiere asignar al logo.
-     */
-    private void setLogoOnClickListener(Toolbar toolbar, View.OnClickListener listener) {
-        try {
-            Class<?> toolbarClass = Toolbar.class;
-            Field logoField = toolbarClass.getDeclaredField("mLogoView");
-            logoField.setAccessible(true);
-            ImageView logoView = (ImageView) logoField.get(toolbar);
-
-            if(logoView != null) {
-                logoView.setOnClickListener(listener);
-            }
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            // No hago nada
-        }
+        imageView.setOnClickListener(view -> presenter.onLogoClicked());
     }
 
     /**

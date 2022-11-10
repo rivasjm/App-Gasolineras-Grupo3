@@ -27,17 +27,50 @@ public interface IConveniosContract {
 
         /**
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
-         * Aceptar de la ventana emergente que notfica el error de acceso a datos ha
+         * Aceptar de la ventana emergente que notifica el error de acceso a datos ha
          * sido pulsado.
          */
         void onErrorAceptarClicked();
 
         /**
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
-         * Reintentar de la ventana emergente que notfica el error de acceso a datos ha
+         * Reintentar de la ventana emergente que notifica el error de acceso a datos ha
          * sido pulsado.
          */
         void onErrorReintentarClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Añadir de la ventana emergente para añadir convenios ha sido pulsado.
+         */
+        void onConvenioAnhadirClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Cancelar de la ventana emergente para añadir convenios ha sido pulsado.
+         */
+        void onConvenioCancelarClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Sobreescribir de la ventana emergente que notifica que hay un convenio repetido
+         * ha sido pulsado.
+         */
+        void onSiSobreescribirClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Cancelar de la ventana emergente que notifica que hay un convenio repetido
+         * ha sido pulsado.
+         */
+        void onNoSobreescribirClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
+         * Aceptar de la ventana emergente que notifica un error al introducir el descuento
+         * de un nuevo convenio ha sido pulsado.
+         */
+        void onErrorDescuentoAceptarClicked();
     }
 
     /**

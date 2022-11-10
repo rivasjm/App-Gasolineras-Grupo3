@@ -78,15 +78,20 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     @Override
     public void showAnhadirConvenio() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        
+        //Se crea una ventana emergente customizada para el convenio
+        //builder.setView(getLayoutInflater().inflate(R.layout.custom_layout, null));
+        builder.setTitle(R.string.anhadirConvenioTitulo);
+        //builder.setPositiveButton(R.string.anhadir, (dialogInterface, i) ->  presenter.onConvenioAnhadirClicked());
+        //builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onConvenioCancelarClicked());
+
     }
 
     @Override
     public void showSobreescribirConvenio() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.conveniosFalloAccesoDatos);
-        //builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onSobreescribirAceptarClicked());
-        //builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onSobreescribirCancelarClicked());
+        //builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onSiSobreescribirClicked());
+        //builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onNoSobreescribirClicked());
         AlertDialog dialog = builder.create();
         dialog.show();
     }

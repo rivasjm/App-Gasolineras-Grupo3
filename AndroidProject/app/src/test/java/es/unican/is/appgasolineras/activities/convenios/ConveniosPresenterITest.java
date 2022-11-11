@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ANHADIR;
+
 import android.os.Build;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -19,6 +21,8 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.ConvenioDao;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
@@ -32,9 +36,12 @@ public class ConveniosPresenterITest {
     private IConveniosContract.View mockView;
     private List<Convenio> convenios_;
     private static GasolineraDatabase db;
+    @Mock
+    private IPrefs mockPrefs;
     @Before
     public void set(){
         MockitoAnnotations.openMocks(this);
+        when(mockPrefs.getInt(ANHADIR)).thenReturn(0);
     }
     public void llenarDatos(){
         Convenio c1 = new Convenio();
@@ -77,7 +84,7 @@ public class ConveniosPresenterITest {
     }
     @Test
     public void testInitCorrecto(){
-        sut= new ConveniosPresenter(mockView);
+        sut= new ConveniosPresenter(mockView, mockPrefs);
         db = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext());
         when(mockView.getDatabase()).thenReturn(GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(),true));
         dao = db.convenioDao();
@@ -92,7 +99,7 @@ public class ConveniosPresenterITest {
     }
     @Test
     public void testInitVacio(){
-        sut = new ConveniosPresenter(mockView);
+        sut= new ConveniosPresenter(mockView, mockPrefs);
         db = GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext());
         when(mockView.getDatabase()).thenReturn(GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(),true));
         sut.init();

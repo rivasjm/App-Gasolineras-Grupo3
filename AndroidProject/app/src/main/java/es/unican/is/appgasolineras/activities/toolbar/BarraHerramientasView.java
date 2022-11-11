@@ -50,11 +50,11 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
      */
     private void setUpToolBar() {
         activity.setSupportActionBar(toolbar);
-        if (activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
 
         ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
         actionBar.setDisplayOptions(actionBar.getDisplayOptions()
                 | ActionBar.DISPLAY_SHOW_CUSTOM);
         ImageView imageView = new ImageView(actionBar.getThemedContext());

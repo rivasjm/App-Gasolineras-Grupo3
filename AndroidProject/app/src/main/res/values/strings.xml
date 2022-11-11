@@ -35,4 +35,8 @@
     <string name="cancelar">Cancelar</string>
     <string name="anhadir">Añadir</string>
     <string name="anhadirConvenioTitulo">Nuevo convenio</string>
+
+    <string name="anhadirConvenioMarcaLabel">Marca</string>
+    <string name="anhadirConvenioDescuentoLabel">Descuento</string>
+
 </resources>

@@ -44,6 +44,12 @@ public interface IBarraHerramientasContract {
          * de ordenar gasolineras por precio ha sido pulsado.
          */
         void onOrdenarPrecioAscClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el icono
+         * de crear convenio ha sido pulsado.
+         */
+        void onAnhadeConvenioClicked();
     }
 
     /**

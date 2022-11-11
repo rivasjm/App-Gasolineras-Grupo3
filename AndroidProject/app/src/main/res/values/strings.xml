@@ -29,4 +29,14 @@
 
     <string name="ordenarDistanciaAplicado">Gasolineras ordenadas por distancia</string>
     <string name="ordenarPrecioAscAplicado">Gasolineras ordenadas por precio</string>
+
+    <string name="anhadirConvenioExito">Se ha añadido el nuevo convenio</string>
+    <string name="anhadirConvenioSobreescribir">Ya existe un convenio asociado a la marca indicada. ¿Desea sobreescribir el convenio?</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="anhadir">Añadir</string>
+    <string name="anhadirConvenioTitulo">Nuevo convenio</string>
+
+    <string name="anhadirConvenioMarcaLabel">Marca</string>
+    <string name="anhadirConvenioDescuentoLabel">Descuento</string>
+
 </resources>

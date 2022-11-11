@@ -3,6 +3,8 @@ package es.unican.is.appgasolineras.activities.convenios;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ANHADIR;
+
 import android.database.sqlite.SQLiteException;
 
 import org.junit.Before;
@@ -13,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.ConvenioDao;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
@@ -27,6 +30,9 @@ public class ConveniosPresenterTest {
     @Mock
     private GasolineraDatabase mockDb;
     private List<Convenio> convenios;
+
+    @Mock
+    private IPrefs mockPrefs;
 
     private void llenarDatos(Boolean anomalos){
         Convenio c1 = new Convenio();
@@ -49,12 +55,14 @@ public class ConveniosPresenterTest {
     }
     @Before
     public void setUp()  {
+
         MockitoAnnotations.openMocks(this);
+        when(mockPrefs.getInt(ANHADIR)).thenReturn(0);
     }
 
     @Test
     public void testInitCorrecto(){
-        sut = new ConveniosPresenter(mockView);
+        sut = new ConveniosPresenter(mockView, mockPrefs);
         convenios = new ArrayList<Convenio>();
         llenarDatos(false);
 
@@ -71,7 +79,7 @@ public class ConveniosPresenterTest {
 
     @Test
     public void testInitErrorCarga(){
-        sut = new ConveniosPresenter(mockView);
+        sut = new ConveniosPresenter(mockView, mockPrefs);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
         when(mockDb.convenioDao()).thenReturn(mockDao);
@@ -89,7 +97,7 @@ public class ConveniosPresenterTest {
 
     @Test
     public void testInitVacio(){
-        sut = new ConveniosPresenter(mockView);
+        sut = new ConveniosPresenter(mockView, mockPrefs);
         convenios = new ArrayList<Convenio>();
 
         when(mockView.getDatabase()).thenReturn(mockDb);
@@ -105,7 +113,7 @@ public class ConveniosPresenterTest {
 
     @Test
     public void testInitDatosAnomalos(){
-        sut = new ConveniosPresenter(mockView);
+        sut = new ConveniosPresenter(mockView, mockPrefs);
         convenios = new ArrayList<Convenio>();
         llenarDatos(true);
 
@@ -122,7 +130,7 @@ public class ConveniosPresenterTest {
 
     @Test
     public void testOnErrorAceptarClicked(){
-        sut = new ConveniosPresenter(mockView);
+        sut = new ConveniosPresenter(mockView, mockPrefs);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
         when(mockDb.convenioDao()).thenReturn(mockDao);
@@ -135,7 +143,7 @@ public class ConveniosPresenterTest {
 
     @Test
     public void onErrorReintentarClicked(){
-        sut = new ConveniosPresenter(mockView);
+        sut = new ConveniosPresenter(mockView, mockPrefs);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
         when(mockDb.convenioDao()).thenReturn(mockDao);

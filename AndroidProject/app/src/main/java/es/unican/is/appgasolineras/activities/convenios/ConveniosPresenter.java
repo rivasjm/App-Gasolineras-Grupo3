@@ -28,10 +28,6 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         this.prefs = prefs;
     }
 
-    public ConveniosPresenter(IConveniosContract.View view) {
-        this.view = view;
-    }
-
     @Override
     public void init() {
         final GasolineraDatabase db = view.getDatabase();
@@ -55,17 +51,16 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
             shownConvenios = null;
         }
 
-        //Extrae las marcas de todas las gasolineras
-        Set<String> marcas = new HashSet<String>();
-        List<Gasolinera> gasolineras = db.gasolineraDao().getAll();
-
-        for (Gasolinera g: gasolineras) {
-            marcas.add(g.getRotulo());
-        }
-
-        view.cargaMarcas(marcas);
-
         if (prefs.getInt(ANHADIR) == 1) {
+            //Extrae las marcas de todas las gasolineras
+            Set<String> marcas = new HashSet<String>();
+            List<Gasolinera> gasolineras = db.gasolineraDao().getAll();
+
+            for (Gasolinera g: gasolineras) {
+                marcas.add(g.getRotulo());
+            }
+
+            view.cargaMarcas(marcas);
             view.showAnhadirConvenio();
             prefs.putInt(ANHADIR, 0);
         }

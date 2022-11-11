@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.activities.main;
 
+
 import static es.unican.is.appgasolineras.model.Gasolinera.DIVISA;
 
 import android.content.Context;

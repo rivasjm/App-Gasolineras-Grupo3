@@ -161,7 +161,7 @@ public class Gasolinera implements Parcelable {
         String precio = Double.toString(precioSumario);
         precio = precio.replace('.', ',');
         precio = precio.substring(0, 4);
-        return precio+DIVISA;
+        return precio;
     }
 
     /*

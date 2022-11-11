@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
+import static es.unican.is.appgasolineras.model.Gasolinera.DIVISA;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,7 @@ public class HistorialRepostajesArrayAdapter extends ArrayAdapter<Repostaje> {
         showInfo(convertView, R.id.tvLiters, repostajes.getLitros());
 
         // Precio
-        showInfo(convertView, R.id.tvPrice, repostajes.getPrecio());
+        showInfo(convertView, R.id.tvPrice, repostajes.getPrecio()+DIVISA);
 
         return convertView;
     }

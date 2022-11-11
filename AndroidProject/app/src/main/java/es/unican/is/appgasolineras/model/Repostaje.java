@@ -1,7 +1,5 @@
 package es.unican.is.appgasolineras.model;
 
-import static es.unican.is.appgasolineras.model.Gasolinera.DIVISA;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -54,7 +52,7 @@ public class Repostaje {
     }
 
     public String getPrecio() {
-        return precio+DIVISA;
+        return precio;
     }
 
     public void setPrecio(String precio) {

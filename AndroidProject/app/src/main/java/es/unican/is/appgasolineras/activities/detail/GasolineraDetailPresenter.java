@@ -41,10 +41,10 @@ public class GasolineraDetailPresenter {
      * @return String con el precio sumario en dos decimales, - si un precio es negativo
      */
     public String getPrecioSumario() {
-        if (gasolinera.getPrecioSumario() == null || gasolinera.getPrecioSumario().equals("")) {
+        if (gasolinera.getPrecioSumario() == null || gasolinera.getPrecioSumario().equals("") || gasolinera.getPrecioSumario().equals("-")) {
             return "-";
         }
-        return gasolinera.getPrecioSumario();
+        return gasolinera.getPrecioSumario() + DIVISA;
     }
 
     public String getRotulo() {

@@ -13,9 +13,6 @@
         android:id="@+id/menuInfo"
         android:title="@string/info" />
     <item
-        android:id="@+id/menuRefresh"
-        android:title="@string/refresh" />
-    <item
         android:id="@+id/menuDistancia"
         android:title="Ordenar distancia"
         android:icon="@drawable/location_32"

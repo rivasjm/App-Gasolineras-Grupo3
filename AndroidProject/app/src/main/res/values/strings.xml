@@ -22,7 +22,7 @@
 
     <string name="conveniosCampoMarca">Marca:</string>
     <string name="conveniosCampoDescuento">Descuento (%):</string>
-    <string name="conveniosListaVacia">La lista de convenios esta vacía</string>
+    <string name="conveniosListaVacia">La lista de convenios está vacía</string>
     <string name="conveniosFalloAccesoDatos">Ha ocurrido un error al acceder a los datos.</string>
     <string name="aceptar">Aceptar</string>
     <string name="reintentar">Reintentar</string>

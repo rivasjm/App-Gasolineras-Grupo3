@@ -4,10 +4,14 @@ import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPr
 
 import android.database.sqlite.SQLiteException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Convenio;
+import es.unican.is.appgasolineras.model.Gasolinera;
+import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.ConvenioDao;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
@@ -16,6 +20,8 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
     private final IConveniosContract.View view;
     private List<Convenio> shownConvenios;
     private IPrefs prefs;
+
+    private ConvenioDao dao;
 
     public ConveniosPresenter(IConveniosContract.View view, IPrefs prefs) {
         this.view = view;
@@ -49,8 +55,19 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
             shownConvenios = null;
         }
 
+        //Extrae las marcas de todas las gasolineras
+        Set<String> marcas = new HashSet<String>();
+        List<Gasolinera> gasolineras = db.gasolineraDao().getAll();
+
+        for (Gasolinera g: gasolineras) {
+            marcas.add(g.getRotulo());
+        }
+
+        view.cargaMarcas(marcas);
+
         if (prefs.getInt(ANHADIR) == 1) {
-            onConvenioAnhadirClicked();
+            view.showAnhadirConvenio();
+            prefs.putInt(ANHADIR, 0);
         }
     }
 
@@ -66,12 +83,12 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     @Override
     public void onConvenioAnhadirClicked() {
-        view.showAnhadirConvenio();
+
     }
 
     @Override
     public void onConvenioCancelarClicked() {
-
+        //No hace nada (solo cierra la ventana)
     }
 
     @Override

@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
 import java.util.List;
+import java.util.Set;
 
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
@@ -115,6 +116,11 @@ public interface IConveniosContract {
          * introducido un dato erróneo en el descuento, ofreciendo la opción de aceptar el mensaje.
          */
         void showErrorDescuento();
+
+        /**
+         * La View carga el listado de marcas para poder mostrarlo al usuario.
+         */
+        void cargaMarcas(Set<String> marcas);
 
         /**
          * Se solicita a la View que muestre una ventana emergente informando de que ha ocurrido

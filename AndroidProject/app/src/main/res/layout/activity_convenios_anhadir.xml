@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/anhadirConvenioMarcaLabel"
-        android:textSize="24sp" />
+        android:textSize="14sp" />
 
     <Spinner
         android:id="@+id/spMarca"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/anhadirConvenioDescuentoLabel"
-        android:textSize="24sp" />
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/etConvenioDescuento"

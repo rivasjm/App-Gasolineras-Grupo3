@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.activities.convenios;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import android.content.Intent;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
 import java.util.List;
+import java.util.Set;
 
 import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
@@ -105,6 +107,10 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     @Override
     public void showErrorDescuento() {
 
+    }
+
+    public void cargaMarcas(Set<String> marcas) {
+        Spinner spinner = findViewById(R.id.spMarca);
     }
 
     @Override

@@ -57,24 +57,6 @@ public class ConveniosPresenterITest {
         convenios_.add(c3);
         convenios_.add(c4);
     }
-    public boolean verifyEquals(List<Convenio> sut, List<Convenio> test){
-        boolean ans = false;
-        if(sut.size()==test.size()){
-            int items = sut.size();
-            int count=0;
-            for(int i=0;i<items;i++){
-                Convenio sutC = sut.get(i);
-                Convenio testC = test.get(i);
-                if( (sutC.getId()==testC.getId()) && (sutC.getMarca().equals(testC.getMarca())) &&  (sutC.getDescuento()==testC.getDescuento())){
-                    count++;
-                }
-            }
-            if (count==items){
-                ans=true;
-            }
-        }
-        return  ans;
-    }
     @Test
     public void testInitCorrecto(){
         sut= new ConveniosPresenter(mockView);
@@ -86,7 +68,7 @@ public class ConveniosPresenterITest {
         llenarDatos();
 
         sut.init();
-        assertTrue(verifyEquals(sut.shownConvenios,convenios_));
+        assert(sut.shownConvenios.equals(convenios_));
         verify(mockView).getDatabase();
         verify(mockView).showConvenios(sut.shownConvenios);
     }

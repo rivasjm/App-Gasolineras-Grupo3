@@ -52,7 +52,7 @@ public class Convenio {
         }
         Convenio o = (Convenio) obj;
 
-        if( this.id.equals(o.id) && this.marca.equals(o.marca) && this.descuento.equals(o.descuento)){
+        if( this.id == o.id  && this.marca.equals(o.marca) && this.descuento == o.descuento){
             result=true;
         }
         return result;

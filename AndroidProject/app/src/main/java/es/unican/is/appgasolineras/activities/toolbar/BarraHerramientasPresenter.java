@@ -17,11 +17,6 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     }
 
     @Override
-    public void onRefreshClicked() {
-        view.getActivity().recreate();
-    }
-
-    @Override
     public void onConveniosClicked() {
         view.openConveniosView();
     }

@@ -44,4 +44,17 @@ public class Convenio {
     public void setDescuento(int descuento) {
         this.descuento = descuento;
     }
+    @Override
+    public boolean equals(Object obj) {
+        Boolean result = false;
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return result;
+        }
+        Convenio o = (Convenio) obj;
+
+        if( this.id.equals(o.id) && this.marca.equals(o.marca) && this.descuento.equals(o.descuento)){
+            result=true;
+        }
+        return result;
+    }
 }

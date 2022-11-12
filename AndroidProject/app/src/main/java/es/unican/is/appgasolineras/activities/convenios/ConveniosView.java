@@ -114,7 +114,7 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     public void showSobreescribirConvenio(Convenio c) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.anhadirConvenioSobreescribir);
-        builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onSiSobreescribirClicked(c));
+        builder.setPositiveButton(R.string.sobreescribir, (dialogInterface, i) ->  presenter.onSiSobreescribirClicked(c));
         builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onNoSobreescribirClicked());
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -143,6 +143,16 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     public void showLoadError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.conveniosFalloAccesoDatos);
+        builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onErrorAceptarClicked());
+        builder.setNegativeButton(R.string.reintentar, (dialogInterface, i) -> presenter.onErrorReintentarClicked());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void showLoadErrorMarcas() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.loadErrorMarcasConvenios);
         builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onErrorAceptarClicked());
         builder.setNegativeButton(R.string.reintentar, (dialogInterface, i) -> presenter.onErrorReintentarClicked());
         AlertDialog dialog = builder.create();

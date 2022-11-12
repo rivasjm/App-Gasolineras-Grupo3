@@ -128,6 +128,13 @@ public interface IConveniosContract {
         void showLoadError();
 
         /**
+         * Se solicita a la View que muestre una ventana emergente informando de que ha ocurrido
+         * un error al acceder a los datos de las marcas y ofreciendo la opcion de reintentar o volver a la
+         * vista principal.
+         */
+        void showLoadErrorMarcas();
+
+        /**
          * Se solicita a la View que muestre un mensaje informando que la lista de convenios
          * esta vacia.
          */

@@ -32,12 +32,15 @@
 
     <string name="anhadirConvenioExito">Se ha añadido el nuevo convenio</string>
     <string name="anhadirConvenioSobreescribir">Ya existe un convenio asociado a la marca indicada. ¿Desea sobreescribir el convenio?</string>
-    <string name="anhadirConvenioErrorDescuento">Descuento inválido: el valor introducido debe estar entre 1 y 99 %</string>
+    <string name="anhadirConvenioErrorDescuento">El descuento introducido no es válido</string>
     <string name="cancelar">Cancelar</string>
     <string name="anhadir">Añadir</string>
+    <string name="sobreescribir">Sobreescribir</string>
     <string name="anhadirConvenioTitulo">Nuevo convenio</string>
 
     <string name="anhadirConvenioMarcaLabel">Marca</string>
     <string name="anhadirConvenioDescuentoLabel">Descuento</string>
+
+    <string name="loadErrorMarcasConvenios">Ha ocurrido un error al acceder a los datos de las marcas.</string>
 
 </resources>

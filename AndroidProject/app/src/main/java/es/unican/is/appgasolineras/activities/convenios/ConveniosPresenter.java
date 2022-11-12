@@ -61,6 +61,11 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
             Set<String> marcas = new HashSet<String>();
             List<Gasolinera> gasolineras = db.gasolineraDao().getAll();
 
+            if(gasolineras == null) {
+                //Error en carga de marcas
+                view.showLoadError();
+            }
+
             for (Gasolinera g: gasolineras) {
                 marcas.add(g.getRotulo());
             }
@@ -91,6 +96,11 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         String marca = s.getSelectedItem().toString();
         Integer descuento = Integer.parseInt(e.getText().toString());
 
+        if (descuento == null) {
+            view.showErrorDescuento();
+            return;
+        }
+
         if (descuento == 0 || descuento == 100) {
             view.showErrorDescuento();
             return;
@@ -102,6 +112,8 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         //Comprueba si ya existe un convenio asociado a la marca y persiste el convenio en la BD
         //si no estaba ya insertado
         Convenio convenioAnterior = conveniosDao.buscaConvenioPorMarca(c.getMarca());
+
+        List<Convenio> conv = conveniosDao.getAll();
 
         if (convenioAnterior != null) {
             view.showSobreescribirConvenio(c);

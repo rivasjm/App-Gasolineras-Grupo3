@@ -3,6 +3,8 @@ package es.unican.is.appgasolineras.activities.convenios;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -18,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasView;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -83,22 +87,27 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     }
 
     @Override
-    public void showAnhadirConvenio() {
+    public void showAnhadirConvenio(Set<String> marcas) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Se crea una ventana emergente customizada para el convenio
-        builder.setView(getLayoutInflater().inflate(R.layout.activity_convenios_anhadir, null));
+        View anhadirView = getLayoutInflater().inflate(R.layout.activity_convenios_anhadir, null);
+        builder.setView(anhadirView);
         builder.setTitle(R.string.anhadirConvenioTitulo);
-        builder.setPositiveButton(R.string.anhadir, (dialogInterface, i) ->  presenter.onConvenioAnhadirClicked());
+        builder.setPositiveButton(R.string.anhadir, (dialogInterface, i) ->  presenter.onConvenioAnhadirClicked(anhadirView));
         builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onConvenioCancelarClicked());
+
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        Spinner s = (Spinner) anhadirView.findViewById(R.id.spMarca);
+        cargaMarcas(s, marcas);
     }
 
     @Override
-    public void showSobreescribirConvenio() {
+    public void showSobreescribirConvenio(Convenio c) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.conveniosFalloAccesoDatos);
-        builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onSiSobreescribirClicked());
+        builder.setMessage(R.string.anhadirConvenioSobreescribir);
+        builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onSiSobreescribirClicked(c));
         builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onNoSobreescribirClicked());
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -109,8 +118,14 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
 
     }
 
-    public void cargaMarcas(Set<String> marcas) {
-        Spinner spinner = findViewById(R.id.spMarca);
+    private void cargaMarcas(Spinner s, Set<String> marcas) {
+        ArrayList marcasArray = new ArrayList();
+        marcasArray.addAll(marcas);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, marcasArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s.setAdapter(adapter);
     }
 
     @Override

@@ -65,7 +65,8 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
                 marcas.add(g.getRotulo());
             }
 
-            view.showAnhadirConvenio(marcas);
+            view.setMarcas(marcas);
+            view.showAnhadirConvenio();
             prefs.putInt(ANHADIR, 0);
         }
     }
@@ -86,8 +87,17 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         Spinner s = (Spinner) anhadirView.findViewById(R.id.spMarca);
         EditText e = (EditText) anhadirView.findViewById(R.id.etConvenioDescuento);
         Convenio c = new Convenio();
-        c.setMarca(s.getSelectedItem().toString());
-        c.setDescuento(Integer.parseInt(e.getText().toString()));
+
+        String marca = s.getSelectedItem().toString();
+        Integer descuento = Integer.parseInt(e.getText().toString());
+
+        if (descuento == 0 || descuento == 100) {
+            view.showErrorDescuento();
+            return;
+        }
+
+        c.setMarca(marca);
+        c.setDescuento(descuento);
 
         //Comprueba si ya existe un convenio asociado a la marca y persiste el convenio en la BD
         //si no estaba ya insertado
@@ -124,7 +134,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     @Override
     public void onErrorDescuentoAceptarClicked() {
-
+        view.showAnhadirConvenio();
     }
 
     /**

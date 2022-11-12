@@ -39,6 +39,8 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
 
     private IPrefs prefs;
 
+    private Set<String> marcas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,11 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
 
         presenter = new ConveniosPresenter(this, prefs);
         presenter.init();
+    }
+
+    @Override
+    public void setMarcas(Set<String> marcas) {
+        this.marcas = marcas;
     }
 
     /*
@@ -87,7 +94,7 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     }
 
     @Override
-    public void showAnhadirConvenio(Set<String> marcas) {
+    public void showAnhadirConvenio() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Se crea una ventana emergente customizada para el convenio
         View anhadirView = getLayoutInflater().inflate(R.layout.activity_convenios_anhadir, null);
@@ -100,7 +107,7 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
         dialog.show();
 
         Spinner s = (Spinner) anhadirView.findViewById(R.id.spMarca);
-        cargaMarcas(s, marcas);
+        cargaMarcas(s);
     }
 
     @Override
@@ -115,10 +122,14 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
 
     @Override
     public void showErrorDescuento() {
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.anhadirConvenioErrorDescuento);
+        builder.setPositiveButton(R.string.aceptar, (dialogInterface, i) ->  presenter.onErrorDescuentoAceptarClicked());
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-    private void cargaMarcas(Spinner s, Set<String> marcas) {
+    private void cargaMarcas(Spinner s) {
         ArrayList marcasArray = new ArrayList();
         marcasArray.addAll(marcas);
 

@@ -59,7 +59,6 @@ public interface IConveniosContract {
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
          * Sobreescribir de la ventana emergente que notifica que hay un convenio repetido
          * ha sido pulsado.
-         * @param c el convenio que sobreescribe
          */
         void onSiSobreescribirClicked(Convenio c);
 
@@ -106,14 +105,12 @@ public interface IConveniosContract {
          * Se solicita a la View que muestre una ventana emergente que solicite los datos
          * necesarios para añadir un nuevo convenio (marca, descuento), ofreciendo la opcion
          * de añadir el nuevo convenio o cancelar
-         * @param marcas la lista de marcas a mostrar
          */
-        void showAnhadirConvenio(Set<String> marcas);
+        void showAnhadirConvenio();
 
         /**
          * Se solicita a la View que muestre una ventana emergente que informe de que ya existe
          * un convenio asociado a la marca indicada, ofreciendo la opcion se sobreescribir o cancelar.
-         * @param c el convenio a sobreescribir
          */
         void showSobreescribirConvenio(Convenio c);
 
@@ -135,6 +132,12 @@ public interface IConveniosContract {
          * esta vacia.
          */
         void showListaConveniosVacia();
+
+        /**
+         * Carga el listado de marcas de la View con aquellas obtenidas de la BD
+         * @param marcas las marcas a mostrar
+         */
+        void setMarcas(Set<String> marcas);
 
         /**
          * Se solicita a la View que abra la vista principal.

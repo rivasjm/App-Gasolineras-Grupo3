@@ -1,5 +1,8 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import android.view.View;
+import android.widget.Spinner;
+
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +47,7 @@ public interface IConveniosContract {
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
          * Añadir de la ventana emergente para añadir convenios ha sido pulsado.
          */
-        void onConvenioAnhadirClicked();
+        void onConvenioAnhadirClicked(android.view.View anhadirView);
 
         /**
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
@@ -57,7 +60,7 @@ public interface IConveniosContract {
          * Sobreescribir de la ventana emergente que notifica que hay un convenio repetido
          * ha sido pulsado.
          */
-        void onSiSobreescribirClicked();
+        void onSiSobreescribirClicked(Convenio c);
 
         /**
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
@@ -109,18 +112,13 @@ public interface IConveniosContract {
          * Se solicita a la View que muestre una ventana emergente que informe de que ya existe
          * un convenio asociado a la marca indicada, ofreciendo la opcion se sobreescribir o cancelar.
          */
-        void showSobreescribirConvenio();
+        void showSobreescribirConvenio(Convenio c);
 
         /**
          * Se solicita a la View que muestre una ventana emergente que informe de que se ha
          * introducido un dato erróneo en el descuento, ofreciendo la opción de aceptar el mensaje.
          */
         void showErrorDescuento();
-
-        /**
-         * La View carga el listado de marcas para poder mostrarlo al usuario.
-         */
-        void cargaMarcas(Set<String> marcas);
 
         /**
          * Se solicita a la View que muestre una ventana emergente informando de que ha ocurrido
@@ -130,10 +128,23 @@ public interface IConveniosContract {
         void showLoadError();
 
         /**
+         * Se solicita a la View que muestre una ventana emergente informando de que ha ocurrido
+         * un error al acceder a los datos de las marcas y ofreciendo la opcion de reintentar o volver a la
+         * vista principal.
+         */
+        void showLoadErrorMarcas();
+
+        /**
          * Se solicita a la View que muestre un mensaje informando que la lista de convenios
          * esta vacia.
          */
         void showListaConveniosVacia();
+
+        /**
+         * Carga el listado de marcas de la View con aquellas obtenidas de la BD
+         * @param marcas las marcas a mostrar
+         */
+        void setMarcas(Set<String> marcas);
 
         /**
          * Se solicita a la View que abra la vista principal.

@@ -24,6 +24,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     private final IConveniosContract.View view;
     private List<Convenio> shownConvenios;
+    private List<Gasolinera> gasolineras;
     private IPrefs prefs;
 
     private ConvenioDao conveniosDao;
@@ -37,7 +38,6 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
     public void init() {
         final GasolineraDatabase db = view.getDatabase();
         conveniosDao = db.convenioDao();
-        // Ejecutar solo la primera vez que se ejecuta la app
         List<Convenio> data = null;
 
         // Fallo en el acceso a datos
@@ -59,19 +59,22 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         if (prefs.getInt(ANHADIR) == 1) {
             //Extrae las marcas de todas las gasolineras
             Set<String> marcas = new HashSet<String>();
-            List<Gasolinera> gasolineras = db.gasolineraDao().getAll();
-
-            if(gasolineras == null) {
-                //Error en carga de marcas
+            try {
+                gasolineras = db.gasolineraDao().getAll();
+            } catch (SQLiteException e) {
+                // Error en carga de marcas
                 view.showLoadError();
             }
 
-            for (Gasolinera g: gasolineras) {
-                marcas.add(g.getRotulo());
+            if (gasolineras != null) {
+                // Caso exito
+                for (Gasolinera g: gasolineras) {
+                    marcas.add(g.getRotulo());
+                }
+                view.setMarcas(marcas);
+                view.showAnhadirConvenio();
             }
 
-            view.setMarcas(marcas);
-            view.showAnhadirConvenio();
             prefs.putInt(ANHADIR, 0);
         }
     }
@@ -174,5 +177,8 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     public List<Convenio> getShownConvenios(){
         return shownConvenios;
+    }
+    public List<Gasolinera> getGasolineras() {
+        return gasolineras;
     }
 }

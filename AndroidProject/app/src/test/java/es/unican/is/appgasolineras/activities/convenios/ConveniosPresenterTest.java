@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,19 +19,26 @@ import java.util.List;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.repository.db.ConvenioDao;
+import es.unican.is.appgasolineras.repository.db.GasolineraDao;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
+/**
+ * Test unitarios del presentador de convenios.
+ *
+ * @author Micaela Camila Patiño Hermosa y Alina Solonaru
+ */
 public class ConveniosPresenterTest {
-    //Tests unitarios para el presentador de los Convenios
     private ConveniosPresenter sut;
+    private List<Convenio> convenios;
+
     @Mock
     private IConveniosContract.View mockView;
     @Mock
-    private ConvenioDao mockDao;
+    private ConvenioDao mockConvenioDao;
     @Mock
     private GasolineraDatabase mockDb;
-    private List<Convenio> convenios;
-
+    @Mock
+    private GasolineraDao mockGasolineraDao;
     @Mock
     private IPrefs mockPrefs;
 
@@ -55,7 +63,7 @@ public class ConveniosPresenterTest {
     }
     @Before
     public void setUp()  {
-
+        // Inicializar mocks
         MockitoAnnotations.openMocks(this);
         when(mockPrefs.getInt(ANHADIR)).thenReturn(0);
     }
@@ -67,8 +75,8 @@ public class ConveniosPresenterTest {
         llenarDatos(false);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
-        when(mockDb.convenioDao()).thenReturn(mockDao);
-        when(mockDao.getAll()).thenReturn(convenios);
+        when(mockDb.convenioDao()).thenReturn(mockConvenioDao);
+        when(mockConvenioDao.getAll()).thenReturn(convenios);
 
         sut.init();
         assert(sut.getShownConvenios().equals(convenios));
@@ -82,8 +90,8 @@ public class ConveniosPresenterTest {
         sut = new ConveniosPresenter(mockView, mockPrefs);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
-        when(mockDb.convenioDao()).thenReturn(mockDao);
-        when(mockDao.getAll()).thenThrow(new SQLiteException());
+        when(mockDb.convenioDao()).thenReturn(mockConvenioDao);
+        when(mockConvenioDao.getAll()).thenThrow(new SQLiteException());
 
         try{
             sut.init();
@@ -101,14 +109,14 @@ public class ConveniosPresenterTest {
         convenios = new ArrayList<Convenio>();
 
         when(mockView.getDatabase()).thenReturn(mockDb);
-        when(mockDb.convenioDao()).thenReturn(mockDao);
-        when(mockDao.getAll()).thenReturn(convenios);
+        when(mockDb.convenioDao()).thenReturn(mockConvenioDao);
+        when(mockConvenioDao.getAll()).thenReturn(convenios);
 
         sut.init();
         verify(mockView).showListaConveniosVacia();
         verify(mockView).getDatabase();
         verify(mockDb).convenioDao();
-        verify(mockDao).getAll();
+        verify(mockConvenioDao).getAll();
     }
 
     @Test
@@ -118,8 +126,8 @@ public class ConveniosPresenterTest {
         llenarDatos(true);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
-        when(mockDb.convenioDao()).thenReturn(mockDao);
-        when(mockDao.getAll()).thenReturn(convenios);
+        when(mockDb.convenioDao()).thenReturn(mockConvenioDao);
+        when(mockConvenioDao.getAll()).thenReturn(convenios);
 
         sut.init();
         assert(sut.getShownConvenios().equals(convenios));
@@ -128,13 +136,39 @@ public class ConveniosPresenterTest {
         verify(mockDb).convenioDao();
     }
 
+    /**
+     * Test UPR464971.1a
+     * Alina Solonaru
+     */
+    @Test
+    public void testInitErrorCargaMarcas() {
+        sut = new ConveniosPresenter(mockView, mockPrefs);
+
+        // Definir comportamiento correcto de convenios para que no lance NullPointerException
+        convenios = new ArrayList<Convenio>();
+        when(mockView.getDatabase()).thenReturn(mockDb);
+        when(mockDb.convenioDao()).thenReturn(mockConvenioDao);
+        when(mockConvenioDao.getAll()).thenReturn(convenios);
+
+        // Definir comportamiento gasolineras, si hay error lanza excepcion
+        when(mockPrefs.getInt(ANHADIR)).thenReturn(1);
+        when(mockDb.gasolineraDao()).thenReturn(mockGasolineraDao);
+        when(mockGasolineraDao.getAll()).thenThrow(new SQLiteException());
+
+        // Comprobar funcionamiento
+        sut.init(); // Recoge SQLiteException
+        assert (sut.getGasolineras() == null);
+        verify(mockView).getDatabase();
+        verify(mockView).showLoadError();
+    }
+
     @Test
     public void testOnErrorAceptarClicked(){
         sut = new ConveniosPresenter(mockView, mockPrefs);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
-        when(mockDb.convenioDao()).thenReturn(mockDao);
-        when(mockDao.getAll()).thenReturn(null);
+        when(mockDb.convenioDao()).thenReturn(mockConvenioDao);
+        when(mockConvenioDao.getAll()).thenReturn(null);
 
         sut.init();
         sut.onErrorAceptarClicked();
@@ -146,8 +180,8 @@ public class ConveniosPresenterTest {
         sut = new ConveniosPresenter(mockView, mockPrefs);
 
         when(mockView.getDatabase()).thenReturn(mockDb);
-        when(mockDb.convenioDao()).thenReturn(mockDao);
-        when(mockDao.getAll()).thenReturn(null);
+        when(mockDb.convenioDao()).thenReturn(mockConvenioDao);
+        when(mockConvenioDao.getAll()).thenReturn(null);
 
         sut.init();
         sut.onErrorReintentarClicked();

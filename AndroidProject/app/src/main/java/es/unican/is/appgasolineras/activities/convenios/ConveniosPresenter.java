@@ -126,6 +126,9 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     @Override
     public void onSiSobreescribirClicked(Convenio c) {
+        Convenio cAnterior = conveniosDao.buscaConvenioPorMarca(c.getMarca());
+        cAnterior.setMarca(c.getMarca());
+        cAnterior.setDescuento(c.getDescuento());
         conveniosDao.updateConvenio(c);
         view.refresh();
         view.showConvenioAnhadido();

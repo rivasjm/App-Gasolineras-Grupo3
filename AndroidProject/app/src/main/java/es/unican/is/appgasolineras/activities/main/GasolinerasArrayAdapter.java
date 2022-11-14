@@ -59,6 +59,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
         //Con el substring mostramos 2 decimales únicamente.
         showInfo(convertView, R.id.tv95, gasolinera.getNormal95().substring(0, 4));
 
+        //Se muestran 2 decimales y la divisa de euros
         // diesel A price
         String labelDieselALabel = getContext().getResources().getString(R.string.dieselAlabel);
         showInfo(convertView, R.id.tvDieselALabel, labelDieselALabel + ":");

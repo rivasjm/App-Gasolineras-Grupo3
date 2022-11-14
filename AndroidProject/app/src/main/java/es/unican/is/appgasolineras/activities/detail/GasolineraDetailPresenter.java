@@ -66,7 +66,7 @@ public class GasolineraDetailPresenter {
 
     public String getDieselA() {
         String txt = "-";
-        String diesel = gasolinera.getDieselA();
+        String diesel = gasolinera.getDieselA().substring(0, 4);
         if (!diesel.equals("") && Double.parseDouble(diesel.replace(',', '.')) > 0) {
             txt = diesel + DIVISA;
         }
@@ -75,7 +75,7 @@ public class GasolineraDetailPresenter {
 
     public String getNormal95() {
         String txt = "-";
-        String gasolina = gasolinera.getNormal95();
+        String gasolina = gasolinera.getNormal95().substring(0, 4);
         if (!gasolina.equals("")  && Double.parseDouble(gasolina.replace(',', '.')) > 0) {
             txt = gasolina + DIVISA;
         }

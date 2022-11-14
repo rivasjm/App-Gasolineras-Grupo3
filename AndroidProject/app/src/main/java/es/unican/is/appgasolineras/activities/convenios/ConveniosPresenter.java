@@ -104,7 +104,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
             return;
         }
 
-        if (descuento == 0 || descuento == 100) {
+        if (descuento == 0 || descuento >= 100) {
             view.showErrorDescuento();
             return;
         }

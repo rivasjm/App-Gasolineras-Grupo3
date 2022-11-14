@@ -90,39 +90,32 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
     }
 
     @Override
-    public void onConvenioAnhadirClicked(View anhadirView) {
-        //Lee los campos del usuario
-        Spinner s = (Spinner) anhadirView.findViewById(R.id.spMarca);
-        EditText e = (EditText) anhadirView.findViewById(R.id.etConvenioDescuento);
-        Convenio c = new Convenio();
-
-        String marca = s.getSelectedItem().toString();
-        Integer descuento = Integer.parseInt(e.getText().toString());
-
-        if (descuento == null) {
+    public void onConvenioAnhadirClicked(String descuento, String marca) {
+        if (descuento.equals("")) {
             view.showErrorDescuento();
             return;
         }
 
-        if (descuento == 0 || descuento == 100) {
+        Integer descuentoParsed = Integer.parseInt(descuento);
+
+        if (descuentoParsed == 0 || descuentoParsed >= 100) {
             view.showErrorDescuento();
             return;
         }
 
-        c.setMarca(marca);
-        c.setDescuento(descuento);
+        //Crea el convenio
+        Convenio convenio = new Convenio();
+        convenio.setDescuento(descuentoParsed);
+        convenio.setMarca(marca);
 
         //Comprueba si ya existe un convenio asociado a la marca y persiste el convenio en la BD
         //si no estaba ya insertado
-        Convenio convenioAnterior = conveniosDao.buscaConvenioPorMarca(c.getMarca());
-
-        List<Convenio> conv = conveniosDao.getAll();
+        Convenio convenioAnterior = conveniosDao.buscaConvenioPorMarca(convenio.getMarca());
 
         if (convenioAnterior != null) {
-            view.showSobreescribirConvenio(c);
-            conveniosDao.deleteConvenio(convenioAnterior);
+            view.showSobreescribirConvenio(convenio);
         } else {
-            insertaConvenio(c);
+            insertaConvenio(convenio);
         }
     }
 
@@ -133,7 +126,9 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     @Override
     public void onSiSobreescribirClicked(Convenio c) {
-        insertaConvenio(c);
+        conveniosDao.updateConvenio(c);
+        view.refresh();
+        view.showConvenioAnhadido();
     }
 
     private void insertaConvenio(Convenio c) {

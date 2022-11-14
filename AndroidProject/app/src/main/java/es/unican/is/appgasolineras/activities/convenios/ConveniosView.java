@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -112,7 +113,16 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
         View anhadirView = getLayoutInflater().inflate(R.layout.activity_convenios_anhadir, null);
         builder.setView(anhadirView);
         builder.setTitle(R.string.anhadirConvenioTitulo);
-        builder.setPositiveButton(R.string.anhadir, (dialogInterface, i) ->  presenter.onConvenioAnhadirClicked(anhadirView));
+        builder.setPositiveButton(R.string.anhadir, (dialogInterface, i) ->  {
+            //Lee los campos del usuario
+            Spinner s = (Spinner) anhadirView.findViewById(R.id.spMarca);
+            EditText e = (EditText) anhadirView.findViewById(R.id.etConvenioDescuento);
+
+            String marca = s.getSelectedItem().toString();
+            String descuento = e.getText().toString();
+
+            presenter.onConvenioAnhadirClicked(descuento, marca);
+        });
         builder.setNegativeButton(R.string.cancelar, (dialogInterface, i) -> presenter.onConvenioCancelarClicked());
 
         AlertDialog dialog = builder.create();

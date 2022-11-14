@@ -46,8 +46,10 @@ public interface IConveniosContract {
         /**
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
          * Añadir de la ventana emergente para añadir convenios ha sido pulsado.
+         * @param descuento descuento del convenio
+         * @param marca marca del convenio
          */
-        void onConvenioAnhadirClicked(android.view.View anhadirView);
+        void onConvenioAnhadirClicked(String descuento, String marca);
 
         /**
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton

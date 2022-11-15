@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-//import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 import es.unican.is.appgasolineras.R;

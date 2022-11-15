@@ -48,9 +48,9 @@ public class Convenio {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        Boolean result = false;
+        Boolean result=false;
         if (obj == null || obj.getClass() != this.getClass()) {
-            result = false;
+            return result;
         } else if (this.marca.equals(((Convenio) obj).marca) && this.descuento == ((Convenio) obj).descuento) {
             result = true;
         }

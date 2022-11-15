@@ -152,10 +152,10 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     }
 
     private void cargaMarcas(Spinner s) {
-        ArrayList marcasArray = new ArrayList();
+        var marcasArray = new ArrayList();
         marcasArray.addAll(marcas);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, marcasArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         s.setAdapter(adapter);

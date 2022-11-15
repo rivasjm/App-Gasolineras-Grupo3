@@ -56,7 +56,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
         if (prefs.getInt(ANHADIR) == 1) {
             //Extrae las marcas de todas las gasolineras
-            Set<String> marcas = new HashSet<String>();
+            Set<String> marcas = new HashSet<>();
             try {
                 gasolineras = db.gasolineraDao().getAll();
             } catch (SQLiteException e) {

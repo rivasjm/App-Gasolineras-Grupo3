@@ -15,9 +15,7 @@ import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.model.Gasolinera;
-import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.ConvenioDao;
-import es.unican.is.appgasolineras.repository.db.GasolineraDao;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class ConveniosPresenter implements IConveniosContract.Presenter {

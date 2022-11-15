@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -40,7 +41,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     private IMainContract.Presenter presenter;
     private BarraHerramientasView barraHerramientasView;
-    private static Prefs prefs;
+    private Prefs prefs;
     private FusedLocationProviderClient fusedLocationClient;
     private Location currentLocation;
     private static int debug = 0;
@@ -206,7 +207,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         debug = 1;
     }
 
-    public static void acabaTest() {
+    public static void acabaTest(Context context) {
+        Prefs prefs = Prefs.from(context);
         prefs.putInt(ORDENAR, 0);
         debug = 0;
     }

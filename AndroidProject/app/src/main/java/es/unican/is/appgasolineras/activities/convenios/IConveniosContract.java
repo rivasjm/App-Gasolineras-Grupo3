@@ -1,8 +1,5 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
-import android.view.View;
-import android.widget.Spinner;
-
 import java.util.List;
 import java.util.Set;
 

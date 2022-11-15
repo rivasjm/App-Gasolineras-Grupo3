@@ -90,6 +90,6 @@ public class VerHistorialRepostajesVacioUITest {
     public static void tearDown() {
         // volver URL real
         GasolinerasServiceConstants.setMinecoURL();
-        MainView.acabaTest();
+        MainView.acabaTest(ApplicationProvider.getApplicationContext());
     }
 }

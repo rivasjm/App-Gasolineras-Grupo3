@@ -47,7 +47,7 @@ public class MostrarConveniosUITest {
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();
-        MainView.acabaTest();
+        MainView.acabaTest(ApplicationProvider.getApplicationContext());
     }
 
     @Test

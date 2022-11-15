@@ -55,6 +55,7 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
             actionBar.setDisplayOptions(actionBar.getDisplayOptions()
                     | ActionBar.DISPLAY_SHOW_CUSTOM);
         }
+        assert actionBar != null;
         ImageView imageView = new ImageView(actionBar.getThemedContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         imageView.setImageResource(R.drawable.letras_repost_app_230);

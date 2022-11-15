@@ -3,7 +3,6 @@ package es.unican.is.appgasolineras.activities.detail;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 

@@ -13,6 +13,7 @@ import static es.unican.is.appgasolineras.utils.Matchers.hasNElements;
 
 import android.view.View;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
@@ -85,6 +86,6 @@ public class OrdenarGasolinerasPorDistanciaUITest {
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();
-        MainView.acabaTest();
+        MainView.acabaTest(ApplicationProvider.getApplicationContext());
     }
 }

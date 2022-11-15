@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 
@@ -16,7 +15,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.lang.reflect.Field;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.convenios.ConveniosView;
@@ -54,9 +52,9 @@ public class BarraHerramientasView extends AppCompatActivity implements IBarraHe
         ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayOptions(actionBar.getDisplayOptions()
+                    | ActionBar.DISPLAY_SHOW_CUSTOM);
         }
-        actionBar.setDisplayOptions(actionBar.getDisplayOptions()
-                | ActionBar.DISPLAY_SHOW_CUSTOM);
         ImageView imageView = new ImageView(actionBar.getThemedContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         imageView.setImageResource(R.drawable.letras_repost_app_230);

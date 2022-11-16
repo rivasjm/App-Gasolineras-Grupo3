@@ -188,6 +188,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
     public List<Convenio> getShownConvenios(){
         return shownConvenios;
     }
+
     public List<Gasolinera> getGasolineras() {
         return gasolineras;
     }

@@ -71,6 +71,8 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
                 for (Gasolinera g: gasolineras) {
                     marcas.add(g.getRotulo());
                 }
+                marcas.remove("(SIN RÓTULO)");
+                marcas.remove("12241");
                 List<String> marcasOrdenadas = new ArrayList<>(marcas);
                 Collections.sort(marcasOrdenadas);
                 view.setMarcas(marcasOrdenadas);

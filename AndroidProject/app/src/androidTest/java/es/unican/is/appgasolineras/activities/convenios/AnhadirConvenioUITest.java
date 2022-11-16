@@ -55,6 +55,13 @@ public class AnhadirConvenioUITest {
         onView(withId(R.id.tvConvenioMarca)).check(matches(isDisplayed()));
         onView(withId(R.id.tvConvenioDescuento)).check(matches(isDisplayed()));
 
+        // Esperar a que se carguen las marcas de gasolineras
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Introducir datos
         onView(withId(R.id.spMarca)).perform(click());
         onView(withText("AGROCANTABRIA")).inRoot(isPlatformPopup()).perform(click());

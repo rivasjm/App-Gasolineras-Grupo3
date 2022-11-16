@@ -91,14 +91,24 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
     @Override
     public void onConvenioAnhadirClicked(String descuento, String marca) {
+
+        // Caso descuento vacio
         if (descuento.equals("")) {
             view.showErrorDescuento();
             return;
         }
 
-        Integer descuentoParsed = Integer.parseInt(descuento);
+        // Caso descuento no numerico
+        Integer descuentoParsed = null;
+        try {
+            descuentoParsed = Integer.parseInt(descuento);
+        } catch (NumberFormatException e) {
+            view.showErrorDescuento();
+            return;
+        }
 
-        if (descuentoParsed == 0 || descuentoParsed >= 100) {
+        // Caso descuento fuera de rango
+        if (descuentoParsed <= 0 || descuentoParsed >= 100) {
             view.showErrorDescuento();
             return;
         }
@@ -113,8 +123,10 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         Convenio convenioAnterior = conveniosDao.buscaConvenioPorMarca(convenio.getMarca());
 
         if (convenioAnterior != null) {
+            // Caso sobrescribir convenio
             view.showSobreescribirConvenio(convenio);
         } else {
+            // Caso exito
             insertaConvenio(convenio);
         }
     }

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,7 +60,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
 
         if (prefs.getInt(ANHADIR) == 1) {
             //Extrae las marcas de todas las gasolineras
-            Set<String> marcas = new HashSet<String>();
+            Set<String> marcas = new HashSet<>();
             try {
                 gasolineras = db.gasolineraDao().getAll();
             } catch (SQLiteException e) {
@@ -71,7 +73,9 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
                 for (Gasolinera g: gasolineras) {
                     marcas.add(g.getRotulo());
                 }
-                view.setMarcas(marcas);
+                List<String> marcasOrdenadas = new ArrayList<>(marcas);
+                Collections.sort(marcasOrdenadas);
+                view.setMarcas(marcasOrdenadas);
                 view.showAnhadirConvenio();
             }
 

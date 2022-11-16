@@ -136,7 +136,7 @@ public interface IConveniosContract {
          * Carga el listado de marcas de la View con aquellas obtenidas de la BD
          * @param marcas las marcas a mostrar
          */
-        void setMarcas(Set<String> marcas);
+        void setMarcas(List<String> marcas);
 
         /**
          * Se solicita a la View que abra la vista principal.

@@ -12,6 +12,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import org.junit.AfterClass;
@@ -21,6 +22,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 /**
@@ -37,6 +39,7 @@ public class AnhadirConvenioUITest {
     public static void setUp() {
         // Usar URL estatica para controlar el entorno
         GasolinerasServiceConstants.setStaticURL();
+        GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true).convenioDao().deleteAll();
     }
 
     /**
@@ -54,13 +57,13 @@ public class AnhadirConvenioUITest {
 
         // Introducir datos
         onView(withId(R.id.spMarca)).perform(click());
-        onView(withText("CAMPSA")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("AGROCANTABRIA")).inRoot(isPlatformPopup()).perform(click());
         onView(withId(R.id.etConvenioDescuento)).perform(typeText("20"), closeSoftKeyboard());
         onView(withText(R.string.anhadir)).perform(click());
 
         // Comprobar que el convenio nuevo aparece en la lista de convenios
         onData(anything()).inAdapterView(withId(R.id.lvConvenios)).atPosition(0).
-                onChildView(withId(R.id.tvMarcaConvenio)).check(matches(withText("CAMPSA")));
+                onChildView(withId(R.id.tvMarcaConvenio)).check(matches(withText("AGROCANTABRIA")));
         onData(anything()).inAdapterView(withId(R.id.lvConvenios)).atPosition(0).
                 onChildView(withId(R.id.tvDescuentoConvenio)).check(matches(withText("20")));
 
@@ -71,5 +74,6 @@ public class AnhadirConvenioUITest {
     public static void tearDown() {
         // Volver URL real
         GasolinerasServiceConstants.setMinecoURL();
+        GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true).convenioDao().deleteAll();
     }
 }

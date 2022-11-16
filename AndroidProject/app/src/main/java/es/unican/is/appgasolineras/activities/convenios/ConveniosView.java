@@ -43,7 +43,7 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
 
     private IPrefs prefs;
 
-    private Set<String> marcas;
+    private List<String> marcas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class ConveniosView extends AppCompatActivity implements IConveniosContra
     }
 
     @Override
-    public void setMarcas(Set<String> marcas) {
+    public void setMarcas(List<String> marcas) {
         this.marcas = marcas;
     }
 

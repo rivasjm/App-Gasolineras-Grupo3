@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -69,7 +71,9 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
                 for (Gasolinera g: gasolineras) {
                     marcas.add(g.getRotulo());
                 }
-                view.setMarcas(marcas);
+                List<String> marcasOrdenadas = new ArrayList<>(marcas);
+                Collections.sort(marcasOrdenadas);
+                view.setMarcas(marcasOrdenadas);
                 view.showAnhadirConvenio();
             }
 

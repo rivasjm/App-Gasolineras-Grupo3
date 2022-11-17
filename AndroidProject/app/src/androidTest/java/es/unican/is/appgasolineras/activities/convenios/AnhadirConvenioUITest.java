@@ -11,6 +11,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.Matchers.hasToString;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -39,6 +40,7 @@ public class AnhadirConvenioUITest {
     public static void setUp() {
         // Usar URL estatica para controlar el entorno
         GasolinerasServiceConstants.setStaticURL();
+        // Situacion inicial: 0 convenios
         GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true).convenioDao().deleteAll();
     }
 
@@ -55,22 +57,15 @@ public class AnhadirConvenioUITest {
         onView(withId(R.id.tvConvenioMarca)).check(matches(isDisplayed()));
         onView(withId(R.id.tvConvenioDescuento)).check(matches(isDisplayed()));
 
-        // Esperar a que se carguen las marcas de gasolineras
-        try {
-            Thread.sleep(30000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         // Introducir datos
         onView(withId(R.id.spMarca)).perform(click());
-        onView(withText("AGROCANTABRIA")).inRoot(isPlatformPopup()).perform(click());
+        onData(hasToString("CAMPSA")).inRoot(isPlatformPopup()).perform(click());
         onView(withId(R.id.etConvenioDescuento)).perform(typeText("20"), closeSoftKeyboard());
         onView(withText(R.string.anhadir)).perform(click());
 
         // Comprobar que el convenio nuevo aparece en la lista de convenios
         onData(anything()).inAdapterView(withId(R.id.lvConvenios)).atPosition(0).
-                onChildView(withId(R.id.tvMarcaConvenio)).check(matches(withText("AGROCANTABRIA")));
+                onChildView(withId(R.id.tvMarcaConvenio)).check(matches(withText("CAMPSA")));
         onData(anything()).inAdapterView(withId(R.id.lvConvenios)).atPosition(0).
                 onChildView(withId(R.id.tvDescuentoConvenio)).check(matches(withText("20")));
 
@@ -81,6 +76,7 @@ public class AnhadirConvenioUITest {
     public static void tearDown() {
         // Volver URL real
         GasolinerasServiceConstants.setMinecoURL();
+        // Borrar el convenio añadido
         GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true).convenioDao().deleteAll();
     }
 }

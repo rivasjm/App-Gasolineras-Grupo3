@@ -62,20 +62,16 @@ public class AnhadirConvenioUITest {
 
         // Introducir datos
         onView(withId(R.id.spMarca)).perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        onData(allOf(is(instanceOf(String.class)), is("CAMPSA"))).inRoot(isPlatformPopup()).perform(click());
-        //onData(hasToString("CAMPSA")).inRoot(isPlatformPopup()).perform(click());
+        onData(instanceOf(String.class)).inRoot(isPlatformPopup()).atPosition(0).perform(click());
+        //onData(allOf(is(instanceOf(String.class)), is("AGROCANTABRIA"))).inRoot(isPlatformPopup()).perform(click());
+        //onData(hasToString("AGROCANTABRIA")).inRoot(isPlatformPopup()).perform(click());
         //onView(withText("AGROCANTABRIA")).inRoot(isPlatformPopup()).perform(click());
         onView(withId(R.id.etConvenioDescuento)).perform(typeText("20"), closeSoftKeyboard());
         onView(withText(R.string.anhadir)).perform(click());
 
         // Comprobar que el convenio nuevo aparece en la lista de convenios
         onData(anything()).inAdapterView(withId(R.id.lvConvenios)).atPosition(0).
-                onChildView(withId(R.id.tvMarcaConvenio)).check(matches(withText("CAMPSA")));
+                onChildView(withId(R.id.tvMarcaConvenio)).check(matches(withText("AGROCANTABRIA")));
         onData(anything()).inAdapterView(withId(R.id.lvConvenios)).atPosition(0).
                 onChildView(withId(R.id.tvDescuentoConvenio)).check(matches(withText("20")));
 

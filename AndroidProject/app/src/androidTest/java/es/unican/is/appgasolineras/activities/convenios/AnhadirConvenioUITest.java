@@ -62,7 +62,14 @@ public class AnhadirConvenioUITest {
 
         // Introducir datos
         onView(withId(R.id.spMarca)).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onData(allOf(is(instanceOf(String.class)), is("CAMPSA"))).inRoot(isPlatformPopup()).perform(click());
+        //onData(hasToString("CAMPSA")).inRoot(isPlatformPopup()).perform(click());
+        //onView(withText("AGROCANTABRIA")).inRoot(isPlatformPopup()).perform(click());
         onView(withId(R.id.etConvenioDescuento)).perform(typeText("20"), closeSoftKeyboard());
         onView(withText(R.string.anhadir)).perform(click());
 

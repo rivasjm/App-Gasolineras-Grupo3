@@ -53,18 +53,13 @@ jobs:
                 working-directory: ./AndroidProject
                 profile: pixel_2
                 target: google_apis
-                disable-animations: true
-                emulator-options: -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
                 script: ./gradlew connectedCheck
-
+                
             - name: Android UI tests artifacts
-              if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v2
               with:
                 name: ui-tests-artifacts
-                path: |
-                  ./AndroidProject/app/build/reports/androidTests/connected/
-                  ./AndroidProject/app/build/outputs/androidTest-results/connected/
+                path: ./AndroidProject/app/build/reports/androidTests/connected/index.html
                 
     # android-release-apk:
         # needs: [android-unit-tests, android-integration-tests]

@@ -11,9 +11,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.anyOf;
 import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;

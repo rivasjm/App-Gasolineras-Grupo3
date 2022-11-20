@@ -64,7 +64,12 @@ public class GasolineraDetailPresenter {
 
     public String getDieselA() {
         String txt = "-";
-        String diesel = gasolinera.getDieselA();
+        String diesel;
+        try {
+            diesel = gasolinera.getDieselA().substring(0, 4);
+        } catch (IndexOutOfBoundsException e){
+            return txt;
+        }
         if (!diesel.equals("") && Double.parseDouble(diesel.replace(',', '.')) > 0) {
             txt = diesel;
         }
@@ -73,7 +78,12 @@ public class GasolineraDetailPresenter {
 
     public String getNormal95() {
         String txt = "-";
-        String gasolina = gasolinera.getNormal95();
+        String gasolina;
+        try {
+            gasolina  = gasolinera.getNormal95().substring(0, 4);
+        } catch (IndexOutOfBoundsException e){
+            return txt;
+        }
         if (!gasolina.equals("")  && Double.parseDouble(gasolina.replace(',', '.')) > 0) {
             txt = gasolina;
         }

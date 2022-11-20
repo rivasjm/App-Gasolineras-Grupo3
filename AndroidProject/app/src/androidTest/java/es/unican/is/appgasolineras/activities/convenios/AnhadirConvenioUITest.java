@@ -5,10 +5,12 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
+
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anything;
@@ -76,6 +78,7 @@ public class AnhadirConvenioUITest {
 //                onChildView(withId(R.id.tvDescuentoConvenio)).check(matches(withText("20")));
 //
 //        // NOTA: no comprobamos el Toast porque puede hacer que falle la integracion por restricciones de tiempo
+
     }
 
     @AfterClass

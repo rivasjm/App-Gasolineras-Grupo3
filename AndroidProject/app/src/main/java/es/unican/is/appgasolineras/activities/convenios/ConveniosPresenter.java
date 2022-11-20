@@ -147,6 +147,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         Convenio cAnterior = conveniosDao.buscaConvenioPorMarca(c.getMarca());
         cAnterior.setMarca(c.getMarca());
         cAnterior.setDescuento(c.getDescuento());
+
         conveniosDao.updateConvenio(cAnterior);
         view.refresh();
         view.showConvenioAnhadido();
@@ -190,6 +191,7 @@ public class ConveniosPresenter implements IConveniosContract.Presenter {
         conveniosDao.insertConvenio(c3);
         conveniosDao.insertConvenio(c4);
     }
+
 
     public List<Convenio> getShownConvenios(){
         return shownConvenios;

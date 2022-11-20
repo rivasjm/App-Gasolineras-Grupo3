@@ -14,20 +14,24 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasToString;
+
+import android.Manifest;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.rule.GrantPermissionRule;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
+import es.unican.is.appgasolineras.utils.ScreenshotTestRule;
 
 /**
  * Test de interfaz grafica para el escenario "Añadir convenio".
@@ -35,9 +39,16 @@ import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
  */
 public class AnhadirConvenioUITest {
 
-    @Rule // Se empieza desde la activity Convenios
+    // Se empieza desde la activity Convenios
     public ActivityScenarioRule<ConveniosView> activityRule = new
             ActivityScenarioRule<>(ConveniosView.class);
+    @Rule
+    public final TestRule activityAndScreenshotRule = RuleChain
+            .outerRule(activityRule)
+            .around(new ScreenshotTestRule());
+    @Rule
+    public GrantPermissionRule permissionRule =
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     @BeforeClass
     public static void setUp() {

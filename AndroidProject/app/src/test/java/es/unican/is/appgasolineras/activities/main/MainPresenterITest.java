@@ -86,9 +86,9 @@ public class MainPresenterITest {
         verify(viewMock).openGasolineraDetails(gas);
         detailPresenter = new GasolineraDetailPresenter(gas, prefs);
         //Verificamos que efectivamente los datos que se ven son correctos
-        assertEquals(detailPresenter.getDieselA(),"1,999");
-        assertEquals(detailPresenter.getNormal95(),"1,859");
-        assertEquals(detailPresenter.getPrecioSumario(),"1,90");
+        assertEquals(detailPresenter.getDieselA(),"1,99 €");
+        assertEquals(detailPresenter.getNormal95(),"1,85 €");
+        assertEquals(detailPresenter.getPrecioSumario(),"1,90 €");
         assertEquals(detailPresenter.getMunicipio(),"Alfoz de Lloredo");
         assertEquals(detailPresenter.getRotulo(),"CEPSA");
         assertEquals(detailPresenter.getSchedule(),"L-D: 08:00-21:00");
@@ -110,12 +110,12 @@ public class MainPresenterITest {
         verify(viewMock).openGasolineraDetails(gas);
         detailPresenter = new GasolineraDetailPresenter(gas, prefs);
 
-        //Verificamos que efectivamente los datos que se ven son correctos a pesar de ser anomalos
+        //Verificamos que efectivamente los datos que se ven son correctos a pesar de haber ausentes
         assertEquals(detailPresenter.getMunicipio(),"Voto");
-        assertEquals(detailPresenter.getNormal95(),"1,799");
+        assertEquals(detailPresenter.getNormal95(),"1,79 €");
         assertEquals(detailPresenter.getRotulo(),"-");
         assertEquals(detailPresenter.getDieselA(),"-");
-        assertEquals(detailPresenter.getPrecioSumario(),"1,79");
+        assertEquals(detailPresenter.getPrecioSumario(),"1,79 €");
         assertEquals(detailPresenter.getSchedule(),"L-D: 09:00-20:30");
     }
 
@@ -136,11 +136,11 @@ public class MainPresenterITest {
         detailPresenter = new GasolineraDetailPresenter(gas, prefs);
         //Verificamos que efectivamente los datos que se ven son correctos a pesar de ser anomalos
         assertEquals(detailPresenter.getMunicipio(),"Villafufre");
-        assertEquals(detailPresenter.getNormal95(),"1,738");
+        assertEquals(detailPresenter.getNormal95(),"1,73 €");
         assertEquals(detailPresenter.getRotulo(),"AVIA");
         assertEquals(detailPresenter.getDieselA(),"-");
 
-        assertEquals(detailPresenter.getPrecioSumario(),"1,73");
+        assertEquals(detailPresenter.getPrecioSumario(),"1,73 €");
 
 
         assertEquals(detailPresenter.getSchedule(),"L-S: 06:00-22:00; D: 08:00-22:00");

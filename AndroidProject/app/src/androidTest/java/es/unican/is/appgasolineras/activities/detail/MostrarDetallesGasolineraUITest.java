@@ -79,9 +79,9 @@ public class MostrarDetallesGasolineraUITest {
         }
 
         onView(withId(R.id.tvDistancia)).check(matches(withText("7072,50 km")));
-        onView(withId(R.id.tvPrecioDieselA)).check(matches(withText("1,999")));
-        onView(withId(R.id.tvPrecioGasolina95)).check(matches(withText("1,859")));
-        onView(withId(R.id.tvPrecioSumario)).check(matches(withText("1,90")));
+        onView(withId(R.id.tvPrecioDieselA)).check(matches(withText("1,99 €")));
+        onView(withId(R.id.tvPrecioGasolina95)).check(matches(withText("1,85 €")));
+        onView(withId(R.id.tvPrecioSumario)).check(matches(withText("1,90 €")));
         onView(withId(R.id.tvHorario)).check(matches(withText("L-D: 08:00-21:00")));
         onView(withId(R.id.tvRotulo)).check(matches(withText("CEPSA")));
         onView(withId(R.id.tvMunicipio)).check(matches(withText("Alfoz de Lloredo")));

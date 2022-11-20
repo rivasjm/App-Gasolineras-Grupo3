@@ -61,8 +61,6 @@ public class MostrarDetallesGasolineraUITest {
 
     /**
      * Marcos Fernandez Alonso
-     * RELLENAR NOMBRE
-     * @throws InterruptedException
      */
     @Test
     public void testMuestraDetalle()  {

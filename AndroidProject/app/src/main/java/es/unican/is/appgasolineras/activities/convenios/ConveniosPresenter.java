@@ -3,9 +3,6 @@ package es.unican.is.appgasolineras.activities.convenios;
 import static es.unican.is.appgasolineras.activities.toolbar.BarraHerramientasPresenter.ANHADIR;
 
 import android.database.sqlite.SQLiteException;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Convenio;
 import es.unican.is.appgasolineras.model.Gasolinera;

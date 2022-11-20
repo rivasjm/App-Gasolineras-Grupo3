@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.activities.historialRepostajes;
 
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -65,7 +66,7 @@ public class VerHistorialRepostajesVacioUITest {
     public void verHistorialRepostajesVacioTest() {
 
         // abrir el menu de los 3 puntos desde Main, empieza el test en si
-        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
+        openActionBarOverflowOrOptionsMenu(getApplicationContext());
         // cuando se vea el desplegable
         onView(anyOf(withText("Historial Repostajes"),
                 withId(R.id.menuHistorialRepostajes))).perform(click());
@@ -90,6 +91,6 @@ public class VerHistorialRepostajesVacioUITest {
     public static void tearDown() {
         // volver URL real
         GasolinerasServiceConstants.setMinecoURL();
-        MainView.acabaTest();
+        MainView.acabaTest( getApplicationContext());
     }
 }

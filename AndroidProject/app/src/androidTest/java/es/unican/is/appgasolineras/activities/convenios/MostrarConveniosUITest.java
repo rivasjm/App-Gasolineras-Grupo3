@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -46,12 +47,12 @@ public class MostrarConveniosUITest {
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();
-        MainView.acabaTest();
+        MainView.acabaTest( getApplicationContext());
     }
 
     @Test
     public void testConvenioVacioVolverAtras() {
-        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
+        openActionBarOverflowOrOptionsMenu(getApplicationContext());
         onView(anyOf(withText("Convenios"), withId(R.id.menuConvenios))).perform(click());
         onView(withId(R.id.lvConvenios)).check(matches(not(hasElements())));
         pressBack();

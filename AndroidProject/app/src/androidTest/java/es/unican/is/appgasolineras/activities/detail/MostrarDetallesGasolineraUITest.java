@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.activities.detail;
 
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -56,7 +57,7 @@ public class MostrarDetallesGasolineraUITest {
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();
-        MainView.acabaTest();
+        MainView.acabaTest( getApplicationContext());
     }
 
     /**

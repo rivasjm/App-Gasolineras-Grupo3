@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.activities.main;
 
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -28,7 +29,7 @@ public class MostrarGasolinerasUITest {
     @AfterClass
     public static void clean() {
         GasolinerasServiceConstants.setMinecoURL();
-        MainView.acabaTest();
+        MainView.acabaTest( getApplicationContext());
     }
 
     @Rule

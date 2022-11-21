@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -19,8 +20,6 @@ import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 
-
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import org.junit.AfterClass;
@@ -49,7 +48,7 @@ public class AnhadirConvenioUITest {
         // Usar URL estatica para controlar el entorno
         GasolinerasServiceConstants.setStaticURL();
         // Situacion inicial: 0 convenios
-        GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true).convenioDao().deleteAll();
+        GasolineraDatabase.getDB(getApplicationContext(), true).convenioDao().deleteAll();
     }
 
     /**
@@ -59,7 +58,7 @@ public class AnhadirConvenioUITest {
     @Test
     public void testAnhadirConvenioCorrecto() {
         // Abrir el menu de los 3 puntos desde Main
-        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
+        openActionBarOverflowOrOptionsMenu(getApplicationContext());
 
         // Cuando se vea el desplegable
         onView(anyOf(withText("Convenios"), withId(R.id.menuConvenios))).perform(click());
@@ -92,6 +91,6 @@ public class AnhadirConvenioUITest {
         // Volver URL real
         GasolinerasServiceConstants.setMinecoURL();
         // Borrar el convenio añadido
-        GasolineraDatabase.getDB(ApplicationProvider.getApplicationContext(), true).convenioDao().deleteAll();
+        GasolineraDatabase.getDB(getApplicationContext(), true).convenioDao().deleteAll();
     }
 }

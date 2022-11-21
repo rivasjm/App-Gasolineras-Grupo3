@@ -6,6 +6,7 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     private final IBarraHerramientasContract.View view;
     private final IPrefs prefs;
     public static final  String ORDENAR = "Ordenar";
+    public static final String ANHADIR = "Añadir convenio";
     public BarraHerramientasPresenter(IBarraHerramientasContract.View view, final IPrefs  prefs ) {
         this.view = view;
         this.prefs = prefs;
@@ -14,11 +15,6 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
     @Override
     public void onInfoClicked() {
         view.openInfoView();
-    }
-
-    @Override
-    public void onRefreshClicked() {
-        view.getActivity().recreate();
     }
 
     @Override
@@ -63,5 +59,11 @@ public class BarraHerramientasPresenter implements IBarraHerramientasContract.Pr
                 view.openMainView();
             }
         }
+    }
+
+    @Override
+    public void onAnhadeConvenioClicked() {
+        this.prefs.putInt(ANHADIR,1);
+        view.openConveniosView();
     }
 }

@@ -22,11 +22,25 @@
 
     <string name="conveniosCampoMarca">Marca:</string>
     <string name="conveniosCampoDescuento">Descuento (%):</string>
-    <string name="conveniosListaVacia">La lista de convenios esta vacía</string>
+    <string name="conveniosListaVacia">La lista de convenios está vacía</string>
     <string name="conveniosFalloAccesoDatos">Ha ocurrido un error al acceder a los datos.</string>
     <string name="aceptar">Aceptar</string>
     <string name="reintentar">Reintentar</string>
 
     <string name="ordenarDistanciaAplicado">Gasolineras ordenadas por distancia</string>
     <string name="ordenarPrecioAscAplicado">Gasolineras ordenadas por precio</string>
+
+    <string name="anhadirConvenioExito">Se ha añadido el nuevo convenio</string>
+    <string name="anhadirConvenioSobreescribir">Ya existe un convenio asociado a la marca indicada. ¿Desea sobreescribir el convenio?</string>
+    <string name="anhadirConvenioErrorDescuento">El descuento introducido no es válido</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="anhadir">Añadir</string>
+    <string name="sobreescribir">Sobreescribir</string>
+    <string name="anhadirConvenioTitulo">Nuevo convenio</string>
+
+    <string name="anhadirConvenioMarcaLabel">Marca</string>
+    <string name="anhadirConvenioDescuentoLabel">Descuento</string>
+
+    <string name="loadErrorMarcasConvenios">Ha ocurrido un error al acceder a los datos de las marcas.</string>
+
 </resources>

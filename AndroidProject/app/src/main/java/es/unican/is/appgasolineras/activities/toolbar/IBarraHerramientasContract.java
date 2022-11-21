@@ -17,12 +17,6 @@ public interface IBarraHerramientasContract {
 
         /**
          * Este metodo debe ser usado por la View para notificar al Presenter que el boton
-         * Refrescar ha sido pulsado.
-         */
-        void onRefreshClicked();
-
-        /**
-         * Este metodo debe ser usado por la View para notificar al Presenter que el boton
          * Convenios ha sido pulsado.
          */
         void onConveniosClicked();
@@ -50,6 +44,12 @@ public interface IBarraHerramientasContract {
          * de ordenar gasolineras por precio ha sido pulsado.
          */
         void onOrdenarPrecioAscClicked();
+
+        /**
+         * Este metodo debe ser usado por la View para notificar al Presenter que el icono
+         * de crear convenio ha sido pulsado.
+         */
+        void onAnhadeConvenioClicked();
     }
 
     /**

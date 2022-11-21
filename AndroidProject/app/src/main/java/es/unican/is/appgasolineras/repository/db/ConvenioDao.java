@@ -31,4 +31,7 @@ public interface ConvenioDao {
 
     @Query("DELETE FROM convenios")
     void deleteAll();
+
+    @Query("SELECT * FROM convenios WHERE marca = :marca")
+    Convenio buscaConvenioPorMarca(String marca);
 }

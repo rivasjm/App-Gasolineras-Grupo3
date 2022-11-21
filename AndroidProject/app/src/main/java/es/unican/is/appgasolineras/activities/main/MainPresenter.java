@@ -21,6 +21,8 @@ public class MainPresenter implements IMainContract.Presenter {
     private List<Gasolinera> shownGasolineras;
     private final IPrefs prefs;
     private Location location;
+    private static final String LONGITUD = "longitud";
+    private static final String LATITUD = "latitud";
 
     public MainPresenter(IMainContract.View view, IPrefs prefs) {
 
@@ -35,6 +37,9 @@ public class MainPresenter implements IMainContract.Presenter {
         }
         if (repository != null) {
             doSyncInit();
+
+        } else {
+            doAsyncInit();
         }
         // obtener ubicacion si no se ordena por precio
         if (prefs.getInt(ORDENAR) != 2) {
@@ -43,8 +48,8 @@ public class MainPresenter implements IMainContract.Presenter {
                 public void onSuccess(Location data) { // en data recibe Location
                     // guardar ubicacion en preferencias para el resto de actividades
                     location = data;
-                    prefs.putString("longitud", Double.toString(data.getLongitude()));
-                    prefs.putString("latitud", Double.toString(data.getLatitude()));
+                    prefs.putString(LONGITUD, Double.toString(data.getLongitude()));
+                    prefs.putString(LATITUD, Double.toString(data.getLatitude()));
 
                     // recargar las gasolineras con la distancia
                     MainPresenter.this.refresh();
@@ -103,26 +108,26 @@ public class MainPresenter implements IMainContract.Presenter {
                 // recoger la distancia (es un nuevo presenter, quizas no lo tiene)
                 if (location == null) {
                     // no hay nada guardado en preferencias, error
-                    if (prefs.getString("longitud").equals("") ||
-                            prefs.getString("latitud").equals("")) {
+                    if (prefs.getString(LONGITUD).equals("") ||
+                            prefs.getString(LATITUD).equals("")) {
                         view.showGpsError();
                         return;
                     }
                     // si se puede obtener la ubicacion
                     location = new Location("");
-                    location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
-                    location.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+                    location.setLongitude(Double.parseDouble(prefs.getString(LONGITUD)));
+                    location.setLatitude(Double.parseDouble(prefs.getString(LATITUD)));
                 }
                 Collections.sort(shownGasolineras, new GasolineraUbicacionComparator(location));
                 view.showDistanceSort();
                 break;
             case 2: // por precio
                 // si se puede obtener la ubicacion
-                if (!prefs.getString("longitud").equals("") &&
-                        !prefs.getString("latitud").equals("")) {
+                if (!prefs.getString(LONGITUD).equals("") &&
+                        !prefs.getString(LATITUD).equals("")) {
                     location = new Location("");
-                    location.setLongitude(Double.parseDouble(prefs.getString("longitud")));
-                    location.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+                    location.setLongitude(Double.parseDouble(prefs.getString(LONGITUD)));
+                    location.setLatitude(Double.parseDouble(prefs.getString(LATITUD)));
                 }
                 Collections.sort(shownGasolineras, new GasolineraPrecioComparator());
                 view.showPriceAscSort();
@@ -136,7 +141,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void onGasolineraClicked(int index) {
-        if (shownGasolineras != null && index < shownGasolineras.size()) {
+        if (shownGasolineras != null && index < shownGasolineras.size() && index >= 0) {
             Gasolinera gasolinera = shownGasolineras.get(index);
             view.openGasolineraDetails(gasolinera);
         }

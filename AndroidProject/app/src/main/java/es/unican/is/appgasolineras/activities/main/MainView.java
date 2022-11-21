@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -38,7 +40,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     private IMainContract.Presenter presenter;
     private BarraHerramientasView barraHerramientasView;
-    private static Prefs prefs;
+    private Prefs prefs;
     private FusedLocationProviderClient fusedLocationClient;
     private Location currentLocation;
     private static int debug = 0;
@@ -65,12 +67,19 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         presenter = new MainPresenter(this, prefs);
         presenter.init();
+
+        SwipeRefreshLayout swipeRefreshLayout; // solo se usa aqui
+        swipeRefreshLayout = findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.init();
+            swipeRefreshLayout.setRefreshing(false);
+        });
         this.init();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return barraHerramientasView.onCreateOptionsMenu(menu, true);
+        return barraHerramientasView.onCreateOptionsMenu(menu, true, false);
     }
 
     @Override
@@ -171,9 +180,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         builder.setMessage(R.string.gpsError);
         builder.setPositiveButton(R.string.aceptar, (dialogInterface, i)
-                -> {
-            dialogInterface.cancel();
-        } );
+                -> dialogInterface.cancel());
         builder.setNegativeButton(R.string.reintentar, (dialogInterface, i)
                 -> { // funciona bien
             presenter = new MainPresenter(this, prefs);
@@ -195,7 +202,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         debug = 1;
     }
 
-    public static void acabaTest() {
+    public static void acabaTest(Context context) {
+        Prefs prefs = Prefs.from(context);
         prefs.putInt(ORDENAR, 0);
         debug = 0;
     }

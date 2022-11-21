@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -25,6 +26,7 @@ public class Convenio {
         id = 0;
     }
 
+    //id
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
@@ -43,5 +45,21 @@ public class Convenio {
 
     public void setDescuento(int descuento) {
         this.descuento = descuento;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Boolean result=false;
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return result;
+        } else if (this.marca.equals(((Convenio) obj).marca) && this.descuento == ((Convenio) obj).descuento) {
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

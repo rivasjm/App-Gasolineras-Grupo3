@@ -12,7 +12,4 @@
     <item
         android:id="@+id/menuInfo"
         android:title="@string/info" />
-    <item
-        android:id="@+id/menuRefresh"
-        android:title="@string/refresh" />
 </menu>

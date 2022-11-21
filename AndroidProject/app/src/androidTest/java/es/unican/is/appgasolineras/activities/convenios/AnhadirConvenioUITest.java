@@ -21,11 +21,13 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.MainView;
@@ -36,6 +38,7 @@ import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
  * Test de interfaz grafica para el escenario "Añadir convenio".
  * @author Alina Solonaru
  */
+@RunWith(AndroidJUnit4.class)
 public class AnhadirConvenioUITest {
 
     // Se empieza desde la activity Main

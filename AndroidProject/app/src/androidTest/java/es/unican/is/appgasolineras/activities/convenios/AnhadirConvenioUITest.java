@@ -1,6 +1,5 @@
 package es.unican.is.appgasolineras.activities.convenios;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -17,7 +16,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -61,7 +59,7 @@ public class AnhadirConvenioUITest {
     @Test
     public void testAnhadirConvenioCorrecto() {
         // Abrir el menu de los 3 puntos desde Main
-        openActionBarOverflowOrOptionsMenu(getApplicationContext());
+        openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
 
         // Cuando se vea el desplegable
         onView(anyOf(withText("Convenios"), withId(R.id.menuConvenios))).perform(click());
